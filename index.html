@@ -365,7 +365,7 @@ function render(){
       ${g.minute?`<div class="minute stamp">${g.minute.replace("'","")}<span>'</span></div>`:''}
       ${g.channel?`<div class="src">${g.channel}</div>`:''}
       ${isKor?`<div class="kor-flag" aria-hidden="true">🇰🇷</div>`:''}
-      ${PLATFORM_URL?`<a class="card-cta" href="${PLATFORM_URL}" target="_blank" rel="noopener" onclick="event.stopPropagation()">누드TV</a>`:''}
+      ${(()=>{const _cb=cardButton();return _cb?`<a class="card-cta" href="${_cb.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">누드TV</a>`:'';})()}
       <div class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
       <div class="meta">
         <div class="match">${g.match}</div>
@@ -427,6 +427,7 @@ function openPlayer(i){
   pIndex = i; const g = view[pIndex];
   document.getElementById('pTtl').textContent = `${g.match} · ${g.title}`;
   document.getElementById('pSrc').textContent = g.channel;
+  renderPlayerButtons();
   document.getElementById('pFallback').href = g.youtubeId ? `https://www.youtube.com/watch?v=${g.youtubeId}` : '#';
   pBlocked.classList.remove('on');
   pBlocked.querySelector('p').innerHTML = '이 영상은 퍼가기가 막혀 있어요.<br>공식 채널에서 바로 볼 수 있습니다.';
@@ -478,23 +479,32 @@ if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.s
 
 /* ★★ 누드TV 플랫폼 주소 — 아래 따옴표 안만 본인 주소로 바꾸면 됩니다 ★★
    (텔레그램이면 https://t.me/... , 사이트면 https://... ; 비우면 버튼 숨김) */
-/* ===== 플랫폼 버튼 =====
-   구글시트를 '웹에 게시(CSV)'한 주소를 SHEET_CSV_URL 에 넣으면 그 시트의 버튼이 자동 표시됩니다.
-   시트 형식(첫 줄 머리글): 버튼이름,주소,표시   (표시 칸이 N이면 숨김)
-   비어 있으면 아래 기본 버튼 표시. 버튼은 영상 위 오른쪽에 2열로 배치됩니다. */
+/* ===== 플랫폼 버튼 (무작위 로테이션) =====
+   구글시트를 '웹에 게시(CSV)'한 주소를 SHEET_CSV_URL 에 넣으면 그 시트의 버튼 리스트를 읽어
+   모든 영상에 무작위로 돌려가며 보여줍니다. 시트 형식(첫 줄 머리글): 버튼이름,주소,표시
+   비어 있으면 아래 기본 버튼 표시. */
 const SHEET_CSV_URL = "";   // ★게시한 구글시트 CSV 주소를 여기에 넣으세요★
+const BTN_PER_VIDEO = 2;    // 영상마다 보여줄 버튼 개수(2열)
 let PLATFORM_URL = "https://ad-5468745.github.io/nudetv-sports/";
 const DEFAULT_BUTTONS = [
   { name:"누드TV 바로가기", url:PLATFORM_URL },
   { name:"누드TV 채널입장", url:PLATFORM_URL }
 ];
 let BUTTONS = DEFAULT_BUTTONS.slice();
-function renderCtaButtons(){
+function pickRandom(arr,n){
+  const a=arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a.slice(0, n);
+}
+function renderPlayerButtons(){
   const w=document.getElementById('ctaWrap'); if(!w) return;
-  const list=BUTTONS.filter(b=>b && b.url && b.name);
+  const list=pickRandom(BUTTONS.filter(b=>b && b.url && b.name), BTN_PER_VIDEO);
   w.innerHTML = list.map(b=>`<a href="${b.url}" target="_blank" rel="noopener">${b.name}</a>`).join('');
   w.hidden = list.length===0;
-  if(list[0] && list[0].url) PLATFORM_URL = list[0].url;
+}
+function cardButton(){
+  const list=BUTTONS.filter(b=>b && b.url && b.name);
+  return list.length ? list[Math.floor(Math.random()*list.length)] : null;
 }
 function parseCsvButtons(text){
   const rows=text.trim().split(/\r?\n/).map(r=>r.split(','));
@@ -510,14 +520,14 @@ function parseCsvButtons(text){
   return out;
 }
 async function loadButtons(){
-  renderCtaButtons();
-  if(!SHEET_CSV_URL) return;
-  try{
-    const r=await fetch(SHEET_CSV_URL, {cache:'no-store'});
-    if(!r.ok) throw 0;
-    const list=parseCsvButtons(await r.text());
-    if(list.length){ BUTTONS=list; renderCtaButtons(); render(); }
-  }catch(e){}
+  if(SHEET_CSV_URL){
+    try{
+      const r=await fetch(SHEET_CSV_URL, {cache:'no-store'});
+      if(r.ok){ const list=parseCsvButtons(await r.text()); if(list.length) BUTTONS=list; }
+    }catch(e){}
+  }
+  if(BUTTONS[0] && BUTTONS[0].url) PLATFORM_URL = BUTTONS[0].url;
+  render();
 }
 loadButtons();
 
