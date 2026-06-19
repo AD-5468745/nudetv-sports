@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
 <title>HOT 스포츠 쇼츠모음</title>
 <meta name="theme-color" content="#0b1411" />
-<meta name="description" content="축구·야구·농구·격투기·LOL 인기 하이라이트 쇼츠 모음" />
+<meta name="description" content="축구·야구·농구·배구·격투기·육상·LOL 인기 하이라이트 쇼츠 모음" />
 <meta property="og:type" content="website" /><meta property="og:title" content="HOT 스포츠 쇼츠모음" />
-<meta property="og:description" content="축구·야구·농구·격투기·LOL 인기 하이라이트를 쇼츠로 모아봤어요." />
+<meta property="og:description" content="축구·야구·농구 등 인기 하이라이트를 쇼츠로 모아봤어요." />
 <meta property="og:url" content="https://ad-5468745.github.io/hot-sports/" />
 <meta property="og:image" content="https://ad-5468745.github.io/hot-sports/icons/icon-512.png" />
 <meta name="twitter:card" content="summary_large_image" />
@@ -19,8 +19,9 @@
 <style>
   :root{ --green:#1FA85C; --green-soft:#37C98C; --accent:#E25822; }
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  :focus-visible{outline:2px solid var(--green-soft);outline-offset:2px}
   html,body{margin:0;height:100%;background:#0b1411;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden}
-  #bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;background:linear-gradient(180deg,rgba(0,0,0,.66),rgba(0,0,0,.30) 72%,transparent);pointer-events:none}
+  #bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.32) 72%,transparent);pointer-events:none}
   #bar .row{display:flex;align-items:center;gap:8px;pointer-events:auto;max-width:760px;margin:0 auto}
   .brand{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0;cursor:pointer}
   .brand svg{width:30px;height:30px;flex:none}
@@ -38,28 +39,39 @@
   .bg{position:absolute;inset:0;z-index:0;background:radial-gradient(130% 95% at 50% 22%,#15281e 0%,#0b1411 55%,#070d0a 100%)}
   .stage{position:relative;z-index:1;width:100%;height:100%;max-width:min(100%,480px);margin:0 auto;background:#000;overflow:hidden}
   .mount,.mount iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
-  .cue{position:absolute;inset:0;z-index:3;border:0;cursor:pointer;background-size:cover;background-position:center;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+  .spin{position:absolute;inset:0;z-index:4;display:grid;place-items:center;pointer-events:none}
+  .spin::after{content:"";width:46px;height:46px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:#fff;animation:sp .8s linear infinite}
+  .spin[hidden]{display:none}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .cue{position:absolute;inset:0;z-index:5;border:0;padding:0;cursor:pointer;background:#000;display:block;width:100%;height:100%}
   .cue[hidden]{display:none}
-  .cue svg{width:74px;height:74px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
-  .cue b{font-size:14px;font-weight:800;color:#fff;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
-  .cap{position:absolute;left:0;right:64px;bottom:0;z-index:7;pointer-events:none;padding:18px 14px calc(env(safe-area-inset-bottom) + 16px);background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.3) 60%,transparent)}
+  .cue .thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cue .scrim{position:absolute;inset:0;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,.52))}
+  .cue .scrim svg{width:74px;height:74px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.55))}
+  .cue .scrim b{font-size:14px;font-weight:800;color:#fff;letter-spacing:.5px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+  .sndpill{position:absolute;left:50%;top:14px;transform:translateX(-50%);z-index:6;border:0;border-radius:999px;background:rgba(0,0,0,.62);color:#fff;font-size:13px;font-weight:700;padding:8px 15px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:flex;align-items:center;gap:6px;box-shadow:0 2px 10px rgba(0,0,0,.4)}
+  .sndpill[hidden]{display:none} .sndpill svg{width:16px;height:16px}
+  .cap{position:absolute;left:0;right:64px;bottom:0;z-index:7;pointer-events:none;padding:18px 14px calc(env(safe-area-inset-bottom) + 16px);background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 60%,transparent)}
   .cap .lg{display:inline-block;background:rgba(31,168,92,.92);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;margin-bottom:7px}
   .cap .vw{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:6px}
   .cap .ttl{font-size:14px;line-height:1.4;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;pointer-events:auto;cursor:pointer}
-  .cap .ttl.expanded{-webkit-line-clamp:unset;max-height:40vh;overflow:auto}
-  .cap .ch{display:block;margin-top:4px;color:rgba(255,255,255,.6);font-size:11px}
-  .acts{position:absolute;right:8px;bottom:calc(env(safe-area-inset-bottom) + 150px);z-index:8;display:flex;flex-direction:column;align-items:center}
+  .cap .ttl.expanded{-webkit-line-clamp:unset;max-height:42vh;overflow:auto}
+  .cap .ch{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:11px}
+  .acts{position:absolute;right:8px;bottom:calc(env(safe-area-inset-bottom) + 150px);z-index:8;display:flex;flex-direction:column;align-items:center;gap:14px}
   .act{width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .act svg{width:26px;height:26px} .act:active{transform:scale(.9)} .act.on{color:#ff3b55} .act.on svg{fill:#ff3b55}
   .act .cnt{font-size:10px;font-weight:700;margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-  .wm{position:absolute;top:calc(env(safe-area-inset-top) + 104px);left:13px;z-index:7;width:30px;height:30px;opacity:.82;pointer-events:none;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
-  .wm svg{width:100%;height:100%}
   .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   .nav svg{width:20px;height:20px} .nav:active{transform:scale(.92)}
   .nav.up{top:calc(50% - 56px)} .nav.down{top:calc(50% + 10px)}
   @media (min-width:760px){ .nav{display:grid} }
-  #empty{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:rgba(255,255,255,.85);padding:30px;z-index:5}
-  #empty.show{display:flex} #empty .ic{font-size:42px} #empty b{font-size:16px} #empty p{margin:0;color:rgba(255,255,255,.6);font-size:13px}
+  .endcard{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:radial-gradient(120% 80% at 50% 20%,#16291f,#0b1411 60%,#070d0a)}
+  .endcard svg{width:64px;height:64px} .endcard b{font-size:18px} .endcard p{margin:0 0 6px;color:rgba(255,255,255,.62);font-size:13px}
+  .endcard .eb{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-weight:700;padding:11px 20px;border-radius:12px;cursor:pointer;margin:3px}
+  .endcard .eb.pri{background:var(--accent);border-color:transparent}
+  #empty,#err{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:rgba(255,255,255,.85);padding:30px;z-index:6}
+  #empty.show,#err.show{display:flex} #empty .ic,#err .ic{font-size:42px} #empty b,#err b{font-size:16px} #empty p,#err p{margin:0;color:rgba(255,255,255,.6);font-size:13px}
+  #err .eb{margin-top:6px;border:0;border-radius:12px;background:var(--green);color:#fff;font-weight:700;font-size:14px;padding:11px 22px;cursor:pointer}
   #home{position:fixed;inset:0;z-index:50;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 28px) 18px calc(env(safe-area-inset-bottom) + 30px);background:radial-gradient(120% 75% at 50% 8%,#16291f 0%,#0b1411 52%,#070d0a 100%)}
   #home[hidden]{display:none}
   .hm-hero{text-align:center;margin:14px 0 20px} .hm-logo svg{width:74px;height:74px}
@@ -67,18 +79,23 @@
   .hm-hero p{margin:0;color:rgba(255,255,255,.62);font-size:13px}
   #homeSearch{width:100%;max-width:520px;margin:0 auto 14px;display:block;padding:13px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.5);color:#fff;font-size:15px;outline:none}
   .hm-cta{display:block;width:100%;max-width:520px;margin:0 auto 18px;padding:15px;border:0;border-radius:14px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+  .hm-sec{max-width:520px;margin:0 auto 10px;font-size:13px;font-weight:700;color:rgba(255,255,255,.7)}
+  .hm-trend{max-width:520px;margin:0 auto 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .tcard{border:0;padding:0;border-radius:12px;overflow:hidden;cursor:pointer;background:#0e1b15;position:relative;aspect-ratio:9/13}
+  .tcard img{width:100%;height:100%;object-fit:cover;display:block}
+  .tcard span{position:absolute;left:0;right:0;bottom:0;padding:14px 7px 6px;font-size:10px;line-height:1.3;text-align:left;color:#fff;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .hm-grid{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   .hm-cat{padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(255,255,255,.07);color:#fff;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
-  @media(min-width:600px){ .hm-grid{grid-template-columns:repeat(3,1fr)} }
+  @media(min-width:600px){ .hm-grid{grid-template-columns:repeat(3,1fr)} .hm-trend{grid-template-columns:repeat(6,1fr)} }
   #searchRow{max-width:760px;margin:8px auto 0;pointer-events:auto} #searchRow[hidden]{display:none}
-  #searchRow input{width:100%;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;font-size:14px;outline:none}
+  #searchRow input{width:100%;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.55);color:#fff;font-size:14px;outline:none}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 <header id="bar">
   <div class="row">
-    <div class="brand"><svg viewBox="0 0 120 120" aria-label="HOT 스포츠 쇼츠모음"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>HOT 스포츠 <i>쇼츠</i></b></div>
+    <div class="brand" role="button" tabindex="0" aria-label="홈으로"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>HOT 스포츠 <i>쇼츠</i></b></div>
     <button class="iconbtn" id="searchBtn" title="검색" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></button>
     <button class="iconbtn" id="installBtn" hidden title="홈 화면에 추가" aria-label="홈 화면에 추가"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg></button>
     <button class="iconbtn" id="reloadBtn" title="새로고침" aria-label="새로고침"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></button>
@@ -103,6 +120,9 @@
   <div class="hm-hero"><div class="hm-logo"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg></div><h1>HOT 스포츠 <b>쇼츠</b></h1><p>매일 인기 하이라이트를 한 곳에서</p></div>
   <input id="homeSearch" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민)" autocomplete="off" />
   <button class="hm-cta" data-filter="all">▶ 전체 영상 보기</button>
+  <div class="hm-sec" id="trendSec" hidden>🔥 지금 인기</div>
+  <div class="hm-trend" id="hmTrend" hidden></div>
+  <div class="hm-sec">종목별 보기</div>
   <div class="hm-grid">
     <button class="hm-cat" data-filter="latest">🗓️ 최신</button><button class="hm-cat" data-filter="saved">❤️ 관심</button><button class="hm-cat" data-filter="worldcup">🏆 월드컵</button>
     <button class="hm-cat" data-filter="kor">🇰🇷 한국</button><button class="hm-cat" data-filter="soccer">⚽ 축구</button><button class="hm-cat" data-filter="baseball">⚾ 야구</button>
@@ -114,16 +134,22 @@
 <button class="nav up" id="navUp" aria-label="이전 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 <button class="nav down" id="navDn" aria-label="다음 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
 <div id="empty"><div class="ic">🦊</div><b>여기에는 아직 영상이 없어요</b><p>다른 탭을 눌러보거나, 잠시 후 다시 확인해 주세요.</p></div>
+<div id="err"><div class="ic">📡</div><b>잠깐, 연결을 확인해 주세요</b><p>영상 목록을 불러오지 못했어요.</p><button class="eb" id="errRetry">다시 시도</button></div>
 <script>
 const LOGO='<svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg>';
 const SVG_HEART='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+const SVG_SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>';
+const SVG_SND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const FEED=document.getElementById('feed'), CHIPS=document.getElementById('chips'), HOME=document.getElementById('home');
-let ALL=[], list=[], activeFilter='all', searchQ='';
+const IOS=/iP(hone|od|ad)/.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Macintosh/.test(navigator.userAgent));
+let ALL=[], list=[], activeFilter='all', searchQ='', activeSlide=null, activeTimer=null;
 let saved={}; try{ saved=JSON.parse(localStorage.getItem('hot_saved')||'{}'); }catch(e){}
-function isSaved(id){return !!saved[id];} function toggleSaved(id){ if(saved[id])delete saved[id]; else saved[id]=1; try{localStorage.setItem('hot_saved',JSON.stringify(saved));}catch(e){} }
+function isSaved(id){return !!saved[id];}
+function toggleSaved(id){ if(saved[id])delete saved[id]; else saved[id]=1; try{localStorage.setItem('hot_saved',JSON.stringify(saved));}catch(e){} }
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
-function thumb(id){ return 'https://i.ytimg.com/vi/'+id+'/hqdefault.jpg'; }
 function fmtV(v){ v=+v||0; return v>=10000?(v/10000).toFixed(1)+'만':v>=1000?(v/1000).toFixed(1)+'천':String(v); }
+function ytThumbFb(img){ const id=img.dataset.id, s=img.dataset.s||'max'; if(s==='max'){img.dataset.s='sd';img.src='https://i.ytimg.com/vi/'+id+'/sddefault.jpg';} else if(s==='sd'){img.dataset.s='hq';img.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';} }
+window.ytThumbFb=ytThumbFb;
 function computeList(){ let a=ALL.filter(g=>g.youtubeId);
   if(activeFilter==='search'){ const q=(searchQ||'').trim().toLowerCase(); if(q) a=a.filter(g=>((g.title+' '+g.match+' '+g.channel).toLowerCase().includes(q))); }
   else if(activeFilter==='saved'){ a=a.filter(g=>isSaved(g.youtubeId)); }
@@ -131,30 +157,59 @@ function computeList(){ let a=ALL.filter(g=>g.youtubeId);
   else if(activeFilter==='kor'){ a=a.filter(g=>(g.tags||[]).includes('kor')); }
   else if(activeFilter!=='all'){ a=a.filter(g=>g.league===activeFilter); }
   return a; }
-function slideHTML(g){ const id=g.youtubeId,t=thumb(id),vw=g.views?('<span class="vw">조회 '+fmtV(g.views)+'</span>'):'';
+function slideHTML(g){ const id=g.youtubeId, vw=g.views?('<span class="vw">조회 '+fmtV(g.views)+'</span>'):'';
   return '<section class="slide" data-id="'+id+'">'
     + '<div class="bg"></div>'
-    + '<div class="stage"><div class="mount"></div>'
-    +   '<button class="cue" aria-label="재생" style="background-image:linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.55)),url(\''+t+'\')">'+LOGO+'<b>재생</b></button></div>'
-    + '<div class="acts"><button class="act like'+(isSaved(id)?' on':'')+'" data-id="'+id+'" aria-label="관심">'+SVG_HEART+'<span class="cnt">관심</span></button></div>'
-    + '<div class="wm">'+LOGO+'</div>'
+    + '<div class="stage"><div class="mount"></div><div class="spin" hidden></div>'
+    +   '<button class="cue" aria-label="'+esc(g.title)+' 재생"><img class="thumb" loading="lazy" data-id="'+id+'" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" onerror="ytThumbFb(this)" alt=""><span class="scrim">'+LOGO+'<b>재생</b></span></button>'
+    +   '<button class="sndpill" hidden>'+SVG_SND+'소리 켜기</button></div>'
+    + '<div class="acts"><button class="act like'+(isSaved(id)?' on':'')+'" data-id="'+id+'" aria-label="관심 저장">'+SVG_HEART+'<span class="cnt">관심</span></button>'
+    +   '<button class="act share" data-id="'+id+'" data-title="'+esc(g.title)+'" aria-label="공유">'+SVG_SHARE+'<span class="cnt">공유</span></button></div>'
     + '<div class="cap"><span class="lg">'+esc(g.match)+'</span>'+vw+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span></div>'
     + '</section>'; }
-function buildFeed(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML=''); list=computeList();
+function endHTML(){ return '<section class="endcard"><div>'+LOGO+'</div><b>여기까지 다 보셨어요</b><p>처음부터 다시 보거나 다른 종목을 골라보세요</p><div><button class="eb pri" id="endTop">맨 위로</button><button class="eb" id="endHome">다른 종목 보기</button></div></section>'; }
+function buildFeed(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML=''); activeSlide=null; list=computeList();
   document.getElementById('empty').classList.toggle('show', list.length===0);
-  FEED.innerHTML=list.map(slideHTML).join(''); FEED.scrollTop=0;
-  FEED.querySelectorAll('.slide').forEach(s=>io.observe(s)); }
-/* 스크롤 밖으로 나가면 영상 정리(소리 멈춤) */
-const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(!e.isIntersecting){ const m=e.target.querySelector('.mount'); if(m&&m.firstChild){ m.innerHTML=''; const c=e.target.querySelector('.cue'); if(c)c.hidden=false; } } }); },{root:FEED,threshold:0.2});
-/* 라이트 임베드: 탭하면 그때 iframe 생성(사용자 동작=어디서나 확실히 재생) */
-function play(slide){ const id=slide.dataset.id, host=slide.querySelector('.mount'); if(!host||host.firstChild) return;
+  FEED.innerHTML=list.map(slideHTML).join('') + (list.length?endHTML():''); FEED.scrollTop=0;
+  FEED.querySelectorAll('.slide').forEach(s=>io.observe(s));
+  const et=document.getElementById('endTop'); if(et)et.onclick=()=>FEED.scrollTo({top:0,behavior:'smooth'});
+  const eh=document.getElementById('endHome'); if(eh)eh.onclick=showHome; }
+/* 재생 (라이트 임베드: API 없음) */
+function play(slide, muted){ const id=slide.dataset.id, host=slide.querySelector('.mount'); if(!host)return;
+  host.innerHTML='';
+  const spin=slide.querySelector('.spin'); if(spin)spin.hidden=false;
   const ifr=document.createElement('iframe');
   ifr.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; ifr.setAttribute('allowfullscreen',''); ifr.setAttribute('playsinline','1');
-  ifr.src='https://www.youtube.com/embed/'+id+'?autoplay=1&playsinline=1&rel=0&modestbranding=1';
-  host.appendChild(ifr); const c=slide.querySelector('.cue'); if(c)c.hidden=true; }
-FEED.addEventListener('click',e=>{ const c=e.target.closest('.cue'); if(c){ play(c.closest('.slide')); return; }
-  const a=e.target.closest('.act.like'); if(a){ const id=a.dataset.id; toggleSaved(id); a.classList.toggle('on',isSaved(id)); return; }
+  ifr.src='https://www.youtube.com/embed/'+id+'?autoplay=1&playsinline=1&rel=0&modestbranding=1'+(muted?'&mute=1':'');
+  ifr.addEventListener('load',()=>{ if(spin)spin.hidden=true; });
+  host.appendChild(ifr);
+  slide.querySelector('.cue').hidden=true;
+  const pill=slide.querySelector('.sndpill'); if(pill)pill.hidden=!muted; }
+function teardown(slide){ const h=slide.querySelector('.mount'); if(h)h.innerHTML='';
+  const c=slide.querySelector('.cue'); if(c)c.hidden=false;
+  const p=slide.querySelector('.sndpill'); if(p)p.hidden=true;
+  const s=slide.querySelector('.spin'); if(s)s.hidden=true; }
+/* 활성 슬라이드 추적: 비iOS는 무음 자동재생, iOS는 포스터(탭 재생) */
+const io=new IntersectionObserver(es=>{ es.forEach(e=>{
+    if(!e.target.classList.contains('slide')) return;
+    if(e.isIntersecting && e.intersectionRatio>=0.6){ setActive(e.target); }
+    else if(!e.isIntersecting){ teardown(e.target); }
+  }); },{root:FEED,threshold:[0,0.6,1]});
+function setActive(slide){ if(slide===activeSlide)return; activeSlide=slide; clearTimeout(activeTimer);
+  if(!IOS){ activeTimer=setTimeout(()=>{ if(activeSlide===slide && !slide.querySelector('.mount').firstChild) play(slide,true); },180); } }
+/* 피드 클릭 */
+FEED.addEventListener('click',e=>{
+  const pill=e.target.closest('.sndpill'); if(pill){ play(pill.closest('.slide'),false); return; }
+  const cue=e.target.closest('.cue'); if(cue){ play(cue.closest('.slide'),false); return; }
+  const lk=e.target.closest('.act.like'); if(lk){ const id=lk.dataset.id; toggleSaved(id); lk.classList.toggle('on',isSaved(id)); return; }
+  const sh=e.target.closest('.act.share'); if(sh){ shareVideo(sh.dataset.id, sh.dataset.title); return; }
   const tt=e.target.closest('.cap .ttl'); if(tt){ tt.classList.toggle('expanded'); } });
+function shareVideo(id,title){ const url='https://youtu.be/'+id;
+  if(navigator.share){ navigator.share({title:title||'스포츠 쇼츠',url}).catch(()=>{}); }
+  else if(navigator.clipboard){ navigator.clipboard.writeText(url).then(()=>toast('링크를 복사했어요')); }
+  else { toast(url); } }
+let toastT=null;
+function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:99;background:rgba(0,0,0,.82);color:#fff;font-size:13px;font-weight:700;padding:10px 16px;border-radius:999px;pointer-events:none;transition:opacity .25s'; document.body.appendChild(t);} t.textContent=msg; t.style.opacity='1'; clearTimeout(toastT); toastT=setTimeout(()=>t.style.opacity='0',1800); }
 /* 탭 */
 CHIPS.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c)return; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); c.setAttribute('aria-pressed','true'); activeFilter=c.dataset.filter; buildFeed(); });
 function updateChips(){ const cnt={}; ALL.forEach(g=>{ cnt[g.league]=(cnt[g.league]||0)+1; if((g.tags||[]).includes('kor'))cnt._kor=(cnt._kor||0)+1; });
@@ -164,26 +219,36 @@ const searchBtn=document.getElementById('searchBtn'), searchRow=document.getElem
 searchBtn.addEventListener('click',()=>{ const wasHidden=searchRow.hidden; searchRow.hidden=!wasHidden; if(wasHidden){ searchInput.focus(); } else { searchInput.value=''; searchQ=''; if(activeFilter==='search'){ activeFilter='all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); } } });
 searchInput.addEventListener('input',()=>{ searchQ=searchInput.value; activeFilter='search'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); });
 /* 홈 */
-function showHome(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML=''); HOME.hidden=false; HOME.scrollTop=0; }
+function showHome(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML=''); activeSlide=null; HOME.hidden=false; HOME.scrollTop=0; }
 function openFeed(filter){ HOME.hidden=true; activeFilter=filter||'all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter===activeFilter?'true':'false')); buildFeed(); }
-document.querySelector('.brand').addEventListener('click',showHome);
+function openAt(id){ HOME.hidden=true; activeFilter='all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); requestAnimationFrame(()=>{ const s=[...FEED.querySelectorAll('.slide')].find(x=>x.dataset.id===id); if(s)s.scrollIntoView(); }); }
+const brand=document.querySelector('.brand');
+brand.addEventListener('click',showHome); brand.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();showHome();} });
 HOME.querySelectorAll('.hm-cat,.hm-cta').forEach(b=>b.addEventListener('click',()=>openFeed(b.dataset.filter)));
+document.getElementById('hmTrend').addEventListener('click',e=>{ const c=e.target.closest('.tcard'); if(c)openAt(c.dataset.id); });
 const homeSearch=document.getElementById('homeSearch');
 homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
+function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>((b.short?1:0)-(a.short?1:0))||((b.views||0)-(a.views||0))).slice(0,6);
+  if(!top.length)return; const el=document.getElementById('hmTrend');
+  el.innerHTML=top.map(g=>'<button class="tcard" data-id="'+g.youtubeId+'"><img loading="lazy" data-id="'+g.youtubeId+'" src="https://i.ytimg.com/vi/'+g.youtubeId+'/hqdefault.jpg" alt=""><span>'+esc(g.title)+'</span></button>').join('');
+  el.hidden=false; document.getElementById('trendSec').hidden=false; }
 /* 이동/키보드 */
 function goNext(){ FEED.scrollBy({top:FEED.clientHeight,behavior:'smooth'}); }
 function goPrev(){ FEED.scrollBy({top:-FEED.clientHeight,behavior:'smooth'}); }
 document.getElementById('navUp').addEventListener('click',goPrev);
 document.getElementById('navDn').addEventListener('click',goNext);
-document.addEventListener('keydown',e=>{ if(e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();goNext();} else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();goPrev();} });
-/* 새로고침 */
+document.addEventListener('keydown',e=>{ if(HOME.hidden===false)return; if(e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();goNext();} else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();goPrev();} });
+/* 새로고침/설치 */
 document.getElementById('reloadBtn').addEventListener('click',()=>{ location.href=location.pathname+'?r='+Date.now(); });
-/* 설치 */
 let deferred=null;
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; document.getElementById('installBtn').hidden=false; });
 document.getElementById('installBtn').addEventListener('click',async()=>{ if(!deferred)return; deferred.prompt(); await deferred.userChoice; deferred=null; document.getElementById('installBtn').hidden=true; });
+document.getElementById('errRetry').addEventListener('click',load);
 /* 로드 */
-async function load(){ try{ const r=await fetch('data.json?_='+Date.now()); if(!r.ok)throw 0; ALL=(await r.json())||[]; }catch(e){ ALL=[]; } updateChips(); buildFeed(); }
+async function load(){ document.getElementById('err').classList.remove('show');
+  try{ const r=await fetch('data.json?_='+Date.now()); if(!r.ok)throw 0; ALL=(await r.json())||[]; }
+  catch(e){ ALL=[]; document.getElementById('err').classList.add('show'); }
+  updateChips(); buildTrending(); buildFeed(); }
 load();
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
 </script>

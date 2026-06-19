@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-누드TV 스포츠 — 골/하이라이트 자동 수집기 (v2)
+HOT 스포츠 쇼츠 — 골/하이라이트 자동 수집기 (v3)
 - 한국 방송사/공식 채널 + 쿠팡플레이·SPOTV + 해외 공식 채널의 유튜브 RSS를 읽어
   '골/하이라이트'만 추려 data.json 으로 저장. 쇼츠·일반영상 모두 포함.
 - 임베드 막힌 영상은 화면(index.html)에서 자동으로 걸러지므로 여기선 '넓게' 모읍니다.
 - 채널을 더 넣거나 거르는 단어를 고치려면 아래 CHANNELS / 단어 목록만 수정하세요.
 """
-import urllib.request, re, json, html, sys
+import urllib.request, urllib.error, re, json, html, sys, concurrent.futures
 
 # ── 통과 단어(하나는 있어야 통과) / 제외 단어(있으면 탈락) ──
 GOOD_KO = ["하이라이트","골","골모음","골 모음","골장면","골 장면","득점","멀티골","원더골",
@@ -106,6 +106,9 @@ CHANNELS = [
   ("EPL","UCG5qGWdu8nIRZqJ_GgDwQ-w","soccer",False,False),
   ("MLB","UCoLrcjPV5PbUrUyXq5mjc_A","baseball",False,False),
   ("NBA","UCWJ2lWNubArHWmf3FIHbfcQ","basketball",False,False),
+  ("Volleyball World","UCNMg6XDhRZI2QzL4pWOvP_w","volleyball",False,True),
+  ("World Athletics","UCQk7fWv15ChjMJLCRVmtApw","athletics",False,True),
+  ("FIBA Basketball","UCtInrnU3QbWqFGsdKT1GZtg","basketball",False,True),
 ]
 
 SPORT_LABEL={"worldcup":"월드컵","soccer":"축구","baseball":"야구","basketball":"농구","volleyball":"배구","mma":"격투기","athletics":"육상","esports":"LOL","etc":"스포츠"}
@@ -115,6 +118,35 @@ UA={"User-Agent":"Mozilla/5.0 (compatible; NudeSportsBot/1.0)","Accept-Language"
 def fetch(url):
     with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
         return r.read().decode("utf-8","replace")
+
+def embeddable(vid):
+    """유튜브 oEmbed로 임베드 가능여부 확인. 401(임베드불가)/404(삭제·비공개)면 제외, 그 외/오류는 안전하게 포함."""
+    u="https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v="+vid
+    try:
+        with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=6) as r:
+            return r.status==200
+    except urllib.error.HTTPError as e:
+        if e.code in (401,404): return False
+        return True
+    except Exception:
+        return True
+
+def drop_dead(items):
+    """죽은(임베드불가) 영상 제거. 과다제거(40% 미만 생존)면 비정상으로 보고 필터 건너뜀(안전)."""
+    ok={}
+    try:
+        with concurrent.futures.ThreadPoolExecutor(max_workers=16) as ex:
+            futs={ex.submit(embeddable,o["youtubeId"]):o for o in items}
+            for fut in concurrent.futures.as_completed(futs):
+                ok[futs[fut]["youtubeId"]]=fut.result()
+    except Exception as ex:
+        print(f"[경고] 임베드체크 실패 → 건너뜀: {ex}", file=sys.stderr); return items
+    alive=[o for o in items if ok.get(o["youtubeId"],True)]
+    if len(alive) >= max(1,int(len(items)*0.4)):
+        print(f"임베드체크: {len(items)}개 중 {len(items)-len(alive)}개 제거", file=sys.stderr)
+        return alive
+    print(f"[경고] 임베드체크 과다제거({len(alive)}/{len(items)}) → 건너뜀", file=sys.stderr)
+    return items
 
 def feed_entries(xml, source):
     for m in re.finditer(r"<entry>(.*?)</entry>", xml, re.S):
@@ -162,7 +194,7 @@ def main():
             if not trusted and not has(t, GOOD_KO+GOOD_EN) and not has(t, STAR_EN): continue   # 전용채널·빅네임은 통과단어 없어도 OK
             if has(t, NOISE): continue
             if not HANGUL.search(t):
-                if is_kor or not has(t, KOR_EN+STAR_EN): continue   # 해외: 한국선수·빅스타·빅매치만 영어제목 허용
+                if not trusted and (is_kor or not has(t, KOR_EN+STAR_EN)): continue   # 일반채널 해외: 한국선수·빅스타·빅매치만 / 전용채널은 면제
             if it["youtubeId"] in seen: continue
             seen.add(it["youtubeId"])
             sport=classify(t, default)
@@ -173,12 +205,16 @@ def main():
             it["kor_src"]=is_kor
             out.append(it)
     out.sort(key=lambda x:(1 if x.get("short") else 0, x.get("views",0)), reverse=True)   # 쇼츠 우선 + 인기순
-    capped=[]; per={}
+    out=drop_dead(out)   # 죽은(임베드불가) 영상 사전 제거
+    capped=[]; per={}; perns={}
     for o in out:
         k=o["league"]
-        if per.get(k,0)>=30: continue          # 종목별 상위 30개까지
+        if per.get(k,0)>=30: continue                 # 종목별 상위 30개까지
+        if not o.get("short"):
+            if perns.get(k,0)>=5: continue            # 가로(롱폼)은 종목별 최대 5개 → 피드는 세로 쇼츠 위주
+            perns[k]=perns.get(k,0)+1
         per[k]=per.get(k,0)+1; capped.append(o)
-    out=capped[:180]   # 종목별 30개씩 유지(전체 상한만 넉넉히)
+    out=capped[:180]
     with open("data.json","w",encoding="utf-8") as f:
         json.dump(out,f,ensure_ascii=False,indent=1)
     by={}
