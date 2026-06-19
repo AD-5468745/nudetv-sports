@@ -82,7 +82,8 @@
     padding:18px 14px calc(env(safe-area-inset-bottom) + 16px);
     background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,.3) 60%,transparent)}
   .cap .lg{display:inline-block;background:rgba(31,168,92,.92);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;margin-bottom:7px}
-  .cap .ttl{font-size:14px;line-height:1.4;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .cap .ttl{font-size:14px;line-height:1.4;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;pointer-events:auto;cursor:pointer}
+  .cap .ttl.expanded{-webkit-line-clamp:unset;max-height:44vh;overflow:auto}
   .cap .ch{display:block;margin-top:4px;color:rgba(255,255,255,.6);font-size:11px}
 
   /* 하단 진행바 */
@@ -230,6 +231,7 @@ function tick(){
   prevActive=activeId;
   const p=players[activeId], slide=FEED.querySelector('.slide[data-id="'+activeId+'"]'); if(!p||!slide) return;
   let st=-1,ct=0,mu=true,dur=0; try{ st=p.getPlayerState(); ct=p.getCurrentTime()||0; mu=p.isMuted(); dur=p.getDuration()||0; }catch(e){ return; }
+  if(dur>0 && dur>600){ if(!slide._long){ slide._long=true; blockId(activeId); dropSlide(slide); } return; }   // 10분 초과(롱폼)는 자동 제외
   const fill=document.getElementById('pbarFill'); if(fill) fill.style.width = dur>0?Math.min(100,(ct/dur)*100)+'%':'0%';
   if(st===0){ if(!slide._end){ slide._end=true; goNext(); } return; }       // 끝나면 다음
   const advancing = ct>lastT+0.05; lastT=ct;
@@ -243,6 +245,9 @@ setInterval(tick,350);
 FEED.addEventListener('click',e=>{ const pc=e.target.closest('.cue.play'), sc=e.target.closest('.cue.snd'); if(!pc&&!sc)return;
   const slide=(pc||sc).closest('.slide'),id=slide.dataset.id,p=players[id]; if(!p)return;
   try{ p.unMute(); p.setVolume(100); soundOn=true; persistSound(); updateHeaderSound(); if(pc)p.playVideo(); }catch(e2){} });
+
+/* 제목 전체보기(탭하여 펼치기) */
+FEED.addEventListener('click',e=>{ const tt=e.target.closest('.cap .ttl'); if(tt) tt.classList.toggle('expanded'); });
 
 /* 더블탭 5초 */
 let dtTap=0,dtEl=null;
