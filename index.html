@@ -167,7 +167,7 @@ function setActive(slide){ const id=slide.dataset.id; if(id===activeId) return;
   Object.keys(players).forEach(pid=>{ if(!near.has(pid)) teardown(pid); });
   neighbors(slide).forEach(mount);
   Object.keys(players).forEach(pid=>{ const p=players[pid]; try{ if(pid===id){ applySound(p); p.playVideo&&p.playVideo(); } else { p.pauseVideo&&p.pauseVideo(); } }catch(e){} });
-  clearTimeout(slide._st); slide._st=setTimeout(()=>{ if(activeId===id && !slide.classList.contains('played')){ blockId(id); dropSlide(slide); } },5000); }
+  clearTimeout(slide._st); slide._st=setTimeout(()=>{ if(activeId===id && !slide.classList.contains('played')){ let st=-1; try{st=players[id].getPlayerState();}catch(e){} if(st!==1){ blockId(id); dropSlide(slide); } } },10000); }   // 10초 안에 재생 못하면(죽은 영상) 자동 건너뛰기
 function applySound(p){ try{ soundOn?(p.unMute(),p.setVolume(100)):p.mute(); }catch(e){} }
 function mount(slide){ const id=slide.dataset.id; if(players[id])return; const host=slide.querySelector('.mount'); if(!host)return;
   whenYT(()=>{ if(players[id]||!document.body.contains(slide))return; const d=document.createElement('div'); host.appendChild(d);
