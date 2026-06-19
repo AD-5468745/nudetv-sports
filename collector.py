@@ -100,6 +100,8 @@ def has(text, words):
     t=text.lower()
     return any(w.lower() in t for w in words)
 
+YOUTH = ["중고","중학","고등","고교","u20","u18","u16","u14","꿈나무","유소년","학생부","초등","종별","주니어","생활체육","clubs"]
+
 def classify(title, default):
     if has(title, SPORT_WORDS[0][1]): return "worldcup"
     if default!="auto": return default
@@ -126,6 +128,7 @@ def main():
             if it["youtubeId"] in seen: continue
             seen.add(it["youtubeId"])
             sport=classify(t, default)
+            if sport=="athletics" and has(t, YOUTH): continue   # 육상은 성인부만
             it["league"]=sport
             it["match"]=parse_match(t, SPORT_LABEL.get(sport,"경기"))
             it["tags"]=["kor"] if has(t, KOR) else []
