@@ -140,11 +140,12 @@
   .stage{flex:1;display:grid;place-items:center;padding:0 10px}
   .frame{position:relative;width:100%;max-width:min(420px,calc((100dvh - 200px) * 9 / 16));aspect-ratio:9/16;border-radius:18px;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,.12)}
   .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .frame #pSwipe{position:absolute;inset:0;z-index:4;background:transparent;touch-action:none;-webkit-tap-highlight-color:transparent}
   .frame .cta-wrap{position:absolute;top:10px;right:10px;z-index:6;display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:250px}
   .frame .cta-wrap a{display:flex;align-items:center;justify-content:center;gap:4px;background:linear-gradient(135deg,var(--green-soft),var(--green));color:#fff;font-size:11px;font-weight:800;padding:7px 10px;border-radius:999px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,.4);text-shadow:0 1px 2px rgba(0,0,0,.35);white-space:nowrap}
   .frame .cta-wrap a:active{transform:scale(.95)}
   .frame .cta-wrap[hidden]{display:none}
-  .frame .blocked{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:#11201C;color:#fff}
+  .frame .blocked{position:absolute;inset:0;z-index:6;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:#11201C;color:#fff}
   .frame .blocked.on{display:flex}
   .frame .blocked .b-ico{font-size:32px}
   .frame .blocked p{font-size:13px;color:rgba(255,255,255,.65);line-height:1.6}
@@ -213,6 +214,7 @@
     <div class="stage">
       <div class="frame">
         <div id="pMount"></div>
+        <div id="pSwipe" aria-hidden="true"></div>
         <div class="blocked" id="pBlocked">
           <div class="b-ico" aria-hidden="true">🔒</div>
           <p>이 영상은 퍼가기가 막혀 있어요.<br />공식 채널에서 바로 볼 수 있습니다.</p>
@@ -492,6 +494,22 @@ grid.addEventListener('keydown', e=>{ if((e.key==='Enter'||e.key===' ')&&e.targe
 document.getElementById('pClose').addEventListener('click', closePlayer);
 document.getElementById('pPrev').addEventListener('click', ()=>openPlayer(pIndex-1));
 document.getElementById('pNext').addEventListener('click', ()=>openPlayer(pIndex+1));
+
+/* 세로 스와이프: 위로=다음 쇼츠, 아래로=이전 쇼츠 / 탭=재생·정지 */
+function playerNext(){ if(pIndex < view.length-1) openPlayer(pIndex+1); }
+function playerPrev(){ if(pIndex > 0) openPlayer(pIndex-1); }
+function togglePlay(){ if(ytPlayer && ytPlayer.getPlayerState){ ytPlayer.getPlayerState()===1 ? ytPlayer.pauseVideo() : ytPlayer.playVideo(); } }
+(function(){
+  const sw = document.getElementById('pSwipe');
+  let sx=0, sy=0, st=0;
+  sw.addEventListener('touchstart', e=>{ const t=e.changedTouches[0]; sx=t.clientX; sy=t.clientY; st=Date.now(); }, {passive:true});
+  sw.addEventListener('touchend', e=>{
+    const t=e.changedTouches[0];
+    const dx=t.clientX-sx, dy=t.clientY-sy, adx=Math.abs(dx), ady=Math.abs(dy), dt=Date.now()-st;
+    if(adx<30 && ady<30 && dt<320){ togglePlay(); return; }   // 탭
+    if(ady>adx && ady>45){ dy<0 ? playerNext() : playerPrev(); }  // 세로 스와이프
+  }, {passive:true});
+})();
 player.addEventListener('click', e=>{ if(e.target===player) closePlayer(); });
 document.addEventListener('keydown', e=>{ if(e.key==='Escape'&&player.classList.contains('open')) closePlayer(); });
 
