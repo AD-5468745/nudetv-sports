@@ -55,6 +55,9 @@
 
   .cue.snd{position:absolute;z-index:6;border:0;cursor:pointer;font-family:inherit;bottom:calc(env(safe-area-inset-bottom) + 96px);left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:13px;font-weight:800;padding:10px 16px;border-radius:999px;display:flex;gap:6px;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.4);animation:cuePulse 1.8s infinite}
   .cue.snd[hidden]{display:none} .cue.snd svg{width:16px;height:16px}
+  .cue.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:96px;height:96px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;z-index:6;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .cue.play[hidden]{display:none}
+  .cue.play svg{width:50px;height:50px} .cue.play b{font-size:11px;font-weight:800;opacity:.95}
   @keyframes cuePulse{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.05)}}
 
   /* 우측 액션바(관심) */
@@ -160,6 +163,7 @@ function slideHTML(g){ const id=g.youtubeId,t=thumb(id),vw=g.views?('<span class
     + '<div class="stage"><div class="thumb" style="background-image:url(\''+t+'\')"></div><div class="spin"></div><div class="mount"></div>'
     +   '<div class="seek l" data-d="-5"></div><div class="seek r" data-d="5"></div>'
     +   '<div class="dtag l">« 5초</div><div class="dtag r">5초 »</div>'
+    +   '<button class="cue play" hidden aria-label="재생"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>재생</b></button>'
     +   '<button class="cue snd" hidden aria-label="소리 켜기">'+SVG_SND_S+'소리 켜기</button></div>'
     + '<div class="acts"><button class="act like'+(isSaved(id)?' on':'')+'" data-id="'+id+'" aria-label="관심">'+SVG_HEART+'<span class="cnt">관심</span></button></div>'
     + '<div class="cap"><span class="lg">'+esc(g.match)+'</span>'+vw+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span></div>'
@@ -179,12 +183,15 @@ function setActive(slide){ const id=slide.dataset.id; if(id===activeId) return;
   Object.keys(players).forEach(pid=>{ if(!near.has(pid)) teardown(pid); });
   neighbors(slide).forEach(mount);
   Object.keys(players).forEach(pid=>{ const p=players[pid]; try{ if(pid===id){ applySound(p); p.playVideo&&p.playVideo(); } else { p.pauseVideo&&p.pauseVideo(); } }catch(e){} });
-  clearTimeout(slide._st); slide._st=setTimeout(()=>stuckCheck(slide,id,0),8000); }
-function stuckCheck(slide,id,tries){ if(activeId!==id || slide.classList.contains('played')) return;
+  clearTimeout(slide._st); slide._tries=0; setCuePlay(slide,false); slide._st=setTimeout(()=>cueCheck(slide,id),2200); }
+function setCuePlay(slide,show){ const p=slide.querySelector('.cue.play'); if(p) p.hidden=!show; }
+function cueCheck(slide,id){ if(activeId!==id || slide.classList.contains('played')) return;
   let st=-1; try{ st=players[id].getPlayerState(); }catch(e){}
-  if(st===1) return;
-  if(st===3 && tries<2){ slide._st=setTimeout(()=>stuckCheck(slide,id,tries+1),8000); return; }
-  blockId(id); dropSlide(slide); }
+  if(st===1) return;                                  // 재생중이면 OK
+  slide._tries=(slide._tries||0)+1;
+  if(st===3){ if(slide._tries>=8){ blockId(id); dropSlide(slide); return; } slide._st=setTimeout(()=>cueCheck(slide,id),2500); return; }  // 너무 오래 버퍼링=죽은영상→스킵
+  setCuePlay(slide,true);                              // 미시작(자동재생 막힘)→ ▶버튼 표시(스킵 안 함)
+  if(slide._tries<6) slide._st=setTimeout(()=>cueCheck(slide,id),2500); }
 function applySound(p){ try{ soundOn?(p.unMute(),p.setVolume(100)):p.mute(); }catch(e){} }
 function mount(slide){ const id=slide.dataset.id; if(players[id])return; const host=slide.querySelector('.mount'); if(!host)return;
   whenYT(()=>{ if(players[id]||!document.body.contains(slide))return; const d=document.createElement('div'); host.appendChild(d);
@@ -193,10 +200,10 @@ function mount(slide){ const id=slide.dataset.id; if(players[id])return; const h
       events:{
         onReady:e=>{ try{ soundOn?e.target.unMute():e.target.mute(); if(id===activeId)e.target.playVideo(); }catch(_){}},
         onError:()=>{ blockId(id); dropSlide(slide); },
-        onStateChange:e=>{ const st=e.data; if(st===1){ markGood(id); slide.classList.add('playing','played'); clearTimeout(slide._st); } else if(st===0){ if(activeId===id) goNext(); } } } });
+        onStateChange:e=>{ const st=e.data; if(st===1){ markGood(id); slide.classList.add('playing','played'); clearTimeout(slide._st); setCuePlay(slide,false); } else if(st===0){ if(activeId===id) goNext(); } } } });
   }); }
 function teardown(id){ const p=players[id]; if(p){try{p.destroy();}catch(e){}} delete players[id];
-  const s=FEED.querySelector('.slide[data-id="'+id+'"]'); if(s){ clearTimeout(s._st); s.classList.remove('playing'); const m=s.querySelector('.mount'); if(m)m.innerHTML=''; const b=s.querySelector('.cue.snd'); if(b)b.hidden=true; } }
+  const s=FEED.querySelector('.slide[data-id="'+id+'"]'); if(s){ clearTimeout(s._st); s.classList.remove('playing'); const m=s.querySelector('.mount'); if(m)m.innerHTML=''; const b=s.querySelector('.cue.snd'); if(b)b.hidden=true; const pc=s.querySelector('.cue.play'); if(pc)pc.hidden=true; } }
 function dropSlide(slide){ const id=slide.dataset.id; teardown(id); const nxt=slide.nextElementSibling||slide.previousElementSibling; io.unobserve(slide); slide.remove();
   list=list.filter(g=>g.youtubeId!==id); document.getElementById('empty').classList.toggle('show', list.length===0);
   if(activeId===id){ activeId=null; if(nxt){ nxt.scrollIntoView(); setActive(nxt); } } }
@@ -217,6 +224,8 @@ setInterval(tick,500);
 FEED.addEventListener('click',e=>{ const tt=e.target.closest('.cap .ttl'); if(tt) tt.classList.toggle('expanded'); });
 /* 관심(♥) */
 FEED.addEventListener('click',e=>{ const a=e.target.closest('.act.like'); if(!a)return; const id=a.dataset.id; toggleSaved(id); a.classList.toggle('on',isSaved(id)); });
+/* 재생 버튼 탭(자동재생 막힘 시) */
+FEED.addEventListener('click',e=>{ const pc=e.target.closest('.cue.play'); if(!pc)return; const slide=pc.closest('.slide'),p=players[slide.dataset.id]; if(!p)return; soundOn=true; persistSound(); updateHeaderSound(); try{p.unMute();p.setVolume(100);p.playVideo();}catch(_){} setCuePlay(slide,false); });
 /* 소리 켜기 안내 탭 */
 FEED.addEventListener('click',e=>{ const sc=e.target.closest('.cue.snd'); if(!sc)return; const p=players[sc.closest('.slide').dataset.id];
   soundOn=true; persistSound(); updateHeaderSound(); if(p){ try{p.unMute();p.setVolume(100);p.playVideo();}catch(_){}} sc.hidden=true; });
