@@ -492,13 +492,18 @@ function openPlayer(i){
     ytPlayer = new YT.Player('ytmount', {
       host:'https://www.youtube-nocookie.com',
       videoId: g.youtubeId,
-      playerVars: { autoplay:1, mute:1, playsinline:1, rel:0, modestbranding:1 },
+      playerVars: { autoplay:1, playsinline:1, rel:0, modestbranding:1 },
       events: {
-        // 막힘(150/101/100 등) → 자물쇠 화면 대신 자동으로 다음 영상으로 건너뜀
+        // 소리 자동재생 시도 → 브라우저가 막으면 1.4초 뒤 음소거로라도 재생
+        onReady: ()=>{ setTimeout(()=>{ if(tok===playToken && ytPlayer){ try{ if(ytPlayer.getPlayerState()!==1){ ytPlayer.mute(); ytPlayer.playVideo(); } }catch(_){}}}, 1400); },
+        // 막힘(150/101/100 등) → 자물쇠 대신 자동으로 다음 영상
         onError: ()=>{ if(tok===playToken){ markBlocked(g.youtubeId); skipToNext(pIndex); } },
         onStateChange: (e)=>{ if(e.data===1||e.data===3){ markGood(g.youtubeId);
           const m=document.getElementById('pMute');
-          if(e.data===1){ if(wantSound){ try{ytPlayer.unMute();ytPlayer.setVolume(100);}catch(_){} if(m)m.hidden=true; } else if(m){ m.hidden=false; } }
+          if(e.data===1){ let muted=false; try{ muted=ytPlayer.isMuted(); }catch(_){}
+            if(muted && wantSound){ try{ ytPlayer.unMute(); ytPlayer.setVolume(100); muted=false; }catch(_){} }
+            if(m) m.hidden = !muted;   // 실제 음소거일 때만 "탭하면 소리" 안내
+          }
         } }
       }
     });
