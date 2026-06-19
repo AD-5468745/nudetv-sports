@@ -170,9 +170,10 @@
   <nav class="chips" id="chips" aria-label="종목 탭">
     <button class="chip" data-filter="all" aria-pressed="true">전체</button>
     <button class="chip kor" data-filter="kor" aria-pressed="false">🇰🇷 한국</button>
-    <button class="chip" data-filter="epl" aria-pressed="false">⚽ 축구</button>
-    <button class="chip" data-filter="mlb" aria-pressed="false">⚾ 야구</button>
-    <button class="chip" data-filter="nba" aria-pressed="false">🏀 농구</button>
+    <button class="chip" data-filter="soccer" aria-pressed="false">⚽ 축구</button>
+    <button class="chip" data-filter="baseball" aria-pressed="false">⚾ 야구</button>
+    <button class="chip" data-filter="basketball" aria-pressed="false">🏀 농구</button>
+    <button class="chip" data-filter="volleyball" aria-pressed="false">🏐 배구</button>
     <button class="chip" data-filter="worldcup" aria-pressed="false">🏆 월드컵</button>
   </nav>
 
@@ -218,11 +219,11 @@
    ============================================================ */
 const DEMO = [
   { league:"worldcup", match:"대한민국 vs 체코",        title:"이강인 환상 프리킥 결승골", youtubeId:"", channel:"KBS",  tags:["kor"], note:"데모" },
-  { league:"epl",      match:"Arsenal vs Chelsea",     title:"사카 원더골 하이라이트",     youtubeId:"", channel:"EPL",  tags:[],      note:"데모" },
-  { league:"mlb",      match:"Dodgers vs Padres",      title:"오타니 끝내기 홈런",         youtubeId:"", channel:"MLB",  tags:[],      note:"데모" },
-  { league:"nba",      match:"Lakers vs Celtics",      title:"르브론 버저비터",            youtubeId:"", channel:"NBA",  tags:[],      note:"데모" },
-  { league:"epl",      match:"Tottenham vs Liverpool", title:"손흥민 멀티골 폭발",         youtubeId:"", channel:"EPL",  tags:["kor"], note:"데모" },
-  { league:"mlb",      match:"Padres vs Giants",       title:"김하성 환상 호수비",         youtubeId:"", channel:"MLB",  tags:["kor"], note:"데모" },
+  { league:"soccer",      match:"Arsenal vs Chelsea",     title:"사카 원더골 하이라이트",     youtubeId:"", channel:"EPL",  tags:[],      note:"데모" },
+  { league:"baseball",      match:"Dodgers vs Padres",      title:"오타니 끝내기 홈런",         youtubeId:"", channel:"MLB",  tags:[],      note:"데모" },
+  { league:"basketball",      match:"Lakers vs Celtics",      title:"르브론 버저비터",            youtubeId:"", channel:"NBA",  tags:[],      note:"데모" },
+  { league:"soccer",      match:"Tottenham vs Liverpool", title:"손흥민 멀티골 폭발",         youtubeId:"", channel:"EPL",  tags:["kor"], note:"데모" },
+  { league:"baseball",      match:"Padres vs Giants",       title:"김하성 환상 호수비",         youtubeId:"", channel:"MLB",  tags:["kor"], note:"데모" },
 ];
 
 const grid = document.getElementById('grid');
