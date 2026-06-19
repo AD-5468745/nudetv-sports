@@ -6,7 +6,6 @@
 <title>HOT 스포츠 쇼츠모음</title>
 <meta name="theme-color" content="#0b1411" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.youtube.com https://s.ytimg.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; img-src 'self' https://i.ytimg.com data:; style-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; manifest-src 'self'" />
 <meta name="description" content="축구·야구·농구·격투기·LOL 인기 하이라이트 쇼츠 모음" />
 <meta property="og:type" content="website" /><meta property="og:title" content="HOT 스포츠 쇼츠모음" />
 <meta property="og:description" content="축구·야구·농구·격투기·LOL 인기 하이라이트를 쇼츠로 모아봤어요." />
@@ -28,18 +27,18 @@
   .brand svg{width:30px;height:30px;flex:none}
   .brand b{font-size:15px;font-weight:800;letter-spacing:-.2px;white-space:nowrap}
   .brand b i{color:var(--green-soft);font-style:normal}
-  .iconbtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff;cursor:pointer;backdrop-filter:blur(6px);display:grid;place-items:center}
+  .iconbtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:grid;place-items:center}
   .iconbtn svg{width:20px;height:20px} .iconbtn:active{transform:scale(.92)} .iconbtn[hidden]{display:none}
   @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(226,88,34,.5)}50%{box-shadow:0 0 0 9px rgba(226,88,34,0)}}
   .iconbtn.muted{animation:pulse 2s infinite;border-color:var(--accent)}
   #chips{display:flex;gap:7px;overflow-x:auto;margin:9px auto 0;max-width:760px;padding-bottom:2px;scrollbar-width:none;pointer-events:auto;-webkit-mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent);mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
   #chips::-webkit-scrollbar{display:none}
-  .chip{flex:none;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.34);color:#fff;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;backdrop-filter:blur(6px);transition:background .15s}
+  .chip{flex:none;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.34);color:#fff;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .15s}
   .chip[aria-pressed="true"]{background:var(--green);border-color:transparent}
 
-  #feed{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  #feed{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   #feed::-webkit-scrollbar{display:none}
-  .slide{position:relative;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
+  .slide{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
   .bg{position:absolute;inset:-8%;background-size:cover;background-position:center;filter:blur(28px) brightness(.45);transform:scale(1.15);z-index:0}
   .stage{position:relative;z-index:1;width:100%;height:100%;max-width:min(100%,480px);margin:0 auto;background:#000;overflow:hidden}
   .thumb{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .3s;z-index:1}
@@ -60,7 +59,7 @@
 
   /* 우측 액션바(관심) */
   .acts{position:absolute;right:8px;bottom:calc(env(safe-area-inset-bottom) + 150px);z-index:8;display:flex;flex-direction:column;align-items:center;gap:4px}
-  .act{width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(4px)}
+  .act{width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
   .act svg{width:26px;height:26px} .act:active{transform:scale(.9)}
   .act.on svg{fill:#ff3b55} .act.on{color:#ff3b55}
   .act .cnt{font-size:10px;font-weight:700;margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
@@ -77,7 +76,7 @@
   #searchRow input{width:100%;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;font-size:14px;outline:none}
   #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.16);z-index:28}
   #pbar i{display:block;height:100%;width:0;background:var(--accent)}
-  .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center;backdrop-filter:blur(6px)}
+  .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   .nav svg{width:20px;height:20px} .nav:active{transform:scale(.92)}
   .nav.up{top:calc(50% - 56px)} .nav.down{top:calc(50% + 10px)}
   @media (min-width:760px){ .nav{display:grid} }
@@ -249,7 +248,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='ArrowDown'||e.key==='PageDo
   else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();goPrev();}
   else if(e.key===' '){e.preventDefault();const p=players[activeId];if(p){try{p.getPlayerState()===1?p.pauseVideo():p.playVideo();}catch(_){}}}
   else if(e.key==='m'||e.key==='M'){toggleSound();}
-  else if(e.key==='f'||e.key==='F'){const s=FEED.querySelector('.slide[data-id="'+activeId+'"]');const ifr=s&&s.querySelector('iframe');if(ifr&&ifr.requestFullscreen)ifr.requestFullscreen().catch(()=>{});} });
+  else if(e.key==='f'||e.key==='F'){const s=FEED.querySelector('.slide[data-id="'+activeId+'"]');const ifr=s&&s.querySelector('iframe');if(ifr){ const rf=ifr.requestFullscreen||ifr.webkitRequestFullscreen||ifr.webkitEnterFullscreen; if(rf){ try{ const r=rf.call(ifr); if(r&&r.catch)r.catch(()=>{}); }catch(_){}} }} });
 document.getElementById('reloadBtn').addEventListener('click',()=>{ try{localStorage.removeItem(BKEY);}catch(e){} location.href=location.pathname+'?r='+Date.now(); });
 let deferred=null;
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; document.getElementById('installBtn').hidden=false; });
