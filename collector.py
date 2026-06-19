@@ -137,7 +137,7 @@ def main():
         k=o["league"]
         if per.get(k,0)>=30: continue          # 종목별 상위 30개까지
         per[k]=per.get(k,0)+1; capped.append(o)
-    out=capped[:90]
+    out=capped[:180]   # 종목별 30개씩 유지(전체 상한만 넉넉히)
     with open("data.json","w",encoding="utf-8") as f:
         json.dump(out,f,ensure_ascii=False,indent=1)
     by={}
