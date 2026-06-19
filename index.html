@@ -352,7 +352,18 @@ async function loadData(){
   }
 }
 
+function updateChips(){
+  const counts={};
+  rawGoals.forEach(g=>{ counts[g.league]=(counts[g.league]||0)+1; if(g.tags&&g.tags.includes("kor")) counts._kor=(counts._kor||0)+1; });
+  document.querySelectorAll(".chip").forEach(c=>{
+    const f=c.dataset.filter;
+    if(f==="all"){ c.style.display=""; return; }
+    const n = f==="kor" ? (counts._kor||0) : (counts[f]||0);
+    c.style.display = n>=3 ? "" : "none";   // 영상 3개 미만 탭은 자동 숨김
+  });
+}
 function render(){
+  updateChips();
   view = visible();
   if(mode!=='error') setStatus();
   if(view.length===0){
