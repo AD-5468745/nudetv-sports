@@ -47,26 +47,28 @@ KOR = ["대한민국","한국","korea","손흥민","heung-min","son heung","황�
        "한화","키움","kbl"]
 
 # ── 채널: (표시, 채널ID, 기본종목 or "auto", 한국채널여부) ──
+# (표시, 채널ID, 기본종목, 한국채널, 전용채널)  ※전용채널=True면 '하이라이트' 단어 없어도 그 종목 클립으로 받음
 CHANNELS = [
-  ("스브스스포츠","UCk4XjBsDuzItvsuVGiDdKqQ","auto",True),
-  ("SBS Sports","UCqsKWTIu7IhBjLFZS2s1ULQ","auto",True),
-  ("스탐","UCArK9MK34LsQzPJrl5TZmYA","auto",True),
-  ("MBC Sports+","UCMkrtzkegsLZJ1s6H7S0eKw","auto",True),
-  ("JTBC","UCTdZyOFVzontd9MZOJDg8Qw","worldcup",True),
-  ("KBS N SPORTS","UCdkrHEDb1xT3gts9lct12Ug","auto",True),
-  ("쿠팡플레이","UCnBht7BrOx-A328KFXgysqQ","auto",True),
-  ("SPOTV","UCtm_QoN2SIxwCE-59shX7Qg","auto",True),
-  ("KBO","UCoVz66yWHzVsXAFG8WhJK9g","baseball",True),
-  ("엠스플야구","UCDHIto3v5jKVLMaVlaMF-Gg","baseball",True),
-  ("K리그","UCYVxbD_KLbC39PPW9iTBcmQ","soccer",True),
-  ("K LEAGUE","UCak5ZEX4BjijJcf7fdppuIQ","soccer",True),
-  ("LCK","UCw1DsweY9b2AKGjV4kGJP1A","esports",True),
-  ("tvN SPORTS","UCtybqqaTj6Nx74Azdz1KrsA","auto",True),
-  ("대한육상연맹","UCJtsER5EcWP6w3DgcyP22Uw","athletics",True),
-  ("FIFA","UCpcTrCXblq78GZrTUTLWeBw","worldcup",False),
-  ("EPL","UCG5qGWdu8nIRZqJ_GgDwQ-w","soccer",False),
-  ("MLB","UCoLrcjPV5PbUrUyXq5mjc_A","baseball",False),
-  ("NBA","UCWJ2lWNubArHWmf3FIHbfcQ","basketball",False),
+  ("스브스스포츠","UCk4XjBsDuzItvsuVGiDdKqQ","auto",True,False),
+  ("SBS Sports","UCqsKWTIu7IhBjLFZS2s1ULQ","auto",True,False),
+  ("스탐","UCArK9MK34LsQzPJrl5TZmYA","auto",True,False),
+  ("MBC Sports+","UCMkrtzkegsLZJ1s6H7S0eKw","auto",True,False),
+  ("JTBC","UCTdZyOFVzontd9MZOJDg8Qw","worldcup",True,False),
+  ("KBS N SPORTS","UCdkrHEDb1xT3gts9lct12Ug","auto",True,False),
+  ("쿠팡플레이","UCnBht7BrOx-A328KFXgysqQ","auto",True,False),
+  ("SPOTV","UCtm_QoN2SIxwCE-59shX7Qg","auto",True,False),
+  ("KBO","UCoVz66yWHzVsXAFG8WhJK9g","baseball",True,True),
+  ("엠스플야구","UCDHIto3v5jKVLMaVlaMF-Gg","baseball",True,True),
+  ("K리그","UCYVxbD_KLbC39PPW9iTBcmQ","soccer",True,True),
+  ("K LEAGUE","UCak5ZEX4BjijJcf7fdppuIQ","soccer",True,True),
+  ("LCK","UCw1DsweY9b2AKGjV4kGJP1A","esports",True,True),
+  ("ROAD FC","UCQ2TX8Q2iVhXhJ0G3NuyEbA","mma",True,True),
+  ("tvN SPORTS","UCtybqqaTj6Nx74Azdz1KrsA","auto",True,False),
+  ("대한육상연맹","UCJtsER5EcWP6w3DgcyP22Uw","athletics",True,True),
+  ("FIFA","UCpcTrCXblq78GZrTUTLWeBw","worldcup",False,False),
+  ("EPL","UCG5qGWdu8nIRZqJ_GgDwQ-w","soccer",False,False),
+  ("MLB","UCoLrcjPV5PbUrUyXq5mjc_A","baseball",False,False),
+  ("NBA","UCWJ2lWNubArHWmf3FIHbfcQ","basketball",False,False),
 ]
 
 SPORT_LABEL={"worldcup":"월드컵","soccer":"축구","baseball":"야구","basketball":"농구","volleyball":"배구","mma":"격투기","athletics":"육상","esports":"LOL","etc":"스포츠"}
@@ -111,14 +113,14 @@ def parse_match(title, fallback):
 
 def main():
     seen,out=set(),[]
-    for src,cid,default,is_kor in CHANNELS:
+    for src,cid,default,is_kor,trusted in CHANNELS:
         url=f"https://www.youtube.com/feeds/videos.xml?channel_id={cid}"
         try: xml=fetch(url)
         except Exception as ex:
             print(f"[경고] {src} 읽기 실패: {ex}", file=sys.stderr); continue
         for it in feed_entries(xml, src):
             t=it["title"]
-            if not has(t, GOOD_KO+GOOD_EN): continue
+            if not trusted and not has(t, GOOD_KO+GOOD_EN): continue   # 전용채널은 통과단어 없어도 OK
             if has(t, NOISE): continue
             if not HANGUL.search(t): continue   # 제목에 한글 없으면 제외
             if it["youtubeId"] in seen: continue
