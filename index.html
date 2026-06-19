@@ -172,6 +172,7 @@ function buildFeed(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML='')
   document.getElementById('empty').classList.toggle('show', list.length===0);
   FEED.innerHTML=list.map(slideHTML).join('') + (list.length?endHTML():''); FEED.scrollTop=0;
   FEED.querySelectorAll('.slide').forEach(s=>io.observe(s));
+  if(list.length){ const f0=FEED.querySelector('.slide'); if(f0) setActive(f0); }   // 초기 슬라이드 자동재생 보장(IO 첫콜백 비율0 이슈 보완)
   const et=document.getElementById('endTop'); if(et)et.onclick=()=>FEED.scrollTo({top:0,behavior:'smooth'});
   const eh=document.getElementById('endHome'); if(eh)eh.onclick=showHome; }
 /* 재생 (라이트 임베드: API 없음) */
