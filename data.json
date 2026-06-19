@@ -5,7 +5,7 @@
   "published": "2026-06-17T19:06:39+00:00",
   "channel": "SPOTV",
   "short": true,
-  "views": 655383,
+  "views": 655972,
   "league": "baseball",
   "match": "야구",
   "tags": [
@@ -19,7 +19,7 @@
   "published": "2026-06-17T09:42:17+00:00",
   "channel": "EPL",
   "short": true,
-  "views": 518947,
+  "views": 597094,
   "league": "soccer",
   "match": "축구",
   "tags": [],
@@ -31,7 +31,7 @@
   "published": "2026-06-15T06:00:17+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 467200,
+  "views": 467938,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -43,7 +43,7 @@
   "published": "2026-06-15T05:30:08+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 386036,
+  "views": 388122,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -55,7 +55,7 @@
   "published": "2026-06-10T10:00:18+00:00",
   "channel": "ROAD FC",
   "short": true,
-  "views": 357618,
+  "views": 358192,
   "league": "mma",
   "match": "격투기",
   "tags": [],
@@ -67,7 +67,7 @@
   "published": "2026-06-15T09:00:02+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 356606,
+  "views": 357135,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -79,7 +79,7 @@
   "published": "2026-06-15T10:00:19+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 313403,
+  "views": 314395,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -91,7 +91,7 @@
   "published": "2026-06-16T05:00:21+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 257514,
+  "views": 260656,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -103,7 +103,7 @@
   "published": "2026-06-15T08:00:30+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 192125,
+  "views": 192741,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -115,7 +115,7 @@
   "published": "2026-06-15T12:00:29+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 139861,
+  "views": 140069,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -127,9 +127,21 @@
   "published": "2026-06-18T20:48:42+00:00",
   "channel": "NBA",
   "short": true,
-  "views": 113183,
+  "views": 120707,
   "league": "basketball",
   "match": "농구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "r2lgjIkBn68",
+  "title": "Genius setter move! 🧠🇯🇵 #VNL26 #volleyball #volleyballworld #japan #setter",
+  "published": "2026-06-18T03:00:17+00:00",
+  "channel": "Volleyball World",
+  "short": true,
+  "views": 112027,
+  "league": "volleyball",
+  "match": "배구",
   "tags": [],
   "kor_src": false
  },
@@ -139,7 +151,7 @@
   "published": "2026-06-17T15:00:30+00:00",
   "channel": "EPL",
   "short": true,
-  "views": 95894,
+  "views": 99062,
   "league": "worldcup",
   "match": "월드컵",
   "tags": [],
@@ -151,9 +163,21 @@
   "published": "2026-06-18T10:54:38+00:00",
   "channel": "EPL",
   "short": true,
-  "views": 86120,
+  "views": 88828,
   "league": "soccer",
   "match": "축구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "eh3KkmWXMyA",
+  "title": "Nishida 🇯🇵 DELIVERED 😈 #vnl26 #volleyballworld #japan",
+  "published": "2026-06-18T04:30:29+00:00",
+  "channel": "Volleyball World",
+  "short": true,
+  "views": 70396,
+  "league": "volleyball",
+  "match": "배구",
   "tags": [],
   "kor_src": false
  },
@@ -163,23 +187,11 @@
   "published": "2026-06-07T11:58:52+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 68106,
+  "views": 68134,
   "league": "soccer",
   "match": "축구",
   "tags": [],
   "kor_src": true
- },
- {
-  "youtubeId": "xy806WiYCfQ",
-  "title": "It’s officially Jalen Brunson’s city now 🗽🔑",
-  "published": "2026-06-18T17:45:34+00:00",
-  "channel": "NBA",
-  "short": true,
-  "views": 56799,
-  "league": "basketball",
-  "match": "농구",
-  "tags": [],
-  "kor_src": false
  },
  {
   "youtubeId": "_svq3afyD2I",
@@ -187,7 +199,7 @@
   "published": "2026-06-18T18:01:27+00:00",
   "channel": "NBA",
   "short": true,
-  "views": 39304,
+  "views": 40521,
   "league": "basketball",
   "match": "농구",
   "tags": [],
@@ -199,7 +211,7 @@
   "published": "2026-06-07T12:46:47+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 37703,
+  "views": 37719,
   "league": "soccer",
   "match": "축구",
   "tags": [],
@@ -223,23 +235,11 @@
   "published": "2026-06-18T08:00:04+00:00",
   "channel": "LCK",
   "short": true,
-  "views": 31777,
+  "views": 32312,
   "league": "esports",
   "match": "LOL",
   "tags": [],
   "kor_src": true
- },
- {
-  "youtubeId": "cTejCMI6L9s",
-  "title": "NYC was showing love to their NBA Finals MVP! 🏆",
-  "published": "2026-06-18T17:48:17+00:00",
-  "channel": "NBA",
-  "short": true,
-  "views": 29307,
-  "league": "basketball",
-  "match": "농구",
-  "tags": [],
-  "kor_src": false
  },
  {
   "youtubeId": "TklEOI63NXI",
@@ -247,7 +247,7 @@
   "published": "2026-06-19T12:43:11+00:00",
   "channel": "KBO",
   "short": true,
-  "views": 25595,
+  "views": 28271,
   "league": "baseball",
   "match": "야구",
   "tags": [],
@@ -259,9 +259,21 @@
   "published": "2026-06-11T10:15:07+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 25444,
+  "views": 25550,
   "league": "soccer",
   "match": "축구",
+  "tags": [],
+  "kor_src": true
+ },
+ {
+  "youtubeId": "oNKHKPuq9-4",
+  "title": "총알 같은 타구는 그대로 담장 밖으로☄️송찬의의 역전 투런 홈런!!",
+  "published": "2026-06-19T11:30:53+00:00",
+  "channel": "KBO",
+  "short": true,
+  "views": 24542,
+  "league": "baseball",
+  "match": "야구",
   "tags": [],
   "kor_src": true
  },
@@ -278,24 +290,12 @@
   "kor_src": true
  },
  {
-  "youtubeId": "oNKHKPuq9-4",
-  "title": "총알 같은 타구는 그대로 담장 밖으로☄️송찬의의 역전 투런 홈런!!",
-  "published": "2026-06-19T11:30:53+00:00",
-  "channel": "KBO",
-  "short": true,
-  "views": 23166,
-  "league": "baseball",
-  "match": "야구",
-  "tags": [],
-  "kor_src": true
- },
- {
   "youtubeId": "FnIhQf4aQsA",
   "title": "망설임 없이 원샷원킬로 해결!!! #전남 #윤민호",
   "published": "2026-06-07T11:20:45+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 21287,
+  "views": 21298,
   "league": "soccer",
   "match": "축구",
   "tags": [],
@@ -314,24 +314,12 @@
   "kor_src": true
  },
  {
-  "youtubeId": "d82sTIxyXTo",
-  "title": "땅을 치며 후회 기회를 주세요",
-  "published": "2026-06-10T09:30:09+00:00",
-  "channel": "ROAD FC",
-  "short": true,
-  "views": 20300,
-  "league": "mma",
-  "match": "격투기",
-  "tags": [],
-  "kor_src": true
- },
- {
   "youtubeId": "GCjO0cCcMvI",
   "title": "WNBA 한국인 최다 득점을 기록한 박지현 l WNBA l 미네소타 vs LA 스파크스",
   "published": "2026-06-18T06:33:41+00:00",
   "channel": "쿠팡플레이",
   "short": true,
-  "views": 20196,
+  "views": 20370,
   "league": "basketball",
   "match": "미네소타 vs LA",
   "tags": [
@@ -340,16 +328,40 @@
   "kor_src": true
  },
  {
+  "youtubeId": "d82sTIxyXTo",
+  "title": "땅을 치며 후회 기회를 주세요",
+  "published": "2026-06-10T09:30:09+00:00",
+  "channel": "ROAD FC",
+  "short": true,
+  "views": 20321,
+  "league": "mma",
+  "match": "격투기",
+  "tags": [],
+  "kor_src": true
+ },
+ {
   "youtubeId": "PS3FZZbOO-M",
   "title": "내가 본 여성부 경기중 1등",
   "published": "2026-06-01T07:44:43+00:00",
   "channel": "ROAD FC",
   "short": true,
-  "views": 19948,
+  "views": 19962,
   "league": "mma",
   "match": "격투기",
   "tags": [],
   "kor_src": true
+ },
+ {
+  "youtubeId": "gSV4YxQ5JJk",
+  "title": "Duplantis' world record that redefined pole vault at the 2025 #WorldAthleticsChamps 😮‍💨",
+  "published": "2026-06-17T09:52:56+00:00",
+  "channel": "World Athletics",
+  "short": true,
+  "views": 19750,
+  "league": "athletics",
+  "match": "육상",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "knusmywK5Po",
@@ -357,7 +369,7 @@
   "published": "2026-06-17T08:00:18+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 16771,
+  "views": 16815,
   "league": "soccer",
   "match": "축구",
   "tags": [
@@ -366,16 +378,40 @@
   "kor_src": true
  },
  {
+  "youtubeId": "Ur1TDxIA2rU",
+  "title": "Yoshino Sato 🤝 Nichika Yamada Time to rank some volleyball takes 👀🏐 #volleyball #japan #vnl2026 #vnl",
+  "published": "2026-06-19T04:30:06+00:00",
+  "channel": "Volleyball World",
+  "short": true,
+  "views": 15239,
+  "league": "volleyball",
+  "match": "배구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
   "youtubeId": "GUaN9T5w62c",
   "title": "심판님 그만 때리게 해주세요...",
   "published": "2026-06-18T02:21:15+00:00",
   "channel": "ROAD FC",
   "short": true,
-  "views": 11819,
+  "views": 12450,
   "league": "mma",
   "match": "격투기",
   "tags": [],
   "kor_src": true
+ },
+ {
+  "youtubeId": "Adp3Wh0HqTI",
+  "title": "DOMINICANA KAT IS COMING THIS SUMMER 🇩🇴 #FIBAWC",
+  "published": "2026-06-19T10:42:19+00:00",
+  "channel": "FIBA Basketball",
+  "short": true,
+  "views": 12125,
+  "league": "basketball",
+  "match": "농구",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "xoV_xRAA8DU",
@@ -395,7 +431,7 @@
   "published": "2026-06-18T12:00:30+00:00",
   "channel": "쿠팡플레이",
   "short": true,
-  "views": 8108,
+  "views": 8130,
   "league": "soccer",
   "match": "국대 vs 로드",
   "tags": [
@@ -404,12 +440,24 @@
   "kor_src": true
  },
  {
+  "youtubeId": "HIcamYYwnWQ",
+  "title": "sKAI hook 🪝 #FIBAWC",
+  "published": "2026-06-19T10:43:22+00:00",
+  "channel": "FIBA Basketball",
+  "short": true,
+  "views": 8100,
+  "league": "basketball",
+  "match": "농구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
   "youtubeId": "dTROIWBo07U",
   "title": "다른 화질, 같은 김승규(21)",
   "published": "2026-06-19T00:35:35+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 6083,
+  "views": 6202,
   "league": "soccer",
   "match": "축구",
   "tags": [],
@@ -421,7 +469,7 @@
   "published": "2026-06-19T07:59:21+00:00",
   "channel": "K LEAGUE",
   "short": true,
-  "views": 5292,
+  "views": 5831,
   "league": "soccer",
   "match": "축구",
   "tags": [
@@ -435,21 +483,9 @@
   "published": "2026-06-12T03:00:09+00:00",
   "channel": "ROAD FC",
   "short": true,
-  "views": 4339,
+  "views": 4360,
   "league": "mma",
   "match": "격투기",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "HySzJTHfa34",
-  "title": "2030 월드컵이 기대되는 이유 #강상윤",
-  "published": "2026-06-14T12:00:25+00:00",
-  "channel": "K LEAGUE",
-  "short": true,
-  "views": 3629,
-  "league": "worldcup",
-  "match": "월드컵",
   "tags": [],
   "kor_src": true
  },
@@ -459,11 +495,35 @@
   "published": "2026-06-19T07:55:34+00:00",
   "channel": "JTBC",
   "short": true,
-  "views": 3332,
+  "views": 3830,
   "league": "worldcup",
   "match": "월드컵",
   "tags": [],
   "kor_src": true
+ },
+ {
+  "youtubeId": "HySzJTHfa34",
+  "title": "2030 월드컵이 기대되는 이유 #강상윤",
+  "published": "2026-06-14T12:00:25+00:00",
+  "channel": "K LEAGUE",
+  "short": true,
+  "views": 3644,
+  "league": "worldcup",
+  "match": "월드컵",
+  "tags": [],
+  "kor_src": true
+ },
+ {
+  "youtubeId": "GvoNG2q8W_Q",
+  "title": "The Alekna legacy lives on in the discus throw 🥏",
+  "published": "2026-06-19T10:12:29+00:00",
+  "channel": "World Athletics",
+  "short": true,
+  "views": 3267,
+  "league": "athletics",
+  "match": "육상",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "riU9WSD-Xj8",
@@ -471,21 +531,9 @@
   "published": "2026-06-19T03:00:20+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 2872,
+  "views": 3114,
   "league": "baseball",
   "match": "올라선 vs 투수",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "a3Af3jstBo0",
-  "title": "0 : 0 혈투를 끝낸 해결사 구자욱! #베이스볼투나잇",
-  "published": "2026-06-19T02:30:53+00:00",
-  "channel": "엠스플야구",
-  "short": true,
-  "views": 2613,
-  "league": "baseball",
-  "match": "야구",
   "tags": [],
   "kor_src": true
  },
@@ -495,7 +543,7 @@
   "published": "2026-06-19T07:55:32+00:00",
   "channel": "JTBC",
   "short": true,
-  "views": 2558,
+  "views": 2909,
   "league": "worldcup",
   "match": "월드컵",
   "tags": [],
@@ -507,7 +555,33 @@
   "published": "2026-06-19T09:00:14+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 2335,
+  "views": 2822,
+  "league": "baseball",
+  "match": "야구",
+  "tags": [
+   "kor"
+  ],
+  "kor_src": true
+ },
+ {
+  "youtubeId": "a3Af3jstBo0",
+  "title": "0 : 0 혈투를 끝낸 해결사 구자욱! #베이스볼투나잇",
+  "published": "2026-06-19T02:30:53+00:00",
+  "channel": "엠스플야구",
+  "short": true,
+  "views": 2626,
+  "league": "baseball",
+  "match": "야구",
+  "tags": [],
+  "kor_src": true
+ },
+ {
+  "youtubeId": "Zm-5epybrnU",
+  "title": "홈런 타구를 훔치는 한승연의 슈퍼 캐치! #KBO퓨처스리그",
+  "published": "2026-06-19T10:23:48+00:00",
+  "channel": "tvN SPORTS",
+  "short": true,
+  "views": 2171,
   "league": "baseball",
   "match": "야구",
   "tags": [
@@ -521,24 +595,10 @@
   "published": "2026-06-19T07:55:27+00:00",
   "channel": "JTBC",
   "short": true,
-  "views": 1847,
+  "views": 2018,
   "league": "worldcup",
   "match": "월드컵",
   "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "Zm-5epybrnU",
-  "title": "홈런 타구를 훔치는 한승연의 슈퍼 캐치! #KBO퓨처스리그",
-  "published": "2026-06-19T10:23:48+00:00",
-  "channel": "tvN SPORTS",
-  "short": true,
-  "views": 1693,
-  "league": "baseball",
-  "match": "야구",
-  "tags": [
-   "kor"
-  ],
   "kor_src": true
  },
  {
@@ -547,7 +607,7 @@
   "published": "2026-06-18T09:00:29+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 1497,
+  "views": 1533,
   "league": "baseball",
   "match": "야구",
   "tags": [],
@@ -559,7 +619,7 @@
   "published": "2026-06-19T02:32:29+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 1296,
+  "views": 1424,
   "league": "baseball",
   "match": "야구",
   "tags": [],
@@ -571,7 +631,7 @@
   "published": "2026-06-19T02:45:06+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 1213,
+  "views": 1216,
   "league": "baseball",
   "match": "야구",
   "tags": [],
@@ -595,11 +655,35 @@
   "published": "2026-06-18T23:58:49+00:00",
   "channel": "엠스플야구",
   "short": true,
-  "views": 1053,
+  "views": 1072,
   "league": "baseball",
   "match": "야구",
   "tags": [],
   "kor_src": true
+ },
+ {
+  "youtubeId": "qO8EGOwpQS4",
+  "title": "How did Johannes even see that?! 👀 #EuroCupWomen",
+  "published": "2026-06-19T17:17:46+00:00",
+  "channel": "FIBA Basketball",
+  "short": true,
+  "views": 838,
+  "league": "basketball",
+  "match": "농구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "u8ccAF9Ysw0",
+  "title": "Thailand 🇹🇭 vs. Bulgaria 🇧🇬 - Highlights | Week 2 | Women's VNL 2026",
+  "published": "2026-06-18T15:26:45+00:00",
+  "channel": "Volleyball World",
+  "short": false,
+  "views": 855538,
+  "league": "volleyball",
+  "match": "배구",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "nWq21wAjU8Y",
@@ -607,7 +691,7 @@
   "published": "2026-06-18T02:00:04+00:00",
   "channel": "SPOTV",
   "short": false,
-  "views": 443239,
+  "views": 447555,
   "league": "baseball",
   "match": "샌프란시스코 vs 애틀랜타",
   "tags": [],
@@ -619,7 +703,7 @@
   "published": "2026-06-15T06:04:10+00:00",
   "channel": "LCK",
   "short": false,
-  "views": 428077,
+  "views": 429317,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -631,7 +715,7 @@
   "published": "2026-06-18T18:35:13+00:00",
   "channel": "NBA",
   "short": false,
-  "views": 371631,
+  "views": 387596,
   "league": "basketball",
   "match": "농구",
   "tags": [],
@@ -643,7 +727,7 @@
   "published": "2026-06-15T06:05:34+00:00",
   "channel": "LCK",
   "short": false,
-  "views": 334799,
+  "views": 336914,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -655,23 +739,35 @@
   "published": "2026-06-15T06:02:24+00:00",
   "channel": "LCK",
   "short": false,
-  "views": 331245,
+  "views": 332976,
   "league": "esports",
   "match": "LOL",
   "tags": [],
   "kor_src": true
  },
  {
-  "youtubeId": "g1I462LIwBw",
-  "title": "[MLB] 탬파베이 vs LA 다저스｜5분 하이라이트｜2026 MLB (06.16)",
-  "published": "2026-06-16T08:00:07+00:00",
-  "channel": "SPOTV",
+  "youtubeId": "UDCleCP_Uoo",
+  "title": "Türkiye 🇹🇷 vs. France 🇫🇷 - Highlights | Week 2 | Women's VNL 2026",
+  "published": "2026-06-18T19:31:46+00:00",
+  "channel": "Volleyball World",
   "short": false,
-  "views": 141772,
-  "league": "baseball",
-  "match": "탬파베이 vs LA",
+  "views": 189309,
+  "league": "volleyball",
+  "match": "배구",
   "tags": [],
-  "kor_src": true
+  "kor_src": false
+ },
+ {
+  "youtubeId": "QiIeZvyu-Ug",
+  "title": "Japan 🇯🇵 vs. Czechia 🇨🇿 - Highlights | Week 2 | Women's VNL 2026",
+  "published": "2026-06-19T13:53:37+00:00",
+  "channel": "Volleyball World",
+  "short": false,
+  "views": 180807,
+  "league": "volleyball",
+  "match": "배구",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "bozQ3XoBLI8",
@@ -679,7 +775,7 @@
   "published": "2026-06-19T10:56:35+00:00",
   "channel": "JTBC",
   "short": false,
-  "views": 131940,
+  "views": 173012,
   "league": "worldcup",
   "match": "대한민국 vs 멕시코",
   "tags": [
@@ -688,12 +784,74 @@
   "kor_src": true
  },
  {
+  "youtubeId": "ulKgBGvfvH8",
+  "title": "Full Men's 4x100m Heats & Final | World Athletics Relays Gaborone 26",
+  "published": "2026-06-18T10:19:21+00:00",
+  "channel": "World Athletics",
+  "short": false,
+  "views": 168756,
+  "league": "athletics",
+  "match": "육상",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "Vy4lIb-jWtM",
+  "title": "Serbia 🇷🇸 vs. Italy 🇮🇹 - Highlights | Week 2 | Women's VNL 2026",
+  "published": "2026-06-18T14:31:18+00:00",
+  "channel": "Volleyball World",
+  "short": false,
+  "views": 163404,
+  "league": "volleyball",
+  "match": "배구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "Unw9kn2SqJo",
+  "title": "리빙 레전드 손흥민의 존재감 [국대: 로드 투 노스 아메리카] 3화 하이라이트",
+  "published": "2026-06-19T09:00:33+00:00",
+  "channel": "쿠팡플레이",
+  "short": false,
+  "views": 147822,
+  "league": "soccer",
+  "match": "국대 vs 로드",
+  "tags": [
+   "kor"
+  ],
+  "kor_src": true
+ },
+ {
+  "youtubeId": "6T1uay5xEMo",
+  "title": "Belgium 🇧🇪 vs. Brazil 🇧🇷 - Highlights | Week 2 | Women's VNL 2026",
+  "published": "2026-06-18T15:53:59+00:00",
+  "channel": "Volleyball World",
+  "short": false,
+  "views": 144218,
+  "league": "volleyball",
+  "match": "배구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "g1I462LIwBw",
+  "title": "[MLB] 탬파베이 vs LA 다저스｜5분 하이라이트｜2026 MLB (06.16)",
+  "published": "2026-06-16T08:00:07+00:00",
+  "channel": "SPOTV",
+  "short": false,
+  "views": 141807,
+  "league": "baseball",
+  "match": "탬파베이 vs LA",
+  "tags": [],
+  "kor_src": true
+ },
+ {
   "youtubeId": "Nus0XqqUTBw",
   "title": "페이X칼리 | T1 vs GEN 게임 2 하이라이트 | 2026 LCK 로드 투 MSI",
   "published": "2026-06-15T06:01:30+00:00",
   "channel": "LCK",
   "short": false,
-  "views": 125526,
+  "views": 125977,
   "league": "esports",
   "match": "LOL",
   "tags": [],
@@ -705,7 +863,7 @@
   "published": "2026-06-18T02:00:26+00:00",
   "channel": "SPOTV",
   "short": false,
-  "views": 110890,
+  "views": 111609,
   "league": "baseball",
   "match": "탬파베이 vs LA",
   "tags": [],
@@ -717,7 +875,7 @@
   "published": "2026-06-17T08:00:07+00:00",
   "channel": "SPOTV",
   "short": false,
-  "views": 107255,
+  "views": 107546,
   "league": "baseball",
   "match": "탬파베이 vs LA",
   "tags": [],
@@ -729,24 +887,10 @@
   "published": "2026-06-15T12:00:37+00:00",
   "channel": "LCK",
   "short": false,
-  "views": 103515,
+  "views": 103835,
   "league": "esports",
   "match": "LOL",
   "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "Unw9kn2SqJo",
-  "title": "리빙 레전드 손흥민의 존재감 [국대: 로드 투 노스 아메리카] 3화 하이라이트",
-  "published": "2026-06-19T09:00:33+00:00",
-  "channel": "쿠팡플레이",
-  "short": false,
-  "views": 99390,
-  "league": "soccer",
-  "match": "국대 vs 로드",
-  "tags": [
-   "kor"
-  ],
   "kor_src": true
  },
  {
@@ -755,11 +899,23 @@
   "published": "2026-06-18T08:00:11+00:00",
   "channel": "SPOTV",
   "short": false,
-  "views": 97048,
+  "views": 98452,
   "league": "baseball",
   "match": "샌프란시스코 vs 애틀랜타",
   "tags": [],
   "kor_src": true
+ },
+ {
+  "youtubeId": "9quHaZmKAQU",
+  "title": "Ostrava Golden Spike - Extended Highlights | Continental Tour Gold 26",
+  "published": "2026-06-17T18:00:34+00:00",
+  "channel": "World Athletics",
+  "short": false,
+  "views": 95350,
+  "league": "athletics",
+  "match": "육상",
+  "tags": [],
+  "kor_src": false
  },
  {
   "youtubeId": "Ab8Swa3isvk",
@@ -767,37 +923,23 @@
   "published": "2026-06-19T07:56:03+00:00",
   "channel": "JTBC",
   "short": false,
-  "views": 78491,
+  "views": 85388,
   "league": "worldcup",
   "match": "캐나다 vs 카타르",
   "tags": [],
   "kor_src": true
  },
  {
-  "youtubeId": "2iURGyQB-hc",
-  "title": "총과 화약을 다룰 준비가 된 청년 | T1 vs GEN 게임 4 하이라이트 | 2026 LCK 로드 투 MSI",
-  "published": "2026-06-15T06:03:02+00:00",
-  "channel": "LCK",
+  "youtubeId": "31EyfXw5eTU",
+  "title": "World best and records fall in Ostrava | Continental Tour Gold 26",
+  "published": "2026-06-16T19:11:26+00:00",
+  "channel": "World Athletics",
   "short": false,
-  "views": 67992,
-  "league": "esports",
-  "match": "LOL",
+  "views": 69236,
+  "league": "athletics",
+  "match": "육상",
   "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "vBtsMQYJyts",
-  "title": "[KIA vs KT] 무사 만루, 위기를 탈출하는 네일의 완벽한 스위퍼 - 김도영의 총알 같은 송구!!! | 6.19 | 크보모먼트 | KBO 야구 하이라이트",
-  "published": "2026-06-19T11:44:30+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 66576,
-  "league": "baseball",
-  "match": "KIA vs KT",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
+  "kor_src": false
  },
  {
   "youtubeId": "e5Pr3FqE70Y",
@@ -805,24 +947,12 @@
   "published": "2026-06-06T14:30:35+00:00",
   "channel": "K리그",
   "short": false,
-  "views": 62830,
+  "views": 62847,
   "league": "soccer",
   "match": "화성 vs 수원",
   "tags": [
    "kor"
   ],
-  "kor_src": true
- },
- {
-  "youtubeId": "pcnttZ0kufg",
-  "title": "자랑하는 건가?? | T1 vs GEN 게임 1 하이라이트 | 2026 LCK 로드 투 MSI",
-  "published": "2026-06-15T06:00:13+00:00",
-  "channel": "LCK",
-  "short": false,
-  "views": 57601,
-  "league": "esports",
-  "match": "LOL",
-  "tags": [],
   "kor_src": true
  },
  {
@@ -840,56 +970,14 @@
   "kor_src": true
  },
  {
-  "youtubeId": "6pDlkaUzJgc",
-  "title": "[롯데 vs 키움] 두 번 이상 보게 되는 롯데 전민재의 완벽한 러닝 스로우 수비!!! | 6.19 | 크보모먼트 | KBO 야구 하이라이트",
-  "published": "2026-06-19T10:52:57+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 32848,
-  "league": "baseball",
-  "match": "롯데 vs 키움",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
   "youtubeId": "SkSU8CTnaK8",
   "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 대구 vs 파주 | Daegu vs Paju (26.06.05)",
   "published": "2026-06-05T14:36:27+00:00",
   "channel": "K리그",
   "short": false,
-  "views": 25771,
+  "views": 25782,
   "league": "soccer",
   "match": "대구 vs 파주",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "rga-V-3Yz44",
-  "title": "[두산 vs LG] 엄청난 타구 속도! 분위기를 단숨에 뒤집는 LG 송찬의의 역전 투런포 | 6.19 | 크보모먼트 | KBO 야구 하이라이트",
-  "published": "2026-06-19T11:08:12+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 21229,
-  "league": "baseball",
-  "match": "두산 vs LG",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "aIHttk_n6UI",
-  "title": "[KIA vs KT] 8회초, 모든 주자를 불러들인 KIA 김도영의 쐐기 적시타! | 6.19 | 크보모먼트 | KBO 야구 하이라이트",
-  "published": "2026-06-19T12:24:40+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 21199,
-  "league": "baseball",
-  "match": "KIA vs KT",
   "tags": [
    "kor"
   ],
@@ -901,63 +989,9 @@
   "published": "2026-06-10T08:00:06+00:00",
   "channel": "K LEAGUE",
   "short": false,
-  "views": 19691,
+  "views": 19725,
   "league": "soccer",
   "match": "축구",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "ivYXYJqdlyA",
-  "title": "[MLB] 샌디에이고 vs 세인트루이스｜5분 하이라이트｜2026 MLB (06.16)",
-  "published": "2026-06-16T08:00:26+00:00",
-  "channel": "SPOTV",
-  "short": false,
-  "views": 19652,
-  "league": "baseball",
-  "match": "샌디에이고 vs 세인트루이스",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "iPegJgGaLO4",
-  "title": "[KIA타이거즈 vs KT위즈] 6.19(금) 야구 하이라이트｜2026 KBO 리그｜KBO X TVING",
-  "published": "2026-06-19T13:15:33+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 19516,
-  "league": "baseball",
-  "match": "KIA타이거즈 vs KT위즈",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "thiBXZMu8Mc",
-  "title": "[2026 KBO 퓨처스리그] KT vs KIA I 6/17 경기 하이라이트",
-  "published": "2026-06-17T11:36:22+00:00",
-  "channel": "tvN SPORTS",
-  "short": false,
-  "views": 19114,
-  "league": "baseball",
-  "match": "KT vs KIA",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "_vbOW7dnqk0",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 용인 vs 대구 | Yongin vs Daegu (26.05.30)",
-  "published": "2026-05-30T11:30:09+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 17811,
-  "league": "soccer",
-  "match": "용인 vs 대구",
   "tags": [
    "kor"
   ],
@@ -969,7 +1003,7 @@
   "published": "2026-06-05T20:07:46+00:00",
   "channel": "대한육상연맹",
   "short": false,
-  "views": 17196,
+  "views": 17247,
   "league": "athletics",
   "match": "육상",
   "tags": [],
@@ -988,189 +1022,17 @@
   "kor_src": true
  },
  {
-  "youtubeId": "yw_w2XBNikk",
-  "title": "[롯데자이언츠 vs 키움히어로즈] 6.19(금) 야구 하이라이트｜2026 KBO 리그｜KBO X TVING",
-  "published": "2026-06-19T12:49:56+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 17006,
-  "league": "baseball",
-  "match": "롯데자이언츠 vs 키움히어로즈",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "Ye0zuvy3AIk",
-  "title": "2026 밀양아리랑 전국육상경기대회 (3일차)",
-  "published": "2026-06-07T20:07:47+00:00",
-  "channel": "대한육상연맹",
-  "short": false,
-  "views": 14580,
-  "league": "athletics",
-  "match": "육상",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "yw7Ti64fC-k",
-  "title": "2026 밀양아리랑 전국육상경기대회 (4일차)",
-  "published": "2026-06-08T21:42:49+00:00",
-  "channel": "대한육상연맹",
-  "short": false,
-  "views": 13454,
-  "league": "athletics",
-  "match": "육상",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "MN1n8qQ6UKM",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 부산 vs 충남아산 | Busan vs ChungnamAsan (26.06.05)",
-  "published": "2026-06-05T14:30:38+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 13442,
-  "league": "soccer",
-  "match": "부산 vs 충남아산",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "zuHRfjVrhho",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 화성 vs 경남 | Hwaseong vs Gyeongnam (26.05.31)",
-  "published": "2026-05-31T11:30:30+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 13369,
-  "league": "soccer",
-  "match": "화성 vs 경남",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "LxYUfPuOaRs",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 천안 vs 수원FC | Cheonan vs SuwonFC (26.06.07)",
-  "published": "2026-06-07T14:30:00+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 12764,
-  "league": "soccer",
-  "match": "천안 vs 수원FC",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "DmFEltyIRJ4",
-  "title": "[삼성라이온즈 vs 한화이글스] 6.19(금) 야구 하이라이트｜2026 KBO 리그｜KBO X TVING",
-  "published": "2026-06-19T14:13:31+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 12614,
-  "league": "baseball",
-  "match": "삼성라이온즈 vs 한화이글스",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "ey7rRYyLhb8",
-  "title": "[두산베어스 vs LG트윈스] 6.19(금) 야구 하이라이트｜2026 KBO 리그｜KBO X TVING",
-  "published": "2026-06-19T12:28:02+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 12208,
-  "league": "baseball",
-  "match": "두산베어스 vs LG트윈스",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "POWvRXr7w6I",
-  "title": "이기혁의 봄은 온다ㅣ이기혁 2026 상반기 주요장면 / [케잘함]",
-  "published": "2026-06-11T10:00:21+00:00",
-  "channel": "K LEAGUE",
-  "short": false,
-  "views": 12144,
-  "league": "soccer",
-  "match": "축구",
-  "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "MuFCfTjGhjk",
-  "title": "Highlights from ALL GAMES on 6/17 (Corbin Carroll's go-ahead SLAM, Cubs' 7-run inning and MORE!)",
-  "published": "2026-06-19T10:00:22+00:00",
-  "channel": "MLB",
-  "short": false,
-  "views": 11891,
-  "league": "baseball",
-  "match": "야구",
-  "tags": [],
-  "kor_src": false
- },
- {
   "youtubeId": "YBw54JI7zVw",
   "title": "[하이라이트] 대한민국 공격 장면 모음｜A조 조별리그 2차전 대한민국 VS 멕시코｜2026 FIFA 북중미 월드컵",
   "published": "2026-06-19T10:55:31+00:00",
   "channel": "JTBC",
   "short": false,
-  "views": 10386,
+  "views": 12062,
   "league": "worldcup",
   "match": "대한민국 vs 멕시코",
   "tags": [
    "kor"
   ],
-  "kor_src": true
- },
- {
-  "youtubeId": "fFI6VigeR3A",
-  "title": "[삼성 vs 한화] 어려운 타구를 아웃 카운트로 연결하는 박승규의 깔끔한 수비! | 6.19 | 크보모먼트 | KBO 야구 하이라이트",
-  "published": "2026-06-19T13:18:40+00:00",
-  "channel": "KBO",
-  "short": false,
-  "views": 9844,
-  "league": "baseball",
-  "match": "삼성 vs 한화",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "-gkLWsQGWIw",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 서울E vs 충북청주 | SeoulE vs ChungbukCheongju (26.06.07)",
-  "published": "2026-06-07T14:37:48+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 9012,
-  "league": "soccer",
-  "match": "서울E vs 충북청주",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "cl-IxRaYxqI",
-  "title": "[MLB] 시카고 화이트삭스 vs 뉴욕 양키스｜5분 하이라이트｜2026 MLB (06.19)",
-  "published": "2026-06-19T08:00:16+00:00",
-  "channel": "SPOTV",
-  "short": false,
-  "views": 8837,
-  "league": "baseball",
-  "match": "화이트삭스 vs 뉴욕",
-  "tags": [],
   "kor_src": true
  },
  {
@@ -1179,122 +1041,12 @@
   "published": "2026-06-19T10:55:17+00:00",
   "channel": "JTBC",
   "short": false,
-  "views": 7037,
+  "views": 8938,
   "league": "worldcup",
   "match": "대한민국 vs 멕시코",
   "tags": [
    "kor"
   ],
-  "kor_src": true
- },
- {
-  "youtubeId": "6UjPT4V9I18",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 경남 vs 용인 | Gyeongnam vs Yongin (26.06.06)",
-  "published": "2026-06-06T14:30:29+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 6973,
-  "league": "soccer",
-  "match": "경남 vs 용인",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "TK37Hr95GtI",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 김포 vs 전남 | Gimpo vs Jeonnam (26.06.07)",
-  "published": "2026-06-07T14:30:10+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 6781,
-  "league": "soccer",
-  "match": "김포 vs 전남",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "__7_kPNU7OI",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 수원FC vs 성남 | SuwonFC vs Seongnam (26.05.30)",
-  "published": "2026-05-30T14:00:19+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 6697,
-  "league": "soccer",
-  "match": "수원FC vs 성남",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "7OoCuvN68Ss",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 15R 성남 vs 김해 | Seongnam vs Gimhae (26.06.05)",
-  "published": "2026-06-05T14:30:20+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 6121,
-  "league": "soccer",
-  "match": "성남 vs 김해",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "cC4qon7FLj8",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 김해 vs 김포 | Gimhae vs Gimpo (26.05.30)",
-  "published": "2026-05-30T14:00:24+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 5963,
-  "league": "soccer",
-  "match": "김해 vs 김포",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "OvWa2rM3eTI",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 전남 vs 서울E | Jeonnam vs SeoulE (26.05.31)",
-  "published": "2026-05-31T11:30:40+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 5712,
-  "league": "soccer",
-  "match": "전남 vs 서울E",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "D6EtqX31TgE",
-  "title": "[30분 하이라이트] 하나은행 K리그2 2026 14R 안산 vs 천안 | Ansan vs Cheonan (26.05.31)",
-  "published": "2026-05-31T14:00:27+00:00",
-  "channel": "K리그",
-  "short": false,
-  "views": 5688,
-  "league": "soccer",
-  "match": "안산 vs 천안",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "mU88X1flvNI",
-  "title": "박지성, 이재성이 보인다...? 앞으로 이 선수를 주목해야 하는 이유ㅣ2026 전술후술",
-  "published": "2026-06-14T12:00:21+00:00",
-  "channel": "K LEAGUE",
-  "short": false,
-  "views": 4565,
-  "league": "soccer",
-  "match": "축구",
-  "tags": [],
   "kor_src": true
  },
  {
@@ -1303,7 +1055,7 @@
   "published": "2026-06-19T10:55:26+00:00",
   "channel": "JTBC",
   "short": false,
-  "views": 3699,
+  "views": 4696,
   "league": "worldcup",
   "match": "대한민국 vs 멕시코",
   "tags": [
@@ -1312,53 +1064,51 @@
   "kor_src": true
  },
  {
-  "youtubeId": "b7305yiiGAY",
-  "title": "[골모음] 하나은행 K리그2 2026 15라운드 골모음 | ALL GOALS of K LEAGUE2 R15",
-  "published": "2026-06-07T14:36:11+00:00",
-  "channel": "K LEAGUE",
+  "youtubeId": "Q4wrEWheHvI",
+  "title": "Dylan Harper Top plays of the Spurs 2026 NBA Finals Run!",
+  "published": "2026-06-19T18:00:17+00:00",
+  "channel": "NBA",
   "short": false,
-  "views": 2806,
-  "league": "soccer",
-  "match": "축구",
-  "tags": [
-   "kor"
-  ],
-  "kor_src": true
- },
- {
-  "youtubeId": "nlATTOvkYfs",
-  "title": "[하이라이트] 골 장면 모음｜B조 조별리그 2차전 캐나다 VS 카타르｜2026 FIFA 북중미 월드컵",
-  "published": "2026-06-19T07:55:31+00:00",
-  "channel": "JTBC",
-  "short": false,
-  "views": 2129,
-  "league": "worldcup",
-  "match": "캐나다 vs 카타르",
+  "views": 1540,
+  "league": "basketball",
+  "match": "농구",
   "tags": [],
-  "kor_src": true
+  "kor_src": false
  },
  {
-  "youtubeId": "1BOcRwEhe88",
-  "title": "KAAF배 제54회 그린전국육상경기대회 (4일차)",
-  "published": "2026-06-19T02:18:49+00:00",
-  "channel": "대한육상연맹",
+  "youtubeId": "YNxHMGuahdU",
+  "title": "Victor Wembanyama Top plays of the Spurs 2026 NBA Finals Run! 👽",
+  "published": "2026-06-19T17:00:35+00:00",
+  "channel": "NBA",
+  "short": false,
+  "views": 1275,
+  "league": "basketball",
+  "match": "농구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "k5HknILh5P0",
+  "title": "Stephon Castle Top Plays of the Spurs 2026 NBA Finals Run!",
+  "published": "2026-06-19T19:00:32+00:00",
+  "channel": "NBA",
+  "short": false,
+  "views": 708,
+  "league": "basketball",
+  "match": "농구",
+  "tags": [],
+  "kor_src": false
+ },
+ {
+  "youtubeId": "HN6R6qqRS4c",
+  "title": "LIVE - Malta v San Marino | FIBA European Championship for Small Countries 2026 | Group Phase",
+  "published": "2026-06-19T10:44:57+00:00",
+  "channel": "FIBA Basketball",
   "short": false,
   "views": 0,
-  "league": "athletics",
-  "match": "육상",
+  "league": "basketball",
+  "match": "농구",
   "tags": [],
-  "kor_src": true
- },
- {
-  "youtubeId": "urXarR9PGAI",
-  "title": "KAAF배 제54회 그린전국육상경기대회 & 2026 코리아오픈국제육상경기대회 (3일차)",
-  "published": "2026-06-19T02:14:46+00:00",
-  "channel": "대한육상연맹",
-  "short": false,
-  "views": 0,
-  "league": "athletics",
-  "match": "육상",
-  "tags": [],
-  "kor_src": true
+  "kor_src": false
  }
 ]
