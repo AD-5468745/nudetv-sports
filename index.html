@@ -329,7 +329,7 @@ async function loadData(){
       tags: d.tags || [],
       note: d.published ? ago(d.published) : (d.note||'')
     })).filter(g=>g.youtubeId);
-    rawGoals=goals; goals=[]; okIds.clear(); mode='live'; render(); startProbe();
+    rawGoals=goals.filter(g=>embedGet(g.youtubeId)!==false); goals=rawGoals.slice(); mode='live'; render();
   }catch(e){
     goals=DEMO; rawGoals=DEMO; mode='demo'; render();   // data.json 없으면(미리보기 등) 데모 표시
   }
@@ -401,6 +401,15 @@ function showBlocked(msg){
   pBlocked.classList.add('on');
 }
 
+function markBlocked(id){ embedCache[id]={ok:false,ts:Date.now()}; embedSave(); rawGoals=rawGoals.filter(g=>g.youtubeId!==id); goals=goals.filter(g=>g.youtubeId!==id); }
+function markGood(id){ if(embedGet(id)!==true){ embedCache[id]={ok:true,ts:Date.now()}; embedSave(); } }
+function skipToNext(idx){
+  render();           // 막힌 카드 제거 반영 + view 갱신
+  view = visible();
+  if(view.length===0){ showBlocked('지금은 재생 가능한 영상이 없어요.<br>잠시 후 다시 확인해 주세요.'); return; }
+  openPlayer(Math.min(idx, view.length-1));
+}
+
 function openPlayer(i){
   const tok = ++playToken;
   pIndex = i; const g = view[pIndex];
@@ -430,8 +439,9 @@ function openPlayer(i){
       videoId: g.youtubeId,
       playerVars: { autoplay:1, playsinline:1, rel:0, modestbranding:1 },
       events: {
-        // 2·5·100·101·150 = 잘못된 영상/삭제/퍼가기 금지 등 → 공식 채널로 대체
-        onError: ()=>{ if (tok === playToken) showBlocked(); }
+        // 막힘(150/101/100 등) → 자물쇠 화면 대신 자동으로 다음 영상으로 건너뜀
+        onError: ()=>{ if(tok===playToken){ markBlocked(g.youtubeId); skipToNext(pIndex); } },
+        onStateChange: (e)=>{ if(e.data===1||e.data===3) markGood(g.youtubeId); }
       }
     });
   });
