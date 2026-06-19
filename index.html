@@ -23,7 +23,7 @@
   html,body{margin:0;height:100%;background:var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden}
   #bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;background:linear-gradient(180deg,rgba(0,0,0,.66),rgba(0,0,0,.30) 72%,transparent);pointer-events:none}
   #bar .row{display:flex;align-items:center;gap:8px;pointer-events:auto;max-width:760px;margin:0 auto}
-  .brand{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0}
+  .brand{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0;cursor:pointer}
   .brand svg{width:30px;height:30px;flex:none}
   .brand b{font-size:15px;font-weight:800;letter-spacing:-.2px;white-space:nowrap}
   .brand b i{color:var(--green-soft);font-style:normal}
@@ -39,7 +39,7 @@
   #feed{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   #feed::-webkit-scrollbar{display:none}
   .slide{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
-  .bg{position:absolute;inset:-8%;background-size:cover;background-position:center;filter:blur(28px) brightness(.45);transform:scale(1.15);z-index:0}
+  .bg{position:absolute;inset:0;z-index:0;background-color:#0a120f;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27110%27%20height%3D%27110%27%3E%3Cg%20opacity%3D%270.08%27%3E%3Crect%20x%3D%2726%27%20y%3D%2744%27%20width%3D%2758%27%20height%3D%2742%27%20rx%3D%2711%27%20fill%3D%27none%27%20stroke%3D%27%231FA85C%27%20stroke-width%3D%275%27/%3E%3Ctext%20x%3D%2755%27%20y%3D%2774%27%20font-family%3D%27Arial%27%20font-weight%3D%27800%27%20font-size%3D%2724%27%20fill%3D%27%231FA85C%27%20text-anchor%3D%27middle%27%3ELC%3C/text%3E%3C/g%3E%3C/svg%3E");background-size:104px 104px;background-repeat:repeat}
   .stage{position:relative;z-index:1;width:100%;height:100%;max-width:min(100%,480px);margin:0 auto;background:#000;overflow:hidden}
   .thumb{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity .3s;z-index:1}
   .slide.playing .thumb{opacity:0}
@@ -77,6 +77,21 @@
   #searchRow{max-width:760px;margin:8px auto 0;pointer-events:auto}
   #searchRow[hidden]{display:none}
   #searchRow input{width:100%;padding:9px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.45);color:#fff;font-size:14px;outline:none}
+  .wm{position:absolute;top:calc(env(safe-area-inset-top) + 104px);left:13px;z-index:7;width:30px;height:30px;opacity:.82;pointer-events:none;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+  .wm svg{width:100%;height:100%}
+  #home{position:fixed;inset:0;z-index:50;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 28px) 18px calc(env(safe-area-inset-bottom) + 30px);background-color:#0a120f;background-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27110%27%20height%3D%27110%27%3E%3Cg%20opacity%3D%270.08%27%3E%3Crect%20x%3D%2726%27%20y%3D%2744%27%20width%3D%2758%27%20height%3D%2742%27%20rx%3D%2711%27%20fill%3D%27none%27%20stroke%3D%27%231FA85C%27%20stroke-width%3D%275%27/%3E%3Ctext%20x%3D%2755%27%20y%3D%2774%27%20font-family%3D%27Arial%27%20font-weight%3D%27800%27%20font-size%3D%2724%27%20fill%3D%27%231FA85C%27%20text-anchor%3D%27middle%27%3ELC%3C/text%3E%3C/g%3E%3C/svg%3E");background-size:120px 120px;background-repeat:repeat}
+  #home[hidden]{display:none}
+  .hm-hero{text-align:center;margin:14px 0 20px}
+  .hm-logo svg{width:74px;height:74px}
+  .hm-hero h1{font-size:26px;margin:10px 0 4px;font-weight:800} .hm-hero h1 b{color:var(--green-soft)}
+  .hm-hero p{margin:0;color:rgba(255,255,255,.62);font-size:13px}
+  #homeSearch{width:100%;max-width:520px;margin:0 auto 14px;display:block;padding:13px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(0,0,0,.5);color:#fff;font-size:15px;outline:none}
+  .hm-cta{display:block;width:100%;max-width:520px;margin:0 auto 18px;padding:15px;border:0;border-radius:14px;background:var(--accent);color:#fff;font-size:16px;font-weight:800;cursor:pointer}
+  .hm-cta:active{transform:scale(.98)}
+  .hm-grid{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .hm-cat{padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(255,255,255,.07);color:#fff;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
+  .hm-cat:active{transform:scale(.97)}
+  @media(min-width:600px){ .hm-grid{grid-template-columns:repeat(3,1fr)} }
   #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.16);z-index:28}
   #pbar i{display:block;height:100%;width:0;background:var(--accent)}
   .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -113,6 +128,24 @@
   </nav>
   <div id="searchRow" hidden><input id="searchInput" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민, 끝내기)" autocomplete="off" /></div>
 </header>
+<div id="home" hidden>
+  <div class="hm-hero"><div class="hm-logo"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg></div><h1>HOT 스포츠 <b>쇼츠</b></h1><p>매일 인기 하이라이트를 한 곳에서</p></div>
+  <input id="homeSearch" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민)" autocomplete="off" />
+  <button class="hm-cta" data-filter="all">▶ 전체 영상 보기</button>
+  <div class="hm-grid">
+    <button class="hm-cat" data-filter="latest">🗓️ 최신</button>
+    <button class="hm-cat" data-filter="saved">❤️ 관심</button>
+    <button class="hm-cat" data-filter="worldcup">🏆 월드컵</button>
+    <button class="hm-cat" data-filter="kor">🇰🇷 한국</button>
+    <button class="hm-cat" data-filter="soccer">⚽ 축구</button>
+    <button class="hm-cat" data-filter="baseball">⚾ 야구</button>
+    <button class="hm-cat" data-filter="basketball">🏀 농구</button>
+    <button class="hm-cat" data-filter="volleyball">🏐 배구</button>
+    <button class="hm-cat" data-filter="mma">🥊 격투기</button>
+    <button class="hm-cat" data-filter="athletics">🏃 육상</button>
+    <button class="hm-cat" data-filter="esports">🎮 LOL</button>
+  </div>
+</div>
 <main id="feed" aria-label="쇼츠 피드"></main>
 <button class="nav up" id="navUp" title="이전 영상" aria-label="이전 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 <button class="nav down" id="navDn" title="다음 영상" aria-label="다음 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
@@ -159,7 +192,7 @@ function computeList(){ let a=listFor(true); if(a.length===0 && activeFilter!=='
 
 function slideHTML(g){ const id=g.youtubeId,t=thumb(id),vw=g.views?('<span class="vw">조회 '+fmtV(g.views)+'</span>'):'';
   return '<section class="slide" data-id="'+id+'">'
-    + '<div class="bg" style="background-image:url(\''+t+'\')"></div>'
+    + '<div class="bg"></div>'
     + '<div class="stage"><div class="thumb" style="background-image:url(\''+t+'\')"></div><div class="spin"></div><div class="mount"></div>'
     +   '<div class="seek l" data-d="-5"></div><div class="seek r" data-d="5"></div>'
     +   '<div class="dtag l">« 5초</div><div class="dtag r">5초 »</div>'
@@ -167,6 +200,7 @@ function slideHTML(g){ const id=g.youtubeId,t=thumb(id),vw=g.views?('<span class
     +   '<button class="cue snd" hidden aria-label="소리 켜기">'+SVG_SND_S+'소리 켜기</button></div>'
     + '<div class="acts"><button class="act like'+(isSaved(id)?' on':'')+'" data-id="'+id+'" aria-label="관심">'+SVG_HEART+'<span class="cnt">관심</span></button></div>'
     + '<div class="cap"><span class="lg">'+esc(g.match)+'</span>'+vw+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span></div>'
+    + '<div class="wm" aria-hidden="true"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg></div>'
     + '</section>'; }
 function buildFeed(){ Object.keys(players).forEach(teardown); list=computeList();
   document.getElementById('empty').classList.toggle('show', list.length===0);
@@ -183,14 +217,13 @@ function setActive(slide){ const id=slide.dataset.id; if(id===activeId) return;
   Object.keys(players).forEach(pid=>{ if(!near.has(pid)) teardown(pid); });
   neighbors(slide).forEach(mount);
   Object.keys(players).forEach(pid=>{ const p=players[pid]; try{ if(pid===id){ applySound(p); p.playVideo&&p.playVideo(); } else { p.pauseVideo&&p.pauseVideo(); } }catch(e){} });
-  clearTimeout(slide._st); slide._tries=0; setCuePlay(slide,false); slide._st=setTimeout(()=>cueCheck(slide,id),2200); }
+  clearTimeout(slide._st); slide._tries=0; setCuePlay(slide,true); slide._st=setTimeout(()=>cueCheck(slide,id),2200); }
 function setCuePlay(slide,show){ const p=slide.querySelector('.cue.play'); if(p) p.hidden=!show; }
 function cueCheck(slide,id){ if(activeId!==id || slide.classList.contains('played')) return;
   let st=-1; try{ st=players[id].getPlayerState(); }catch(e){}
   if(st===1) return;                                  // 재생중이면 OK
   slide._tries=(slide._tries||0)+1;
   if(st===3){ if(slide._tries>=8){ blockId(id); dropSlide(slide); return; } slide._st=setTimeout(()=>cueCheck(slide,id),2500); return; }  // 너무 오래 버퍼링=죽은영상→스킵
-  setCuePlay(slide,true);                              // 미시작(자동재생 막힘)→ ▶버튼 표시(스킵 안 함)
   if(slide._tries<6) slide._st=setTimeout(()=>cueCheck(slide,id),2500); }
 function applySound(p){ try{ soundOn?(p.unMute(),p.setVolume(100)):p.mute(); }catch(e){} }
 function mount(slide){ const id=slide.dataset.id; if(players[id])return; const host=slide.querySelector('.mount'); if(!host)return;
@@ -214,7 +247,7 @@ function tick(){ const p=players[activeId], slide=FEED.querySelector('.slide[dat
   let ct=0,dur=0,mu=true; try{ ct=p.getCurrentTime()||0; dur=p.getDuration()||0; mu=p.isMuted(); }catch(e){ return; }
   if(dur>0 && dur>2400){ if(!slide._long){ slide._long=true; blockId(activeId); dropSlide(slide); } return; }
   const playing = ct>_lastCt+0.05; _lastCt=ct;
-  if(playing){ slide.classList.add('playing','played'); }
+  if(playing){ slide.classList.add('playing','played'); setCuePlay(slide,false); }
   const b=slide.querySelector('.cue.snd'); if(b) b.hidden = !(playing && mu);          // 재생중 + 실제 음소거일 때만
   if(playing && (mu === soundOn)){ soundOn=!mu; updateHeaderSound(); persistSound(); } // 실제 상태와 헤더 동기화
   const fill=document.getElementById('pbarFill'); if(fill) fill.style.width = dur>0?Math.min(100,(ct/dur)*100)+'%':'0%'; }
@@ -263,6 +296,13 @@ let deferred=null;
 window.addEventListener('beforeinstallprompt',e=>{ e.preventDefault(); deferred=e; document.getElementById('installBtn').hidden=false; });
 document.getElementById('installBtn').addEventListener('click',async()=>{ if(!deferred)return; deferred.prompt(); await deferred.userChoice; deferred=null; document.getElementById('installBtn').hidden=true; });
 
+const HOME=document.getElementById('home');
+function showHome(){ const p=players[activeId]; if(p){try{p.pauseVideo();}catch(e){}} HOME.hidden=false; HOME.scrollTop=0; }
+function openFeed(filter){ HOME.hidden=true; activeFilter=filter||'all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter===activeFilter?'true':'false')); buildFeed(); }
+document.querySelector('.brand').addEventListener('click',showHome);
+HOME.querySelectorAll('.hm-cat,.hm-cta').forEach(b=>b.addEventListener('click',()=>openFeed(b.dataset.filter)));
+const homeSearch=document.getElementById('homeSearch');
+homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
 async function load(){ try{ const r=await fetch('data.json?_='+Date.now()); if(!r.ok)throw 0; ALL=(await r.json())||[]; }catch(e){ ALL=[]; } updateChips(); buildFeed(); }
 load();
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
