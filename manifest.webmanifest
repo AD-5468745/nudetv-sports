@@ -1,7 +1,7 @@
 {
-  "name": "누드TV 스포츠",
-  "short_name": "누드TV",
-  "description": "빅리그(월드컵·축구·야구·농구) 골·하이라이트를 공식 채널에서 자동으로 모아 보여주는 앱",
+  "name": "HOT 스포츠 쇼츠모음",
+  "short_name": "HOT스포츠",
+  "description": "인기 스포츠 하이라이트·쇼츠를 공식 유튜브 채널에서 자동으로 모아 보여주는 앱",
   "lang": "ko",
   "dir": "ltr",
   "start_url": "./?source=pwa",
