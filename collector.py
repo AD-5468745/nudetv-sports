@@ -48,7 +48,7 @@ CHANNELS = [
   ("SBS Sports","UCqsKWTIu7IhBjLFZS2s1ULQ","auto",True),
   ("스탐","UCArK9MK34LsQzPJrl5TZmYA","auto",True),
   ("MBC Sports+","UCMkrtzkegsLZJ1s6H7S0eKw","auto",True),
-  ("JTBC","UCTdZyOFVzontd9MZOJDg8Qw","auto",True),
+  ("JTBC","UCTdZyOFVzontd9MZOJDg8Qw","worldcup",True),
   ("쿠팡플레이","UCnBht7BrOx-A328KFXgysqQ","auto",True),
   ("SPOTV","UCtm_QoN2SIxwCE-59shX7Qg","auto",True),
   ("KBO","UCoVz66yWHzVsXAFG8WhJK9g","baseball",True),
