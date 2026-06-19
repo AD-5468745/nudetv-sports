@@ -312,8 +312,10 @@ async function startProbe(){
 
 function thumbUrl(id){ return id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : ''; }
 function visible(){
-  if(activeFilter==='latest'){   // 최신 쇼츠: 업로드 최신순 전체
-    return [...goals].sort((a,b)=> (Date.parse(b.published)||0) - (Date.parse(a.published)||0));
+  if(activeFilter==='latest'){   // 최신 쇼츠: 최근 3일 이내, 업로드 최신순
+    const cutoff = Date.now() - 3*86400000;
+    return goals.filter(g=> (Date.parse(g.published)||0) >= cutoff)
+                .sort((a,b)=> (Date.parse(b.published)||0) - (Date.parse(a.published)||0));
   }
   return goals.filter(g=>{
     if(activeFilter==='all') return true;
