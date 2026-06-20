@@ -199,16 +199,17 @@ function play(slide, auto){ const id=slide.dataset.id, host=slide.querySelector(
   ifr.addEventListener('load',()=>{ if(spin)spin.hidden=true; if(auto&&soundOn){ setTimeout(()=>{ytCmd(ifr,'unMute');ytCmd(ifr,'setVolume',[100]);},350);} });
   host.appendChild(ifr);
   const pill=slide.querySelector('.sndpill'); if(pill)pill.hidden=(!auto)||soundOn; }
-function teardown(slide){ const h=slide.querySelector('.mount'); if(h)h.innerHTML='';
+function teardown(slide){ const h=slide.querySelector('.mount'); if(h){ const ifr=h.querySelector('iframe'); if(ifr){ try{ytCmd(ifr,'stopVideo');}catch(e){} try{ifr.src='about:blank';}catch(e){} } h.innerHTML=''; }
   const p=slide.querySelector('.sndpill'); if(p)p.hidden=true;
   const s=slide.querySelector('.spin'); if(s)s.hidden=true; }
 /* 활성 슬라이드 추적: 비iOS는 무음 자동재생, iOS는 포스터(탭 재생) */
 const io=new IntersectionObserver(es=>{ es.forEach(e=>{
     if(!e.target.classList.contains('slide')) return;
     if(e.isIntersecting && e.intersectionRatio>=0.6){ setActive(e.target); }
-    else if(!e.isIntersecting){ teardown(e.target); }
-  }); },{root:FEED,threshold:[0,0.6,1]});
+    else if(e.intersectionRatio<0.5){ teardown(e.target); }
+  }); },{root:FEED,threshold:[0,0.5,0.6,1]});
 function setActive(slide){ if(slide===activeSlide)return; activeSlide=slide; clearTimeout(activeTimer);
+  FEED.querySelectorAll('.slide').forEach(s=>{ if(s!==slide){ const m=s.querySelector('.mount'); if(m&&m.firstChild) teardown(s); } });
   activeTimer=setTimeout(()=>{ if(activeSlide===slide && !slide.querySelector('.mount').firstChild) play(slide, !IOS); },180); }
 /* 피드 클릭 */
 FEED.addEventListener('click',e=>{
