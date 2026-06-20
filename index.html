@@ -42,8 +42,12 @@
   .stage{position:relative;z-index:1;width:100%;height:100%;max-width:min(100%,480px);margin:0 auto;background:#000;overflow:hidden}
   .mount,.mount iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
   .spin{position:absolute;inset:0;z-index:4;display:grid;place-items:center;pointer-events:none}
-  .tapzone{position:absolute;left:0;right:0;top:0;bottom:58px;z-index:3;pointer-events:none}
+  .tapzone{position:absolute;inset:0;z-index:3;pointer-events:none}
   .slide.live .tapzone{pointer-events:auto}
+  .fsbtn{position:absolute;right:10px;bottom:14px;z-index:6;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .fsbtn svg{width:20px;height:20px}
+  .stage.cssfs{position:fixed;top:50%;left:50%;width:100vh;height:100vw;max-width:none;margin:0;transform:translate(-50%,-50%) rotate(90deg);z-index:9999;background:#000}
+  body.fs-on #feed{overflow:hidden}
   .spin svg{width:58px;height:58px;animation:logopulse 1.1s ease-in-out infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
   .spin[hidden]{display:none}
   @keyframes logopulse{0%,100%{transform:scale(.82);opacity:.55}50%{transform:scale(1.06);opacity:1}}
@@ -140,6 +144,7 @@
 <header id="bar">
   <div class="row">
     <div class="brand" role="button" tabindex="0" aria-label="홈으로"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>HOT 스포츠 <i>쇼츠</i></b></div>
+    <button class="iconbtn" id="muteBtn" aria-label="소리 켜기"></button>
     <button class="catpill" id="catBtn" aria-haspopup="dialog" aria-label="종목 선택">전체 <span class="caret">▾</span></button>
     <button class="instpill" id="installBtn" aria-label="홈 화면에 추가"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg><span>홈 추가</span></button>
     <button class="iconbtn" id="searchBtn" title="검색" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></button>
@@ -191,6 +196,7 @@ const SVG_HEART='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stro
 const SVG_SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>';
 const SVG_SND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const SVG_MUTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
+const SVG_FS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>';
 const FEED=document.getElementById('feed'), CHIPS=document.getElementById('chips'), HOME=document.getElementById('home');
 const catBtn=document.getElementById('catBtn'), catSheet=document.getElementById('catsheet');
 function setCatLabel(filter){ let t='전체'; if(filter==='search'){t='🔍 검색';} else { const c=[...CHIPS.querySelectorAll('.chip')].find(x=>x.dataset.filter===filter); if(c)t=c.textContent.trim(); } catBtn.innerHTML=esc(t)+' <span class="caret">▾</span>'; }
@@ -215,7 +221,7 @@ function slideHTML(g){ const id=g.youtubeId, vw=g.views?('<span class="vw">조�
     + '<div class="bg"></div>'
     + '<div class="stage"><div class="mount"></div><div class="tapzone"></div><div class="spin" hidden>'+LOGO+'</div>'
     +   '<img class="thumb" loading="lazy" data-id="'+id+'" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" onerror="ytThumbFb(this)" alt="">'
-    +   '<button class="sndpill" hidden>'+SVG_SND+'소리 켜기</button></div>'
+    +   '<button class="fsbtn" aria-label="전체화면">'+SVG_FS+'</button></div>'
     + '<div class="acts"><div class="actlogo">'+LOGO+'</div><button class="act like'+(isSaved(id)?' on':'')+'" data-id="'+id+'" aria-label="관심 저장">'+SVG_HEART+'<span class="cnt">관심</span></button></div>'
     + '<div class="cap"><span class="lg">'+esc(g.match)+'</span>'+vw+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span></div>'
     + '</section>'; }
@@ -231,8 +237,10 @@ function buildFeed(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML='')
   const eh=document.getElementById('endHome'); if(eh)eh.onclick=showHome; }
 /* 재생 (라이트 임베드: 항상 무음 자동재생 → 어디서나 단일 탭 재생. 소리는 postMessage로 켬) */
 let soundOn=false;
+const muteBtn=document.getElementById('muteBtn');
+function updateMuteIcon(){ if(muteBtn){ muteBtn.innerHTML=soundOn?SVG_SND:SVG_MUTE; muteBtn.setAttribute('aria-label',soundOn?'음소거':'소리 켜기'); } }
+if(muteBtn){ updateMuteIcon(); muteBtn.addEventListener('click',()=>{ const ifr=activeSlide&&activeSlide.querySelector('.mount iframe'); if(soundOn){ if(ifr)ytCmd(ifr,'mute'); soundOn=false; } else { if(ifr){ytCmd(ifr,'unMute');ytCmd(ifr,'setVolume',[100]);} soundOn=true; } updateMuteIcon(); }); }
 function ytCmd(ifr,func,args){ try{ ifr.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:args||[]}),'*'); }catch(e){} }
-function setPill(slide, muted){ const p=slide.querySelector('.sndpill'); if(!p)return; p.hidden=false; slide.dataset.muted=muted?'1':'0'; if(muted){ p.className='sndpill'; p.innerHTML=SVG_SND+'소리 켜기'; } else { p.className='sndpill on'; p.innerHTML=SVG_MUTE+'음소거'; } }
 function play(slide, auto){ const id=slide.dataset.id, host=slide.querySelector('.mount'); if(!host||host.firstChild)return;
   const spin=slide.querySelector('.spin'); if(spin)spin.hidden=false;
   const ifr=document.createElement('iframe');
@@ -242,8 +250,8 @@ function play(slide, auto){ const id=slide.dataset.id, host=slide.querySelector(
   ifr.src=src;
   ifr.addEventListener('load',()=>{ if(spin)spin.hidden=true; let _n=0; const _hs=setInterval(()=>{ try{ifr.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*');}catch(e){} if(++_n>=6)clearInterval(_hs); },450); if(auto&&soundOn){ setTimeout(()=>{ytCmd(ifr,'unMute');ytCmd(ifr,'setVolume',[100]);},450);} });
   host.appendChild(ifr);
-  if(auto){ setPill(slide, !soundOn); } else { const p=slide.querySelector('.sndpill'); if(p)p.hidden=true; } }
-function teardown(slide){ slide.classList.remove('live'); slide.removeAttribute('data-playing'); const h=slide.querySelector('.mount'); if(h){ const ifr=h.querySelector('iframe'); if(ifr){ try{ytCmd(ifr,'stopVideo');}catch(e){} try{ifr.src='about:blank';}catch(e){} } h.innerHTML=''; }
+  }
+function teardown(slide){ slide.classList.remove('live'); slide.removeAttribute('data-playing'); const _st=slide.querySelector('.stage'); if(_st&&_st.classList.contains('cssfs')){ _st.classList.remove('cssfs'); document.body.classList.remove('fs-on'); } const h=slide.querySelector('.mount'); if(h){ const ifr=h.querySelector('iframe'); if(ifr){ try{ytCmd(ifr,'stopVideo');}catch(e){} try{ifr.src='about:blank';}catch(e){} } h.innerHTML=''; }
   const p=slide.querySelector('.sndpill'); if(p)p.hidden=true;
   const s=slide.querySelector('.spin'); if(s)s.hidden=true; }
 /* 활성 슬라이드 추적: 비iOS는 무음 자동재생, iOS는 포스터(탭 재생) */
@@ -257,8 +265,8 @@ function setActive(slide){ if(slide===activeSlide)return; activeSlide=slide; cle
   activeTimer=setTimeout(()=>{ if(activeSlide===slide && !slide.querySelector('.mount').firstChild) play(slide, !IOS); },180); }
 /* 피드 클릭 */
 FEED.addEventListener('click',e=>{
+  const fsb=e.target.closest('.fsbtn'); if(fsb){ const stg=fsb.closest('.stage'); if(IOS){ const on=stg.classList.toggle('cssfs'); document.body.classList.toggle('fs-on',on); } else { const fn=stg.requestFullscreen||stg.webkitRequestFullscreen; if(fn){try{fn.call(stg);}catch(_){}} } return; }
   const tz=e.target.closest('.tapzone'); if(tz){ const s=tz.closest('.slide'); const ifr=s.querySelector('.mount iframe'); if(ifr){ if(s.dataset.playing==='1'){ytCmd(ifr,'pauseVideo'); s.dataset.playing='0';}else{ytCmd(ifr,'playVideo'); s.dataset.playing='1';} } return; }
-  const pill=e.target.closest('.sndpill'); if(pill){ const sp=pill.closest('.slide'); const ifr=sp.querySelector('.mount iframe'); const muted=sp.dataset.muted==='1'; if(muted){ if(ifr){ytCmd(ifr,'unMute');ytCmd(ifr,'setVolume',[100]);} else {play(sp,true);} soundOn=true; setPill(sp,false); } else { if(ifr)ytCmd(ifr,'mute'); soundOn=false; setPill(sp,true); } return; }
   const lk=e.target.closest('.act.like'); if(lk){ const id=lk.dataset.id; toggleSaved(id); const on=isSaved(id); lk.classList.toggle('on',on); if(on){ lk.classList.remove('pop'); void lk.offsetWidth; lk.classList.add('pop'); } return; }
   const tt=e.target.closest('.cap .ttl'); if(tt){ tt.classList.toggle('expanded'); } });
 function shareVideo(id,title){ const url='https://youtu.be/'+id;
@@ -293,7 +301,7 @@ function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>
   el.hidden=false; document.getElementById('trendSec').hidden=false; }
 /* 이동/키보드 */
 function goNext(){ FEED.scrollBy({top:FEED.clientHeight,behavior:'smooth'}); }
-window.addEventListener('message',e=>{ if(typeof e.data!=='string'||e.origin.indexOf('youtube')<0)return; let d; try{d=JSON.parse(e.data);}catch(_){return;} let st; if(d.event==='onStateChange')st=d.info; else if(d.event==='infoDelivery'&&d.info&&d.info.playerState!==undefined)st=d.info.playerState; if(st===undefined||st===null)return; const ifr=[...document.querySelectorAll('.slide .mount iframe')].find(x=>x.contentWindow===e.source); if(!ifr)return; const s=ifr.closest('.slide'); if(!s)return; if(st===0){ s.dataset.playing='0'; if(s===activeSlide) goNext(); return; } if(st===1){ s.classList.add('live'); s.dataset.playing='1'; const p=s.querySelector('.sndpill'); if(p&&p.hidden){ setPill(s,false); } } else if(st===2){ s.dataset.playing='0'; } });
+window.addEventListener('message',e=>{ if(typeof e.data!=='string'||e.origin.indexOf('youtube')<0)return; let d; try{d=JSON.parse(e.data);}catch(_){return;} let st; if(d.event==='onStateChange')st=d.info; else if(d.event==='infoDelivery'&&d.info&&d.info.playerState!==undefined)st=d.info.playerState; if(st===undefined||st===null)return; const ifr=[...document.querySelectorAll('.slide .mount iframe')].find(x=>x.contentWindow===e.source); if(!ifr)return; const s=ifr.closest('.slide'); if(!s)return; if(st===0){ s.dataset.playing='0'; if(s===activeSlide) goNext(); } else if(st===1){ s.classList.add('live'); s.dataset.playing='1'; if(IOS){ soundOn=true; updateMuteIcon(); } } else if(st===2){ s.dataset.playing='0'; } });
 
 function goPrev(){ FEED.scrollBy({top:-FEED.clientHeight,behavior:'smooth'}); }
 document.getElementById('navUp').addEventListener('click',goPrev);
