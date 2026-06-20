@@ -66,6 +66,7 @@ SPORT_WORDS = [
   ("basketball", ["농구","덩크","버저","3점","자유투","리바운드","nba","kbl","euroleague",
                   "dunk","buzzer","basketball"] + NBA_STARS + NBA_BIG),
   ("volleyball", ["배구","스파이크","블로킹","리시브","세터","v리그","vnl","volleyball","spike"]),
+  ("cheers",     ["치어리더"]),
   ("soccer",     ["축구","골","슈팅","프리킥","페널티","코너킥","epl","프리미어","라리가","분데스",
                   "세리에","리그앙","챔피언스","손흥민","이강인","김민재","황희찬","k리그","kleague",
                   "goal","soccer","football","premier","laliga","bundesliga"] + SOCCER_STARS + SOCCER_BIG),
