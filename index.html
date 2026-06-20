@@ -63,6 +63,8 @@
   .cap{position:absolute;left:0;right:64px;bottom:calc(env(safe-area-inset-bottom) + 16px);padding:18px 14px 4px;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 72%,transparent)}
   .cap .lg{display:inline-block;background:rgba(31,168,92,.92);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;margin-bottom:7px}
   .cap .vw{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:6px}
+  .cap .dt{display:inline-block;margin-left:6px;font-size:11px;font-weight:800;color:#fff;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.2)}
+  .cap .dt.new{background:var(--accent)} .cap .dt.y{background:rgba(31,168,92,.95)}
   .cap .ttl{font-size:14px;line-height:1.4;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;pointer-events:auto;cursor:pointer}
   .cap .ttl.expanded{-webkit-line-clamp:unset;max-height:42vh;overflow:auto}
   .cap .ch{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:11px}
@@ -104,6 +106,8 @@
   .tcard{border:0;padding:0;border-radius:12px;overflow:hidden;cursor:pointer;background:#0e1b15;position:relative;aspect-ratio:9/13}
   .tcard img{width:100%;height:100%;object-fit:cover;display:block}
   .tcard span{position:absolute;left:0;right:0;bottom:0;padding:14px 7px 6px;font-size:10px;line-height:1.3;text-align:left;color:#fff;background:linear-gradient(0deg,rgba(0,0,0,.85),transparent);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .tcard .td{position:absolute;top:6px;left:6px;font-size:9px;font-weight:800;padding:2px 6px;border-radius:5px;background:rgba(0,0,0,.6);color:#fff}
+  .tcard .td.new{background:var(--accent)} .tcard .td.y{background:rgba(31,168,92,.95)}
   .hm-grid{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
   .hm-cat{padding:16px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(255,255,255,.07);color:#fff;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
   @media(min-width:600px){ .hm-grid{grid-template-columns:repeat(3,1fr)} .hm-trend{grid-template-columns:repeat(6,1fr)} }
@@ -206,6 +210,8 @@ function isSaved(id){return !!saved[id];}
 function toggleSaved(id){ if(saved[id])delete saved[id]; else saved[id]=1; try{localStorage.setItem('hot_saved',JSON.stringify(saved));}catch(e){} }
 function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function fmtV(v){ v=+v||0; return v>=10000?(v/10000).toFixed(1)+'만':v>=1000?(v/1000).toFixed(1)+'천':String(v); }
+function relDate(p){ const t=Date.parse(p); if(!t)return null; const n=new Date(), th=new Date(t); const a=new Date(n.getFullYear(),n.getMonth(),n.getDate()), b=new Date(th.getFullYear(),th.getMonth(),th.getDate()); const d=Math.round((a-b)/86400000); if(d<=0)return '오늘'; if(d===1)return '어제'; if(d<7)return d+'일 전'; if(d<14)return '1주 전'; if(d<30)return Math.floor(d/7)+'주 전'; if(d<365)return Math.floor(d/30)+'개월 전'; return Math.floor(d/365)+'년 전'; }
+function relCls(rd){ return rd==='오늘'?'new':(rd==='어제'?'y':''); }
 function ytThumbFb(img){ const id=img.dataset.id, s=img.dataset.s||'max'; if(s==='max'){img.dataset.s='sd';img.src='https://i.ytimg.com/vi/'+id+'/sddefault.jpg';} else if(s==='sd'){img.dataset.s='hq';img.src='https://i.ytimg.com/vi/'+id+'/hqdefault.jpg';} }
 window.ytThumbFb=ytThumbFb;
 /* ===== 단일 플레이어 ===== */
@@ -232,7 +238,8 @@ const _alogo=CTRL.querySelector('.actlogo'); _alogo.innerHTML=LOGO;
 const _like=CTRL.querySelector('.act.like'); _like.innerHTML=SVG_HEART+'<span class="cnt">관심</span>';
 function updateOverlay(id){ const g=ALL.find(x=>x.youtubeId===id); const cap=CTRL.querySelector('.cap');
   if(!g){ cap.innerHTML=''; return; }
-  cap.innerHTML='<span class="lg">'+esc(g.match)+'</span>'+(g.views?'<span class="vw">조회 '+fmtV(g.views)+'</span>':'')+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span>';
+  const rd=relDate(g.published);
+  cap.innerHTML='<span class="lg">'+esc(g.match)+'</span>'+(rd?'<span class="dt '+relCls(rd)+'">'+rd+'</span>':'')+(g.views?'<span class="vw">조회 '+fmtV(g.views)+'</span>':'')+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span>';
   _like.dataset.id=id; _like.classList.toggle('on',isSaved(id)); }
 _like.addEventListener('click',()=>{ const id=_like.dataset.id; if(!id)return; toggleSaved(id); const on=isSaved(id); _like.classList.toggle('on',on); if(on){_like.classList.remove('pop');void _like.offsetWidth;_like.classList.add('pop');} });
 CTRL.querySelector('.cap').addEventListener('click',e=>{ const tt=e.target.closest('.ttl'); if(tt)tt.classList.toggle('expanded'); });
@@ -309,7 +316,7 @@ const homeSearch=document.getElementById('homeSearch');
 homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; setCatLabel('search'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
 function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>((b.views||0)-(a.views||0))).slice(0,6);
   if(!top.length)return; const el=document.getElementById('hmTrend');
-  el.innerHTML=top.map(g=>'<button class="tcard" data-id="'+g.youtubeId+'"><img loading="lazy" data-id="'+g.youtubeId+'" src="https://i.ytimg.com/vi/'+g.youtubeId+'/hqdefault.jpg" alt=""><span>'+esc(g.title)+'</span></button>').join('');
+  el.innerHTML=top.map(g=>{ const rd=relDate(g.published); return '<button class="tcard" data-id="'+g.youtubeId+'"><img loading="lazy" data-id="'+g.youtubeId+'" src="https://i.ytimg.com/vi/'+g.youtubeId+'/hqdefault.jpg" alt="">'+(rd?'<span class="td '+relCls(rd)+'">'+rd+'</span>':'')+'<span>'+esc(g.title)+'</span></button>'; }).join('');
   el.hidden=false; document.getElementById('trendSec').hidden=false; }
 /* 이동/키보드 */
 function goNext(){ FEED.scrollBy({top:FEED.clientHeight,behavior:'smooth'}); }
