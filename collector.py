@@ -8,6 +8,7 @@ HOT 스포츠 쇼츠 — 골/하이라이트 자동 수집기 (v3)
 - 채널을 더 넣거나 거르는 단어를 고치려면 아래 CHANNELS / 단어 목록만 수정하세요.
 """
 import urllib.request, urllib.error, re, json, html, sys, concurrent.futures
+from datetime import datetime, timezone
 
 # ── 통과 단어(하나는 있어야 통과) / 제외 단어(있으면 탈락) ──
 GOOD_KO = ["하이라이트","골","골모음","골 모음","골장면","골 장면","득점","멀티골","원더골",
@@ -131,6 +132,36 @@ def embeddable(vid):
     except Exception:
         return True
 
+ROLL_DAYS = 14   # ── 롤링 보관 기간(일): 최근 N일 업로드 영상만 유지 ──
+PER_LEAGUE_CAP = 40   # 종목별 최대 보관 개수
+PER_LEAGUE_LONG = 5   # 종목별 가로(롱폼) 최대 개수
+TOTAL_CAP = 300       # 전체 최대 보관 개수
+
+def parse_pub(p):
+    """RSS published(ISO) 또는 'YYYY-MM-DD' 를 timezone-aware datetime 으로. 실패시 None."""
+    if not p: return None
+    p=p.strip()
+    try:
+        return datetime.fromisoformat(p.replace("Z","+00:00"))
+    except Exception:
+        pass
+    for fmt in ("%Y-%m-%dT%H:%M:%S%z","%Y-%m-%dT%H:%M:%S","%Y-%m-%d"):
+        try:
+            d=datetime.strptime(p,fmt)
+            return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+        except Exception:
+            pass
+    return None
+
+def load_existing():
+    """기존 data.json 을 읽어 누적 병합의 바탕으로 사용. 없거나 깨지면 빈 목록."""
+    try:
+        with open("data.json",encoding="utf-8") as f:
+            d=json.load(f)
+            return d if isinstance(d,list) else []
+    except Exception:
+        return []
+
 def drop_dead(items):
     """죽은(임베드불가) 영상 제거. 과다제거(40% 미만 생존)면 비정상으로 보고 필터 건너뜀(안전)."""
     ok={}
@@ -182,6 +213,40 @@ def parse_match(title, fallback):
     m=re.search(r"(?:^|[\s｜|\[\]/(])([가-힣A-Za-z]{2,12})\s*(?:vs|VS|Vs|:|대)\s*([가-힣A-Za-z]{2,12})(?:[\s｜|\]/)]|$)", title)
     return f"{m.group(1)} vs {m.group(2)}" if m else fallback
 
+def roll_finalize(new_items, existing, now, dead_filter=None):
+    """기존+신규 병합 → 최근 ROLL_DAYS 윈도우 → 정렬 → 죽은영상제거 → 종목/전체 상한. 순수함수(테스트용)."""
+    now_iso=now.isoformat()
+    bymap={}
+    for it in existing:
+        if it.get("youtubeId"): bymap[it["youtubeId"]]=it
+    for it in new_items:
+        vid=it.get("youtubeId")
+        if not vid: continue
+        it["first_seen"]=bymap[vid].get("first_seen", now_iso) if vid in bymap else now_iso
+        bymap[vid]=it   # 조회수·제목 등 최신 메타로 갱신
+    merged=list(bymap.values())
+
+    def within(it):
+        p=parse_pub(it.get("published",""))
+        if p is not None:
+            return -1 <= (now-p).days <= ROLL_DAYS
+        fs=parse_pub(it.get("first_seen",""))
+        return (now-fs).days <= ROLL_DAYS if fs is not None else True
+    merged=[it for it in merged if within(it)]
+
+    merged.sort(key=lambda x:(1 if x.get("short") else 0, x.get("views",0)), reverse=True)
+    if dead_filter: merged=dead_filter(merged)
+
+    capped=[]; per={}; perns={}
+    for o in merged:
+        k=o.get("league","etc")
+        if per.get(k,0)>=PER_LEAGUE_CAP: continue
+        if not o.get("short"):
+            if perns.get(k,0)>=PER_LEAGUE_LONG: continue
+            perns[k]=perns.get(k,0)+1
+        per[k]=per.get(k,0)+1; capped.append(o)
+    return capped[:TOTAL_CAP]
+
 def main():
     seen,out=set(),[]
     for src,cid,default,is_kor,trusted in CHANNELS:
@@ -204,17 +269,7 @@ def main():
             it["tags"]=["kor"] if has(t, KOR) else []
             it["kor_src"]=is_kor
             out.append(it)
-    out.sort(key=lambda x:(1 if x.get("short") else 0, x.get("views",0)), reverse=True)   # 쇼츠 우선 + 인기순
-    out=drop_dead(out)   # 죽은(임베드불가) 영상 사전 제거
-    capped=[]; per={}; perns={}
-    for o in out:
-        k=o["league"]
-        if per.get(k,0)>=30: continue                 # 종목별 상위 30개까지
-        if not o.get("short"):
-            if perns.get(k,0)>=5: continue            # 가로(롱폼)은 종목별 최대 5개 → 피드는 세로 쇼츠 위주
-            perns[k]=perns.get(k,0)+1
-        per[k]=per.get(k,0)+1; capped.append(o)
-    out=capped[:180]
+    out=roll_finalize(out, load_existing(), datetime.now(timezone.utc), dead_filter=drop_dead)
     with open("data.json","w",encoding="utf-8") as f:
         json.dump(out,f,ensure_ascii=False,indent=1)
     by={}
