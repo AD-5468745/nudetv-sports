@@ -31,7 +31,7 @@
   .brand b i{color:var(--green-soft);font-style:normal}
   .iconbtn{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:grid;place-items:center}
   .iconbtn svg{width:20px;height:20px} .iconbtn:active{transform:scale(.92)} .iconbtn[hidden]{display:none}
-  #chips{display:flex;gap:7px;overflow-x:auto;margin:9px auto 0;max-width:760px;padding-bottom:2px;scrollbar-width:none;pointer-events:auto;-webkit-mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent);mask:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 16px),transparent)}
+  #chips{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;pointer-events:auto}
   #chips::-webkit-scrollbar{display:none}
   .chip{flex:none;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.34);color:#fff;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
   .chip[aria-pressed="true"]{background:var(--green);border-color:transparent}
@@ -99,6 +99,14 @@
   @keyframes heartpop{0%{transform:scale(1)}35%{transform:scale(1.45)}60%{transform:scale(.9)}100%{transform:scale(1)}}
   #feed.fade{animation:feedfade .34s ease}
   @keyframes feedfade{from{opacity:.25}to{opacity:1}}
+  .catpill{flex:none;display:flex;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.34);color:#fff;font-size:13px;font-weight:700;padding:7px 12px;border-radius:999px;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);max-width:44vw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .catpill .caret{opacity:.7;font-size:10px}
+  #catsheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:none;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+  #catsheet.open{display:block}
+  .sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:82vh;overflow-y:auto;background:#0e1b15;border-radius:18px 18px 0 0;padding:10px 16px calc(env(safe-area-inset-bottom) + 20px);box-shadow:0 -8px 30px rgba(0,0,0,.5);animation:sheetup .26s cubic-bezier(.2,.8,.2,1)}
+  @keyframes sheetup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .sheet-grab{width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);margin:4px auto 14px}
+  .sheet-title{font-size:15px;font-weight:800;margin:0 2px 14px;color:#fff}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -106,24 +114,11 @@
 <header id="bar">
   <div class="row">
     <div class="brand" role="button" tabindex="0" aria-label="홈으로"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>HOT 스포츠 <i>쇼츠</i></b></div>
+    <button class="catpill" id="catBtn" aria-haspopup="dialog" aria-label="종목 선택">전체 <span class="caret">▾</span></button>
     <button class="iconbtn" id="searchBtn" title="검색" aria-label="검색"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg></button>
     <button class="iconbtn" id="installBtn" hidden title="홈 화면에 추가" aria-label="홈 화면에 추가"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><polyline points="7 10 12 15 17 10"/><path d="M5 21h14"/></svg></button>
     <button class="iconbtn" id="reloadBtn" title="새로고침" aria-label="새로고침"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg></button>
   </div>
-  <nav id="chips" aria-label="종목 탭">
-    <button class="chip" data-filter="all" aria-pressed="true">전체</button>
-    <button class="chip" data-filter="saved" aria-pressed="false">❤️ 관심</button>
-    <button class="chip" data-filter="latest" aria-pressed="false">🗓️ 최신</button>
-    <button class="chip" data-filter="worldcup" aria-pressed="false">🏆 월드컵</button>
-    <button class="chip" data-filter="kor" aria-pressed="false">🇰🇷 한국</button>
-    <button class="chip" data-filter="soccer" aria-pressed="false">⚽ 축구</button>
-    <button class="chip" data-filter="baseball" aria-pressed="false">⚾ 야구</button>
-    <button class="chip" data-filter="basketball" aria-pressed="false">🏀 농구</button>
-    <button class="chip" data-filter="volleyball" aria-pressed="false">🏐 배구</button>
-    <button class="chip" data-filter="mma" aria-pressed="false">🥊 격투기</button>
-    <button class="chip" data-filter="athletics" aria-pressed="false">🏃 육상</button>
-    <button class="chip" data-filter="esports" aria-pressed="false">🎮 LOL</button>
-  </nav>
   <div id="searchRow" hidden><input id="searchInput" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민)" autocomplete="off" /></div>
 </header>
 <div id="home" hidden>
@@ -145,12 +140,30 @@
 <button class="nav down" id="navDn" aria-label="다음 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
 <div id="empty"><div class="ic">🦊</div><b>여기에는 아직 영상이 없어요</b><p>다른 탭을 눌러보거나, 잠시 후 다시 확인해 주세요.</p></div>
 <div id="err"><div class="ic">📡</div><b>잠깐, 연결을 확인해 주세요</b><p>영상 목록을 불러오지 못했어요.</p><button class="eb" id="errRetry">다시 시도</button></div>
+<div id="catsheet" aria-hidden="true"><div class="sheet-panel"><div class="sheet-grab"></div><div class="sheet-title">종목 선택</div>
+  <nav id="chips" aria-label="종목 탭">
+    <button class="chip" data-filter="all" aria-pressed="true">전체</button>
+    <button class="chip" data-filter="saved" aria-pressed="false">❤️ 관심</button>
+    <button class="chip" data-filter="latest" aria-pressed="false">🗓️ 최신</button>
+    <button class="chip" data-filter="worldcup" aria-pressed="false">🏆 월드컵</button>
+    <button class="chip" data-filter="kor" aria-pressed="false">🇰🇷 한국</button>
+    <button class="chip" data-filter="soccer" aria-pressed="false">⚽ 축구</button>
+    <button class="chip" data-filter="baseball" aria-pressed="false">⚾ 야구</button>
+    <button class="chip" data-filter="basketball" aria-pressed="false">🏀 농구</button>
+    <button class="chip" data-filter="volleyball" aria-pressed="false">🏐 배구</button>
+    <button class="chip" data-filter="mma" aria-pressed="false">🥊 격투기</button>
+    <button class="chip" data-filter="athletics" aria-pressed="false">🏃 육상</button>
+    <button class="chip" data-filter="esports" aria-pressed="false">🎮 LOL</button>
+  </nav>
+</div></div>
 <script>
 const LOGO='<svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg>';
 const SVG_HEART='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 const SVG_SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/><line x1="15.4" y1="6.5" x2="8.6" y2="10.5"/></svg>';
 const SVG_SND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
 const FEED=document.getElementById('feed'), CHIPS=document.getElementById('chips'), HOME=document.getElementById('home');
+const catBtn=document.getElementById('catBtn'), catSheet=document.getElementById('catsheet');
+function setCatLabel(filter){ let t='전체'; if(filter==='search'){t='🔍 검색';} else { const c=[...CHIPS.querySelectorAll('.chip')].find(x=>x.dataset.filter===filter); if(c)t=c.textContent.trim(); } catBtn.innerHTML=esc(t)+' <span class="caret">▾</span>'; }
 const IOS=/iP(hone|od|ad)/.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Macintosh/.test(navigator.userAgent));
 let ALL=[], list=[], activeFilter='all', searchQ='', activeSlide=null, activeTimer=null;
 let saved={}; try{ saved=JSON.parse(localStorage.getItem('hot_saved')||'{}'); }catch(e){}
@@ -223,23 +236,25 @@ function shareVideo(id,title){ const url='https://youtu.be/'+id;
 let toastT=null;
 function toast(msg){ let t=document.getElementById('toast'); if(!t){ t=document.createElement('div'); t.id='toast'; t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:99;background:rgba(0,0,0,.82);color:#fff;font-size:13px;font-weight:700;padding:10px 16px;border-radius:999px;pointer-events:none;transition:opacity .25s'; document.body.appendChild(t);} t.textContent=msg; t.style.opacity='1'; clearTimeout(toastT); toastT=setTimeout(()=>t.style.opacity='0',1800); }
 /* 탭 */
-CHIPS.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c)return; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); c.setAttribute('aria-pressed','true'); activeFilter=c.dataset.filter; buildFeed(); });
+CHIPS.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c)return; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); c.setAttribute('aria-pressed','true'); activeFilter=c.dataset.filter; setCatLabel(activeFilter); catSheet.classList.remove('open'); buildFeed(); });
+catBtn.addEventListener('click',()=>catSheet.classList.add('open'));
+catSheet.addEventListener('click',e=>{ if(e.target===catSheet||e.target.closest('.sheet-grab')) catSheet.classList.remove('open'); });
 function updateChips(){ const cnt={}; ALL.forEach(g=>{ cnt[g.league]=(cnt[g.league]||0)+1; if((g.tags||[]).includes('kor'))cnt._kor=(cnt._kor||0)+1; });
   CHIPS.querySelectorAll('.chip').forEach(c=>{ const f=c.dataset.filter; if(f==='all'||f==='latest'||f==='saved'){c.style.display='';return;} const n=f==='kor'?(cnt._kor||0):(cnt[f]||0); c.style.display=n>=(f==='kor'?1:2)?'':'none'; }); }
 /* 검색 */
 const searchBtn=document.getElementById('searchBtn'), searchRow=document.getElementById('searchRow'), searchInput=document.getElementById('searchInput');
-searchBtn.addEventListener('click',()=>{ const wasHidden=searchRow.hidden; searchRow.hidden=!wasHidden; if(wasHidden){ searchInput.focus(); } else { searchInput.value=''; searchQ=''; if(activeFilter==='search'){ activeFilter='all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); } } });
-searchInput.addEventListener('input',()=>{ searchQ=searchInput.value; activeFilter='search'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); });
+searchBtn.addEventListener('click',()=>{ const wasHidden=searchRow.hidden; searchRow.hidden=!wasHidden; if(wasHidden){ searchInput.focus(); } else { searchInput.value=''; searchQ=''; if(activeFilter==='search'){ activeFilter='all'; setCatLabel('all'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); } } });
+searchInput.addEventListener('input',()=>{ searchQ=searchInput.value; activeFilter='search'; setCatLabel('search'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); });
 /* 홈 */
 function showHome(){ FEED.querySelectorAll('.mount').forEach(m=>m.innerHTML=''); activeSlide=null; HOME.hidden=false; HOME.scrollTop=0; }
-function openFeed(filter){ HOME.hidden=true; activeFilter=filter||'all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter===activeFilter?'true':'false')); buildFeed(); }
-function openAt(id){ HOME.hidden=true; activeFilter='all'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); requestAnimationFrame(()=>{ const s=[...FEED.querySelectorAll('.slide')].find(x=>x.dataset.id===id); if(s)s.scrollIntoView(); }); }
+function openFeed(filter){ HOME.hidden=true; activeFilter=filter||'all'; setCatLabel(activeFilter); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter===activeFilter?'true':'false')); buildFeed(); }
+function openAt(id){ HOME.hidden=true; activeFilter='all'; setCatLabel('all'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); requestAnimationFrame(()=>{ const s=[...FEED.querySelectorAll('.slide')].find(x=>x.dataset.id===id); if(s)s.scrollIntoView(); }); }
 const brand=document.querySelector('.brand');
 brand.addEventListener('click',showHome); brand.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();showHome();} });
 HOME.querySelectorAll('.hm-cat,.hm-cta').forEach(b=>b.addEventListener('click',()=>openFeed(b.dataset.filter)));
 document.getElementById('hmTrend').addEventListener('click',e=>{ const c=e.target.closest('.tcard'); if(c)openAt(c.dataset.id); });
 const homeSearch=document.getElementById('homeSearch');
-homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
+homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; setCatLabel('search'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
 function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>((b.short?1:0)-(a.short?1:0))||((b.views||0)-(a.views||0))).slice(0,6);
   if(!top.length)return; const el=document.getElementById('hmTrend');
   el.innerHTML=top.map(g=>'<button class="tcard" data-id="'+g.youtubeId+'"><img loading="lazy" data-id="'+g.youtubeId+'" src="https://i.ytimg.com/vi/'+g.youtubeId+'/hqdefault.jpg" alt=""><span>'+esc(g.title)+'</span></button>').join('');
