@@ -110,6 +110,7 @@ CHANNELS = [
   ("Volleyball World","UCNMg6XDhRZI2QzL4pWOvP_w","volleyball",False,True),
   ("World Athletics","UCQk7fWv15ChjMJLCRVmtApw","athletics",False,True),
   ("FIBA Basketball","UCtInrnU3QbWqFGsdKT1GZtg","basketball",False,True),
+  ("CheerS & Sports","UC2nsP5D6eG2RSFLqA24AAsw","cheers",False,True),
 ]
 
 SPORT_LABEL={"worldcup":"월드컵","soccer":"축구","baseball":"야구","basketball":"농구","volleyball":"배구","mma":"격투기","athletics":"육상","esports":"LOL","etc":"스포츠"}
