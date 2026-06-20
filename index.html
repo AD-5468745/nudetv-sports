@@ -6,11 +6,6 @@
 <title>HOT 스포츠 쇼츠모음</title>
 <meta name="theme-color" content="#0b1411" />
 <meta name="description" content="축구·야구·농구·배구·격투기·육상·LOL 인기 하이라이트 쇼츠 모음" />
-<meta property="og:type" content="website" /><meta property="og:title" content="HOT 스포츠 쇼츠모음" />
-<meta property="og:description" content="축구·야구·농구 등 인기 하이라이트를 쇼츠로 모아봤어요." />
-<meta property="og:url" content="https://ad-5468745.github.io/hot-sports/" />
-<meta property="og:image" content="https://ad-5468745.github.io/hot-sports/icons/icon-512.png" />
-<meta name="twitter:card" content="summary_large_image" />
 <link rel="manifest" href="manifest.webmanifest" />
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -23,7 +18,7 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   :focus-visible{outline:2px solid var(--green-soft);outline-offset:2px}
   html,body{margin:0;height:100%;background:#0b1411;color:#fff;font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;overflow:hidden}
-  #bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.32) 72%,transparent);pointer-events:none}
+  #bar{position:fixed;top:0;left:0;right:0;z-index:30;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;background:linear-gradient(180deg,rgba(0,0,0,.7),rgba(0,0,0,.3) 72%,transparent);pointer-events:none}
   #bar .row{display:flex;align-items:center;gap:8px;pointer-events:auto;max-width:760px;margin:0 auto}
   .brand{display:flex;align-items:center;gap:8px;margin-right:auto;min-width:0;cursor:pointer}
   .brand svg{width:30px;height:30px;flex:none}
@@ -36,46 +31,53 @@
   .instpill{flex:none;display:flex;align-items:center;gap:4px;border:0;background:linear-gradient(135deg,var(--accent),#f0743f);color:#fff;font-size:13px;font-weight:800;padding:8px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 8px rgba(226,88,34,.35)}
   .instpill svg{width:16px;height:16px} .instpill[hidden]{display:none} .instpill:active{transform:scale(.95)}
   @media(max-width:480px){ .brand b{display:none} }
-  #feed{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  /* 피드(네이티브 스크롤, 맨 위 터치 레이어) */
+  #feed{position:relative;z-index:2;height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;overscroll-behavior-y:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   #feed::-webkit-scrollbar{display:none}
-  .slide{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
+  .slide{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;background:#000;overflow:hidden}
   .bg{position:absolute;inset:0;z-index:0;background:radial-gradient(130% 95% at 50% 22%,#15281e 0%,#0b1411 55%,#070d0a 100%)}
-  .stage{position:relative;z-index:1;width:100%;height:100%;max-width:min(100%,480px);margin:0 auto;background:#000;overflow:hidden}
-  .thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-  .acts{position:absolute;right:8px;bottom:calc(env(safe-area-inset-bottom) + 150px);z-index:7;display:flex;flex-direction:column;align-items:center;gap:14px}
-  .actlogo{width:42px;height:42px;margin-bottom:2px;pointer-events:none;filter:drop-shadow(0 1px 4px rgba(0,0,0,.55))} .actlogo svg{width:100%;height:100%}
-  .act{width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .thumb{position:absolute;inset:0;z-index:1;width:100%;height:100%;max-width:480px;left:50%;transform:translateX(-50%);object-fit:cover}
+  /* 활성(정지) 칸은 투명 → 뒤의 플레이어가 보임 */
+  .slide.live{background:transparent}
+  .slide.live .bg,.slide.live .thumb{opacity:0}
+  /* 단일 플레이어 (피드 뒤) */
+  #player{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:100vh;height:100dvh;z-index:1;background:#000}
+  #player .pmount,#player .pmount iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  #player .spin{position:absolute;inset:0;z-index:2;display:grid;place-items:center;pointer-events:none}
+  #player .spin svg{width:58px;height:58px;animation:logopulse 1.1s ease-in-out infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
+  #player .spin[hidden]{display:none}
+  @keyframes logopulse{0%,100%{transform:scale(.82);opacity:.55}50%{transform:scale(1.06);opacity:1}}
+  #player.fs{position:fixed;inset:0;max-width:none;width:100vw;height:100dvh;transform:none;z-index:95;background:#000}
+  .fsx{position:absolute;top:calc(env(safe-area-inset-top) + 12px);right:14px;z-index:4;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;cursor:pointer;display:none;place-items:center}
+  #player.fs .fsx{display:grid} .fsx svg{width:22px;height:22px}
+  /* 컨트롤 오버레이 (최상단) */
+  #ctrl{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:100vh;height:100dvh;z-index:20;pointer-events:none;display:none}
+  #ctrl.show{display:block}
+  .acts{position:absolute;right:8px;bottom:calc(env(safe-area-inset-bottom) + 150px);display:flex;flex-direction:column;align-items:center;gap:14px}
+  .actlogo{width:42px;height:42px;margin-bottom:2px;filter:drop-shadow(0 1px 4px rgba(0,0,0,.55))} .actlogo svg{width:100%;height:100%}
+  .act{width:46px;height:46px;border-radius:50%;border:0;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);pointer-events:auto}
   .act svg{width:26px;height:26px} .act:active{transform:scale(.9)} .act.on{color:#ff3b55} .act.on svg{fill:#ff3b55}
   .act .cnt{font-size:10px;font-weight:700;margin-top:2px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-  .cap{position:absolute;left:0;right:64px;bottom:calc(env(safe-area-inset-bottom) + 16px);z-index:7;pointer-events:none;padding:18px 14px 4px;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 72%,transparent)}
+  .act.like.pop svg{animation:heartpop .42s ease}
+  @keyframes heartpop{0%{transform:scale(1)}35%{transform:scale(1.45)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+  .cap{position:absolute;left:0;right:64px;bottom:calc(env(safe-area-inset-bottom) + 16px);padding:18px 14px 4px;background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.3) 72%,transparent)}
   .cap .lg{display:inline-block;background:rgba(31,168,92,.92);color:#fff;font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;margin-bottom:7px}
   .cap .vw{display:inline-block;margin-left:6px;font-size:11px;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:6px}
   .cap .ttl{font-size:14px;line-height:1.4;font-weight:600;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;pointer-events:auto;cursor:pointer}
   .cap .ttl.expanded{-webkit-line-clamp:unset;max-height:42vh;overflow:auto}
   .cap .ch{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:11px}
-  /* 단일 플레이어 */
-  #player{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;height:100vh;height:100dvh;z-index:5;background:#000;display:none}
-  #player.show{display:block}
-  #player.fs{position:fixed;inset:0;max-width:none;width:100vw;height:100dvh;transform:none;z-index:95;background:#000}
-  #player .pmount,#player .pmount iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  #player .ptap{position:absolute;left:0;right:0;top:0;bottom:64px;z-index:2}
-  #player .spin{position:absolute;inset:0;z-index:3;display:grid;place-items:center;pointer-events:none}
-  #player .spin svg{width:58px;height:58px;animation:logopulse 1.1s ease-in-out infinite;filter:drop-shadow(0 2px 6px rgba(0,0,0,.5))}
-  #player .spin[hidden]{display:none}
-  @keyframes logopulse{0%,100%{transform:scale(.82);opacity:.55}50%{transform:scale(1.06);opacity:1}}
-  .fsbtn{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom) + 28px);z-index:4;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+  .sndpill{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 96px);transform:translateX(-50%);border:0;border-radius:999px;background:var(--accent);color:#fff;font-size:13px;font-weight:800;padding:9px 16px;cursor:pointer;display:none;align-items:center;gap:6px;box-shadow:0 3px 14px rgba(226,88,34,.6);animation:sndblink 1.25s ease-in-out infinite;pointer-events:auto}
+  .sndpill.show{display:flex}
+  @keyframes sndblink{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.07)}}
+  .sndpill svg{width:16px;height:16px}
+  .fsbtn{position:absolute;right:10px;bottom:calc(env(safe-area-inset-bottom) + 28px);width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);pointer-events:auto}
   .fsbtn svg{width:20px;height:20px}
-  .pbar{position:absolute;left:0;right:0;bottom:env(safe-area-inset-bottom);height:18px;z-index:4;touch-action:none;cursor:pointer}
+  .pbar{position:absolute;left:0;right:0;bottom:env(safe-area-inset-bottom);height:18px;touch-action:none;cursor:pointer;pointer-events:auto}
   .pbar .ptrack{position:absolute;left:0;right:0;bottom:0;height:6px;background:rgba(255,255,255,.3)}
   .pbar .pfill{position:absolute;left:0;bottom:0;height:6px;background:#1FA85C;width:0;box-shadow:0 0 7px rgba(31,168,92,.95)}
   .pbar.drag .ptrack,.pbar.drag .pfill{height:9px}
-  .sndpill{position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 96px);transform:translateX(-50%);z-index:6;border:0;border-radius:999px;background:var(--accent);color:#fff;font-size:13px;font-weight:800;padding:9px 16px;cursor:pointer;display:none;align-items:center;gap:6px;box-shadow:0 3px 14px rgba(226,88,34,.6);animation:sndblink 1.25s ease-in-out infinite}
-  #player.show .sndpill.show{display:flex}
-  @keyframes sndblink{0%,100%{transform:translateX(-50%) scale(1)}50%{transform:translateX(-50%) scale(1.07)}}
-  .sndpill svg{width:16px;height:16px}
-  .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
-  .nav svg{width:20px;height:20px} .nav:active{transform:scale(.92)}
-  .nav.up{top:calc(50% - 56px)} .nav.down{top:calc(50% + 10px)}
+  .nav{position:fixed;right:18px;z-index:25;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:none;place-items:center}
+  .nav svg{width:20px;height:20px} .nav.up{top:calc(50% - 56px)} .nav.down{top:calc(50% + 10px)}
   @media (min-width:760px){ .nav{display:grid} }
   .endcard{position:relative;height:100vh;height:100dvh;scroll-snap-align:start;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:radial-gradient(120% 80% at 50% 20%,#16291f,#0b1411 60%,#070d0a)}
   .endcard svg{width:64px;height:64px} .endcard b{font-size:18px} .endcard p{margin:0 0 6px;color:rgba(255,255,255,.62);font-size:13px}
@@ -87,8 +89,6 @@
   .brandcard p{margin:0;color:rgba(255,255,255,.66);font-size:14px}
   .brandcard .bc-go{margin-top:22px;color:rgba(255,255,255,.5);font-size:12px;font-weight:700;animation:bob 1.6s ease-in-out infinite}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-  .act.like.pop svg{animation:heartpop .42s ease}
-  @keyframes heartpop{0%{transform:scale(1)}35%{transform:scale(1.45)}60%{transform:scale(.9)}100%{transform:scale(1)}}
   #empty,#err{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;color:rgba(255,255,255,.85);padding:30px;z-index:6}
   #empty.show,#err.show{display:flex} #empty .ic,#err .ic{font-size:42px} #empty b,#err b{font-size:16px} #empty p,#err p{margin:0;color:rgba(255,255,255,.6);font-size:13px}
   #err .eb{margin-top:6px;border:0;border-radius:12px;background:var(--green);color:#fff;font-weight:700;font-size:14px;padding:11px 22px;cursor:pointer}
@@ -115,7 +115,7 @@
   @keyframes sheetup{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .sheet-grab{width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,.25);margin:4px auto 14px}
   .sheet-title{font-size:15px;font-weight:800;margin:0 2px 14px;color:#fff}
-  #chips{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;pointer-events:auto}
+  #chips{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0}
   .chip{flex:none;border:1px solid rgba(255,255,255,.22);background:rgba(0,0,0,.34);color:#fff;font-size:13px;font-weight:700;padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
   .chip[aria-pressed="true"]{background:var(--green);border-color:transparent}
   .ihelp{margin:6px 2px 14px;padding-left:20px;color:#fff;font-size:14px;line-height:1.7} .ihelp b{color:var(--green-soft)}
@@ -133,6 +133,7 @@
 </style>
 </head>
 <body>
+<div id="player"><div class="pmount"></div><div class="spin" hidden></div><button class="fsx" aria-label="전체화면 해제"></button></div>
 <header id="bar">
   <div class="row">
     <div class="brand" role="button" tabindex="0" aria-label="홈으로"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg><b>HOT 스포츠 <i>쇼츠</i></b></div>
@@ -144,6 +145,13 @@
   </div>
   <div id="searchRow" hidden><input id="searchInput" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민)" autocomplete="off" /></div>
 </header>
+<div id="ctrl">
+  <button class="sndpill"></button>
+  <div class="acts"><div class="actlogo"></div><button class="act like" aria-label="관심 저장"></button></div>
+  <div class="cap"></div>
+  <button class="fsbtn" aria-label="전체화면"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
+  <div class="pbar"><div class="ptrack"></div><div class="pfill"></div></div>
+</div>
 <div id="home" hidden>
   <div class="hm-hero"><div class="hm-logo"><svg viewBox="0 0 120 120"><g fill="none" stroke="#1FA85C" stroke-width="6" stroke-linecap="round"><line x1="60" y1="44" x2="42" y2="20"/><line x1="60" y1="44" x2="80" y2="22"/></g><circle cx="42" cy="18" r="5.5" fill="#1FA85C"/><circle cx="82" cy="20" r="5.5" fill="#1FA85C"/><rect x="16" y="44" width="88" height="62" rx="16" fill="#fff" stroke="#1FA85C" stroke-width="9"/><text x="60" y="90" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="800" font-size="46" fill="#1FA85C">LC</text></svg></div><h1>HOT 스포츠 <b>쇼츠</b></h1><p>매일 인기 하이라이트를 한 곳에서</p></div>
   <input id="homeSearch" type="search" placeholder="팀·선수·키워드 검색 (예: 손흥민)" autocomplete="off" />
@@ -159,16 +167,6 @@
   </div>
 </div>
 <main id="feed" aria-label="쇼츠 피드"></main>
-<div id="player">
-  <div class="pmount"></div>
-  <div class="ptap"></div>
-  <div class="spin" hidden></div>
-  <button class="sndpill"></button>
-  <div class="acts"><div class="actlogo"></div><button class="act like" aria-label="관심 저장"></button></div>
-  <div class="cap"></div>
-  <button class="fsbtn" aria-label="전체화면"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button>
-  <div class="pbar"><div class="ptrack"></div><div class="pfill"></div></div>
-</div>
 <button class="nav up" id="navUp" aria-label="이전 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button>
 <button class="nav down" id="navDn" aria-label="다음 영상"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
 <div id="empty"><div class="ic">🦊</div><b>여기에는 아직 영상이 없어요</b><p>다른 탭을 눌러보거나, 잠시 후 다시 확인해 주세요.</p></div>
@@ -199,11 +197,10 @@ const SVG_SND='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 const SVG_MUTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/></svg>';
 const SVG_FS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>';
 const SVG_FSX='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-const FEED=document.getElementById('feed'), CHIPS=document.getElementById('chips'), HOME=document.getElementById('home'), PLAYER=document.getElementById('player');
+const FEED=document.getElementById('feed'), CHIPS=document.getElementById('chips'), HOME=document.getElementById('home'), PLAYER=document.getElementById('player'), CTRL=document.getElementById('ctrl');
 const catBtn=document.getElementById('catBtn'), catSheet=document.getElementById('catsheet'), muteBtn=document.getElementById('muteBtn');
-const IOS=/iP(hone|od|ad)/.test(navigator.userAgent)||(navigator.maxTouchPoints>1&&/Macintosh/.test(navigator.userAgent));
-let ALL=[], list=[], activeFilter='all', searchQ='', activeSlide=null, scrubbing=false;
-let yt=null, curId=null, curDur=0, soundOn=false, loadT=null, scrollT=null, posTimer=null, pos=0, posAt=0;
+let ALL=[], list=[], activeFilter='all', searchQ='', activeSec=null, scrubbing=false;
+let yt=null, curId=null, curDur=0, soundOn=false, scrollT=null, posTimer=null, pos=0, posAt=0, scrolling=false;
 let saved={}; try{ saved=JSON.parse(localStorage.getItem('hot_saved')||'{}'); }catch(e){}
 function isSaved(id){return !!saved[id];}
 function toggleSaved(id){ if(saved[id])delete saved[id]; else saved[id]=1; try{localStorage.setItem('hot_saved',JSON.stringify(saved));}catch(e){} }
@@ -213,44 +210,48 @@ function ytThumbFb(img){ const id=img.dataset.id, s=img.dataset.s||'max'; if(s==
 window.ytThumbFb=ytThumbFb;
 /* ===== 단일 플레이어 ===== */
 function ytCmd(func,args){ if(!yt)return; try{ yt.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:args||[]}),'*'); }catch(e){} }
-function ensurePlayer(id){ if(yt)return false;
-  yt=document.createElement('iframe');
-  yt.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; yt.setAttribute('allowfullscreen',''); yt.setAttribute('playsinline','1');
-  yt.src='https://www.youtube.com/embed/'+id+'?enablejsapi=1&autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&origin='+encodeURIComponent(location.origin);
-  yt.addEventListener('load',()=>{ let n=0; const hh=setInterval(()=>{ try{yt.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*');}catch(e){} if(++n>=12)clearInterval(hh); },350); });
-  PLAYER.querySelector('.pmount').appendChild(yt); return true; }
 function setSpin(on){ const s=PLAYER.querySelector('.spin'); if(s){ if(on)s.innerHTML=LOGO; s.hidden=!on; } }
-function setPfill(fr){ const fl=PLAYER.querySelector('.pfill'); if(fl)fl.style.width=Math.max(0,Math.min(100,fr*100))+'%'; }
+function setPfill(fr){ const fl=CTRL.querySelector('.pfill'); if(fl)fl.style.width=Math.max(0,Math.min(100,fr*100))+'%'; }
 function startPos(){ stopPos(); posAt=Date.now(); posTimer=setInterval(()=>{ if(PLAYER.dataset.playing==='1'&&curDur>0){ pos+=(Date.now()-posAt)/1000; if(pos>curDur)pos=curDur; if(!scrubbing) setPfill(pos/curDur); } posAt=Date.now(); },250); }
 function stopPos(){ if(posTimer){clearInterval(posTimer);posTimer=null;} }
-function updateMuteUI(){ muteBtn.innerHTML=soundOn?SVG_SND:SVG_MUTE; muteBtn.setAttribute('aria-label',soundOn?'음소거':'소리 켜기');
-  const pill=PLAYER.querySelector('.sndpill'); if(pill){ if(soundOn){ pill.classList.remove('show'); } else { pill.innerHTML=SVG_SND+'소리 켜기'; pill.classList.add('show'); } } }
 function loadVideo(id){ if(yt && id===curId)return; curDur=0; pos=0; setPfill(0); setSpin(true);
-  if(ensurePlayer(id)){ curId=id; return; }
+  if(!yt){ yt=document.createElement('iframe'); yt.allow='autoplay; encrypted-media; picture-in-picture; fullscreen'; yt.setAttribute('allowfullscreen',''); yt.setAttribute('playsinline','1');
+    yt.src='https://www.youtube.com/embed/'+id+'?enablejsapi=1&autoplay=1&mute=1&playsinline=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&origin='+encodeURIComponent(location.origin);
+    yt.addEventListener('load',()=>{ let n=0; const hh=setInterval(()=>{ try{yt.contentWindow.postMessage(JSON.stringify({event:'listening',id:1,channel:'widget'}),'*');}catch(e){} if(++n>=12)clearInterval(hh); },350); });
+    PLAYER.querySelector('.pmount').appendChild(yt); curId=id; return; }
   curId=id; ytCmd('loadVideoById',[id]);
   setTimeout(()=>{ if(soundOn){ ytCmd('unMute'); ytCmd('setVolume',[100]); } else { ytCmd('mute'); } ytCmd('playVideo'); },150); }
-function showPlayer(){ PLAYER.classList.add('show'); }
-function hidePlayer(){ if(!PLAYER.classList.contains('fs')) PLAYER.classList.remove('show'); }
-/* 탭 = 재생/정지 */
-const ptap=PLAYER.querySelector('.ptap');
 function togglePlay(){ if(PLAYER.dataset.playing==='1') ytCmd('pauseVideo'); else ytCmd('playVideo'); }
-let _ty=null,_lastY=0,_tmoved=false,_tused=false;
-ptap.addEventListener('touchstart',e=>{ _ty=e.touches[0].clientY; _lastY=_ty; _tmoved=false; },{passive:true});
-ptap.addEventListener('touchmove',e=>{ if(_ty===null)return; const y=e.touches[0].clientY; if(!_tmoved&&Math.abs(y-_ty)>6){ _tmoved=true; hidePlayer(); } if(_tmoved){ FEED.scrollTop += (_lastY-y); } _lastY=y; },{passive:true});
-ptap.addEventListener('touchend',()=>{ if(_ty===null)return; _ty=null; _tused=true; setTimeout(()=>_tused=false,400); if(_tmoved){ clearTimeout(scrollT); scrollT=setTimeout(settleLoad,160); } else { togglePlay(); } },{passive:true});
-ptap.addEventListener('click',()=>{ if(_tused)return; togglePlay(); });
-/* 소리 버튼(상단) */
+/* 소리 */
+function updateMuteUI(){ muteBtn.innerHTML=soundOn?SVG_SND:SVG_MUTE; muteBtn.setAttribute('aria-label',soundOn?'음소거':'소리 켜기');
+  const pill=CTRL.querySelector('.sndpill'); if(pill){ if(soundOn)pill.classList.remove('show'); else { pill.innerHTML=SVG_SND+'소리 켜기'; pill.classList.add('show'); } } }
 muteBtn.addEventListener('click',()=>{ if(soundOn){ ytCmd('mute'); soundOn=false; } else { ytCmd('unMute'); ytCmd('setVolume',[100]); soundOn=true; } updateMuteUI(); });
-PLAYER.querySelector('.sndpill').addEventListener('click',()=>{ ytCmd('unMute'); ytCmd('setVolume',[100]); soundOn=true; updateMuteUI(); });
-/* 전체화면 */
-const fsbtn=PLAYER.querySelector('.fsbtn');
-fsbtn.addEventListener('click',()=>{ const on=PLAYER.classList.toggle('fs'); fsbtn.innerHTML=on?SVG_FSX:SVG_FS; showPlayer(); });
+CTRL.querySelector('.sndpill').addEventListener('click',()=>{ ytCmd('unMute'); ytCmd('setVolume',[100]); soundOn=true; updateMuteUI(); });
+/* 컨트롤 갱신 */
+const _alogo=CTRL.querySelector('.actlogo'); _alogo.innerHTML=LOGO;
+const _like=CTRL.querySelector('.act.like'); _like.innerHTML=SVG_HEART+'<span class="cnt">관심</span>';
+function updateOverlay(id){ const g=ALL.find(x=>x.youtubeId===id); const cap=CTRL.querySelector('.cap');
+  if(!g){ cap.innerHTML=''; return; }
+  cap.innerHTML='<span class="lg">'+esc(g.match)+'</span>'+(g.views?'<span class="vw">조회 '+fmtV(g.views)+'</span>':'')+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span>';
+  _like.dataset.id=id; _like.classList.toggle('on',isSaved(id)); }
+_like.addEventListener('click',()=>{ const id=_like.dataset.id; if(!id)return; toggleSaved(id); const on=isSaved(id); _like.classList.toggle('on',on); if(on){_like.classList.remove('pop');void _like.offsetWidth;_like.classList.add('pop');} });
+CTRL.querySelector('.cap').addEventListener('click',e=>{ const tt=e.target.closest('.ttl'); if(tt)tt.classList.toggle('expanded'); });
+/* 전체화면(자체) */
+const fsbtn=CTRL.querySelector('.fsbtn'); fsbtn.innerHTML=SVG_FS;
+fsbtn.addEventListener('click',()=>{ PLAYER.classList.add('fs'); });
+const fsx=PLAYER.querySelector('.fsx'); fsx.innerHTML=SVG_FSX;
+fsx.addEventListener('click',()=>{ PLAYER.classList.remove('fs'); });
 /* 진행바 드래그 */
-function pbarSeek(clientX){ const pb=PLAYER.querySelector('.pbar'); const r=pb.getBoundingClientRect(); let fr=(clientX-r.left)/r.width; fr=Math.max(0,Math.min(1,fr)); setPfill(fr); if(curDur){ pos=fr*curDur; ytCmd('seekTo',[fr*curDur,true]); } }
-PLAYER.querySelector('.pbar').addEventListener('pointerdown',e=>{ scrubbing=true; PLAYER.querySelector('.pbar').classList.add('drag'); pbarSeek(e.clientX); },{passive:true});
+function pbarSeek(clientX){ const pb=CTRL.querySelector('.pbar'); const r=pb.getBoundingClientRect(); let fr=(clientX-r.left)/r.width; fr=Math.max(0,Math.min(1,fr)); setPfill(fr); if(curDur){ pos=fr*curDur; ytCmd('seekTo',[fr*curDur,true]); } }
+CTRL.querySelector('.pbar').addEventListener('pointerdown',e=>{ scrubbing=true; CTRL.querySelector('.pbar').classList.add('drag'); pbarSeek(e.clientX); },{passive:true});
 window.addEventListener('pointermove',e=>{ if(scrubbing) pbarSeek(e.clientX); },{passive:true});
-window.addEventListener('pointerup',()=>{ if(scrubbing){ scrubbing=false; PLAYER.querySelector('.pbar').classList.remove('drag'); } });
-/* 유튜브 이벤트 수신 */
+window.addEventListener('pointerup',()=>{ if(scrubbing){ scrubbing=false; CTRL.querySelector('.pbar').classList.remove('drag'); } });
+/* 전체화면 스와이프(플레이어가 위로 올라온 fs에서만 터치 도달) */
+let _gy=null,_gmoved=false;
+PLAYER.addEventListener('touchstart',e=>{ _gy=e.touches[0].clientY; _gmoved=false; },{passive:true});
+PLAYER.addEventListener('touchmove',e=>{ if(_gy!==null&&Math.abs(e.touches[0].clientY-_gy)>10)_gmoved=true; },{passive:true});
+PLAYER.addEventListener('touchend',e=>{ if(_gy===null)return; const dy=_gy-e.changedTouches[0].clientY; _gy=null; if(Math.abs(dy)>45){ if(dy>0)goNext(); else goPrev(); } else if(!_gmoved){ togglePlay(); } },{passive:true});
+/* 유튜브 이벤트 */
 window.addEventListener('message',e=>{ if(typeof e.data!=='string'||e.origin.indexOf('youtube')<0)return; let d; try{d=JSON.parse(e.data);}catch(_){return;}
   const info=(d.event==='infoDelivery'&&d.info)?d.info:(d.event==='onStateChange'?{playerState:d.info}:null); if(!info)return;
   if(typeof info.currentTime==='number'&&info.duration>0){ curDur=info.duration; pos=info.currentTime; posAt=Date.now(); if(!scrubbing) setPfill(pos/curDur); }
@@ -259,7 +260,7 @@ window.addEventListener('message',e=>{ if(typeof e.data!=='string'||e.origin.ind
   else if(st===3){ setSpin(true); }
   else if(st===2){ PLAYER.dataset.playing='0'; }
   else if(st===0){ PLAYER.dataset.playing='0'; pos=0; goNext(); } });
-/* ===== 피드(썸네일) ===== */
+/* ===== 피드 ===== */
 function computeList(){ let a=ALL.filter(g=>g.youtubeId);
   if(activeFilter==='search'){ const q=(searchQ||'').trim().toLowerCase(); if(q) a=a.filter(g=>((g.title+' '+g.match+' '+g.channel).toLowerCase().includes(q))); }
   else if(activeFilter==='saved'){ a=a.filter(g=>isSaved(g.youtubeId)); }
@@ -267,37 +268,24 @@ function computeList(){ let a=ALL.filter(g=>g.youtubeId);
   else if(activeFilter==='kor'){ a=a.filter(g=>(g.tags||[]).includes('kor')); }
   else if(activeFilter!=='all'){ a=a.filter(g=>g.league===activeFilter); }
   return a; }
-function slideHTML(g){ const id=g.youtubeId, vw=g.views?('<span class="vw">조회 '+fmtV(g.views)+'</span>'):'';
-  return '<section class="slide" data-id="'+id+'">'
-    + '<div class="bg"></div>'
-    + '<div class="stage"><img class="thumb" loading="lazy" data-id="'+id+'" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" onerror="ytThumbFb(this)" alt=""></div>'
-    + '</section>'; }
+function slideHTML(g){ const id=g.youtubeId;
+  return '<section class="slide" data-id="'+id+'"><div class="bg"></div><img class="thumb" loading="lazy" data-id="'+id+'" src="https://i.ytimg.com/vi/'+id+'/maxresdefault.jpg" onerror="ytThumbFb(this)" alt=""></section>'; }
 function brandHTML(){ return '<section class="brandcard"><div class="bc-logo">'+LOGO+'</div><h2>HOT 스포츠 <b>쇼츠</b></h2><p>매일 인기 하이라이트를 한 곳에서</p><div class="bc-go">▾ 아래로 밀어 계속 보기</div></section>'; }
 function endHTML(){ return '<section class="endcard"><div>'+LOGO+'</div><b>여기까지 다 보셨어요</b><p>처음부터 다시 보거나 다른 종목을 골라보세요</p><div><button class="eb pri" id="endTop">맨 위로</button><button class="eb" id="endHome">다른 종목 보기</button></div></section>'; }
-function buildFeed(){ hidePlayer(); curId=null; activeSlide=null; list=computeList();
+function removeLive(){ FEED.querySelectorAll('.slide.live').forEach(s=>s.classList.remove('live')); CTRL.classList.remove('show'); }
+function settle(){ scrolling=false; if(activeSec && activeSec.classList.contains('slide') && activeSec.dataset.id){ FEED.querySelectorAll('.slide.live').forEach(s=>{if(s!==activeSec)s.classList.remove('live');}); activeSec.classList.add('live'); CTRL.classList.add('show'); updateOverlay(activeSec.dataset.id); loadVideo(activeSec.dataset.id); } else { removeLive(); } }
+function buildFeed(){ PLAYER.classList.remove('fs'); removeLive(); curId=null; activeSec=null; list=computeList();
   document.getElementById('empty').classList.toggle('show', list.length===0);
   let h=''; list.forEach((g,i)=>{ h+=slideHTML(g); if((i+1)%8===0 && i<list.length-1) h+=brandHTML(); }); h+=(list.length?endHTML():'');
   FEED.innerHTML=h; FEED.scrollTop=0;
-  FEED.querySelectorAll('.slide').forEach(s=>io.observe(s));
+  FEED.querySelectorAll('.slide,.brandcard,.endcard').forEach(s=>io.observe(s));
   const et=document.getElementById('endTop'); if(et)et.onclick=()=>FEED.scrollTo({top:0,behavior:'smooth'});
   const eh=document.getElementById('endHome'); if(eh)eh.onclick=showHome;
-  if(list.length){ const f0=FEED.querySelector('.slide'); if(f0){ activeSlide=f0; settleLoad(); } } }
-/* 활성 추적 + 스크롤 정지 시 로드 */
-const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.target.classList.contains('slide') && e.isIntersecting && e.intersectionRatio>=0.6){ activeSlide=e.target; } }); },{root:FEED,threshold:[0,0.6,1]});
-const _alogo=PLAYER.querySelector('.actlogo'); if(_alogo)_alogo.innerHTML=LOGO;
-const _like=PLAYER.querySelector('.act.like'); if(_like)_like.innerHTML=SVG_HEART+'<span class="cnt">관심</span>';
-function updateOverlay(id){ const g=ALL.find(x=>x.youtubeId===id); const cap=PLAYER.querySelector('.cap'); const lk=PLAYER.querySelector('.act.like');
-  if(!g){ if(cap)cap.innerHTML=''; return; }
-  if(cap)cap.innerHTML='<span class="lg">'+esc(g.match)+'</span>'+(g.views?'<span class="vw">조회 '+fmtV(g.views)+'</span>':'')+'<div class="ttl">'+esc(g.title)+'</div><span class="ch">'+esc(g.channel)+'</span>';
-  if(lk){ lk.dataset.id=id; lk.classList.toggle('on',isSaved(id)); } }
-if(_like)_like.addEventListener('click',()=>{ const id=_like.dataset.id; if(!id)return; toggleSaved(id); const on=isSaved(id); _like.classList.toggle('on',on); if(on){_like.classList.remove('pop');void _like.offsetWidth;_like.classList.add('pop');} });
-PLAYER.querySelector('.cap').addEventListener('click',e=>{ const tt=e.target.closest('.ttl'); if(tt)tt.classList.toggle('expanded'); });
-function settleLoad(){ if(activeSlide && activeSlide.dataset.id){ const id=activeSlide.dataset.id; showPlayer(); updateOverlay(id); loadVideo(id); } else { hidePlayer(); } }
-FEED.addEventListener('scroll',()=>{ hidePlayer(); clearTimeout(scrollT); scrollT=setTimeout(settleLoad,150); },{passive:true});
-/* 피드 클릭(관심/제목) */
-FEED.addEventListener('click',e=>{
-  const lk=e.target.closest('.act.like'); if(lk){ const id=lk.dataset.id; toggleSaved(id); const on=isSaved(id); lk.classList.toggle('on',on); if(on){ lk.classList.remove('pop'); void lk.offsetWidth; lk.classList.add('pop'); } return; }
-  const tt=e.target.closest('.cap .ttl'); if(tt){ tt.classList.toggle('expanded'); } });
+  if(list.length){ const f0=FEED.querySelector('.slide'); if(f0){ activeSec=f0; settle(); } } }
+const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting && e.intersectionRatio>=0.6){ activeSec=e.target; } }); },{root:FEED,threshold:[0,0.6,1]});
+FEED.addEventListener('scroll',()=>{ if(!scrolling){ scrolling=true; removeLive(); } clearTimeout(scrollT); scrollT=setTimeout(settle,140); },{passive:true});
+/* 탭=재생/정지 (피드 영역 탭) */
+FEED.addEventListener('click',e=>{ const s=e.target.closest('.slide'); if(s && s.dataset.id) togglePlay(); });
 /* 탭 */
 CHIPS.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c)return; CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); c.setAttribute('aria-pressed','true'); activeFilter=c.dataset.filter; setCatLabel(activeFilter); catSheet.classList.remove('open'); buildFeed(); });
 catBtn.addEventListener('click',()=>catSheet.classList.add('open'));
@@ -310,16 +298,16 @@ const searchBtn=document.getElementById('searchBtn'), searchRow=document.getElem
 searchBtn.addEventListener('click',()=>{ const wasHidden=searchRow.hidden; searchRow.hidden=!wasHidden; if(wasHidden){ searchInput.focus(); } else { searchInput.value=''; searchQ=''; if(activeFilter==='search'){ activeFilter='all'; setCatLabel('all'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); } } });
 searchInput.addEventListener('input',()=>{ searchQ=searchInput.value; activeFilter='search'; setCatLabel('search'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); });
 /* 홈 */
-function showHome(){ hidePlayer(); curId=null; HOME.hidden=false; HOME.scrollTop=0; }
+function showHome(){ PLAYER.classList.remove('fs'); removeLive(); curId=null; ytCmd('pauseVideo'); HOME.hidden=false; HOME.scrollTop=0; }
 function openFeed(filter){ HOME.hidden=true; activeFilter=filter||'all'; setCatLabel(activeFilter); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter===activeFilter?'true':'false')); buildFeed(); }
-function openAt(id){ HOME.hidden=true; activeFilter='all'; setCatLabel('all'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); requestAnimationFrame(()=>{ const s=[...FEED.querySelectorAll('.slide')].find(x=>x.dataset.id===id); if(s){ s.scrollIntoView(); activeSlide=s; clearTimeout(scrollT); scrollT=setTimeout(settleLoad,200);} }); }
+function openAt(id){ HOME.hidden=true; activeFilter='all'; setCatLabel('all'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed', x.dataset.filter==='all'?'true':'false')); buildFeed(); requestAnimationFrame(()=>{ const s=[...FEED.querySelectorAll('.slide')].find(x=>x.dataset.id===id); if(s){ s.scrollIntoView(); activeSec=s; clearTimeout(scrollT); scrollT=setTimeout(settle,200);} }); }
 const brand=document.querySelector('.brand');
 brand.addEventListener('click',showHome); brand.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();showHome();} });
 HOME.querySelectorAll('.hm-cat,.hm-cta').forEach(b=>b.addEventListener('click',()=>openFeed(b.dataset.filter)));
 document.getElementById('hmTrend').addEventListener('click',e=>{ const c=e.target.closest('.tcard'); if(c)openAt(c.dataset.id); });
 const homeSearch=document.getElementById('homeSearch');
 homeSearch.addEventListener('keydown',e=>{ if(e.key==='Enter'){ searchQ=homeSearch.value; HOME.hidden=true; activeFilter='search'; setCatLabel('search'); CHIPS.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false')); buildFeed(); } });
-function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>((b.short?1:0)-(a.short?1:0))||((b.views||0)-(a.views||0))).slice(0,6);
+function buildTrending(){ const top=[...ALL].filter(g=>g.youtubeId).sort((a,b)=>((b.views||0)-(a.views||0))).slice(0,6);
   if(!top.length)return; const el=document.getElementById('hmTrend');
   el.innerHTML=top.map(g=>'<button class="tcard" data-id="'+g.youtubeId+'"><img loading="lazy" data-id="'+g.youtubeId+'" src="https://i.ytimg.com/vi/'+g.youtubeId+'/hqdefault.jpg" alt=""><span>'+esc(g.title)+'</span></button>').join('');
   el.hidden=false; document.getElementById('trendSec').hidden=false; }
