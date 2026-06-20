@@ -6,7 +6,7 @@
    ▸ 코드를 고쳐 새로 올릴 때는 아래 CACHE 끝 숫자를 v2, v3 … 로 올리세요.
      (그래야 옛 화면을 붙잡지 않습니다)
 */
-const CACHE = 'hot-sports-v2';
+const CACHE = 'hot-sports-v3';
 const SHELL = [
   './',
   './index.html',
