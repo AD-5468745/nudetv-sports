@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 # ── 통과 단어(하나는 있어야 통과) / 제외 단어(있으면 탈락) ──
 GOOD_KO = ["하이라이트","골","골모음","골 모음","골장면","골 장면","득점","멀티골","원더골",
            "홈런","끝내기","만루","역전","결승골","결승","명장면","베스트","슈퍼플레이","호수비",
-           "덩크","버저비터","버저","스파이크","블로킹","mvp","세리머니","리액션","반응","오열","눈물","분노","역대급","움짤","치어리더"]
+           "덩크","버저비터","버저","스파이크","블로킹","mvp","세리머니","리액션","반응","오열","눈물","분노","역대급","움짤"]
 GOOD_EN = ["goal","goals","highlight","highlights","home run","homer","walk-off","walkoff",
            "top plays","top 10","top 5","game winner","buzzer","full highlights","best plays",
            "wondergoal","game recap","condensed game"]
@@ -66,7 +66,6 @@ SPORT_WORDS = [
   ("basketball", ["농구","덩크","버저","3점","자유투","리바운드","nba","kbl","euroleague",
                   "dunk","buzzer","basketball"] + NBA_STARS + NBA_BIG),
   ("volleyball", ["배구","스파이크","블로킹","리시브","세터","v리그","vnl","volleyball","spike"]),
-  ("cheers",     ["치어리더"]),
   ("soccer",     ["축구","골","슈팅","프리킥","페널티","코너킥","epl","프리미어","라리가","분데스",
                   "세리에","리그앙","챔피언스","손흥민","이강인","김민재","황희찬","k리그","kleague",
                   "goal","soccer","football","premier","laliga","bundesliga"] + SOCCER_STARS + SOCCER_BIG),
@@ -92,7 +91,7 @@ CHANNELS = [
   ("SBS Sports","UCqsKWTIu7IhBjLFZS2s1ULQ","auto",True,False),
   ("스탐","UCArK9MK34LsQzPJrl5TZmYA","auto",True,False),
   ("MBC Sports+","UCMkrtzkegsLZJ1s6H7S0eKw","auto",True,False),
-  ("JTBC","UCTdZyOFVzontd9MZOJDg8Qw","worldcup",True,False),
+  ("JTBC Sports","UCTdZyOFVzontd9MZOJDg8Qw","worldcup",True,True),
   ("KBS N SPORTS","UCdkrHEDb1xT3gts9lct12Ug","auto",True,False),
   ("쿠팡플레이","UCnBht7BrOx-A328KFXgysqQ","auto",True,False),
   ("SPOTV","UCtm_QoN2SIxwCE-59shX7Qg","auto",True,False),
@@ -134,10 +133,12 @@ def embeddable(vid):
     except Exception:
         return True
 
-ROLL_DAYS = 14   # ── 롤링 보관 기간(일): 최근 N일 업로드 영상만 유지 ──
-PER_LEAGUE_CAP = 40   # 종목별 최대 보관 개수
+ROLL_DAYS = 14        # 일반 종목 보관 기간(일): 최근 N일 업로드만 유지
+WC_WINDOW = 45        # ★월드컵 보관 기간(일): 대회 전체 커버 후 자동 정리
+PER_LEAGUE_CAP = 40   # 일반 종목별 최대 보관 개수
 PER_LEAGUE_LONG = 5   # 종목별 가로(롱폼) 최대 개수
-TOTAL_CAP = 300       # 전체 최대 보관 개수
+OTHER_CAP = 240       # 비(非)월드컵 전체 최대 개수
+WC_CAP = 300          # ★월드컵 안전 상한(사실상 전부 보관)
 
 def parse_pub(p):
     """RSS published(ISO) 또는 'YYYY-MM-DD' 를 timezone-aware datetime 으로. 실패시 None."""
@@ -229,25 +230,30 @@ def roll_finalize(new_items, existing, now, dead_filter=None):
     merged=list(bymap.values())
 
     def within(it):
+        win = WC_WINDOW if it.get("league")=="worldcup" else ROLL_DAYS
         p=parse_pub(it.get("published",""))
         if p is not None:
-            return -1 <= (now-p).days <= ROLL_DAYS
+            return -1 <= (now-p).days <= win
         fs=parse_pub(it.get("first_seen",""))
-        return (now-fs).days <= ROLL_DAYS if fs is not None else True
+        return (now-fs).days <= win if fs is not None else True
     merged=[it for it in merged if within(it)]
 
     merged.sort(key=lambda x:(1 if x.get("short") else 0, x.get("views",0)), reverse=True)
     if dead_filter: merged=dead_filter(merged)
 
-    capped=[]; per={}; perns={}
-    for o in merged:
+    capped=[]; per={}; perns={}; wc=0; others=0
+    for o in merged:                       # 이미 쇼츠우선+조회순 정렬됨
         k=o.get("league","etc")
+        if k=="worldcup":                  # ★월드컵: 종목/전체 상한 면제, 사실상 전부
+            if wc>=WC_CAP: continue
+            wc+=1; capped.append(o); continue
+        if others>=OTHER_CAP: continue     # 비월드컵 전체 상한
         if per.get(k,0)>=PER_LEAGUE_CAP: continue
         if not o.get("short"):
             if perns.get(k,0)>=PER_LEAGUE_LONG: continue
             perns[k]=perns.get(k,0)+1
-        per[k]=per.get(k,0)+1; capped.append(o)
-    return capped[:TOTAL_CAP]
+        per[k]=per.get(k,0)+1; others+=1; capped.append(o)
+    return capped
 
 def main():
     seen,out=set(),[]
